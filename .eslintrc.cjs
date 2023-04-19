@@ -30,6 +30,12 @@ module.exports = {
       {
         "patterns": ["@mui/*/*/*"]
       }
-    ]
+    ],
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/no-misused-promises": [2, {
+      "checksVoidReturn": {
+        "attributes": false
+      }
+    }]
   }
 };

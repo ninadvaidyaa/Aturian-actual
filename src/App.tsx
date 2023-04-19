@@ -1,10 +1,11 @@
-import { Typography } from "@mui/material";
+import { RouterProvider } from "react-router-dom";
+import router from "routes";
 import ThemeProvider from "themes";
 
 function App(): JSX.Element {
   return (
     <ThemeProvider>
-    <Typography component='h1' variant="h6">Hello world!</Typography>
+    <RouterProvider router={router} />
     </ThemeProvider>
   );
 }

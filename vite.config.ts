@@ -1,18 +1,12 @@
 /// <reference types="vitest" />
 import { checker } from 'vite-plugin-checker';
 import  tsconfigPaths  from 'vite-tsconfig-paths';
-import { defineConfig } from 'vite'
+import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tsconfigPaths(),
-    checker({
-      typescript: true,
-      eslint: {
-        lintCommand: 'eslint "./src/**/*.{ts,tsx}"',
-      },
-    })],
+  plugins: [react(), tsconfigPaths(),splitVendorChunkPlugin()],
     test: {
       globals: true,
       environment: 'jsdom',
