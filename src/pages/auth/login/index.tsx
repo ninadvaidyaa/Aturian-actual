@@ -28,7 +28,6 @@ const LoginPage = () => {
   }, []);
 
   const onSubmit = async (data: LoginFormData) => {
-    console.log(data);
     try {
       const resp = await loginApi(data);
       if (resp.statusText === "OK") {

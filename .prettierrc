@@ -13,5 +13,6 @@
     "modules",
     "^[./]"
   ],
-  "importOrderSeparation": true
+  "importOrderSeparation": true,
+  "singleAttributePerLine": true
 }

@@ -5,18 +5,12 @@ import {
   type Ref,
 } from "react";
 import { useTheme } from "@mui/material/styles";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Divider,
-  Typography,
-  type CardProps,
-  type CardHeaderProps,
-  type CardContentProps,
-} from "@mui/material";
 
-import Highlighter from "./lib/copyToClipboard/Highlighter";
+import Card, { type CardProps } from "@mui/material/Card";
+import CardContent, { type CardContentProps } from "@mui/material/CardContent";
+import CardHeader, { type CardHeaderProps } from "@mui/material/CardHeader";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
 import type { KeyedObject } from "types/root";
 
 const headerSX = {
@@ -137,21 +131,10 @@ const MainCard = forwardRef(
         {/* card content */}
         {content && <CardContent sx={contentSX}>{children}</CardContent>}
         {!content && children}
-
-        {/* card footer - clipboard & highlighter  */}
-        {codeString && (
-          <>
-            <Divider sx={{ borderStyle: "dashed" }} />
-            <Highlighter
-              codeString={codeString}
-              codeHighlight={codeHighlight}
-            />
-          </>
-        )}
       </Card>
     );
   }
 );
 
-MainCard.displayName = 'MainCard'
+MainCard.displayName = "MainCard";
 export default MainCard;

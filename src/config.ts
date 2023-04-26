@@ -18,6 +18,7 @@ const settingsSchema = z.object({
   VITE_BASE_URL: z.string({description: "Base URI for backend api"}),
   MODE: z.string({description: "The mode the app is running in"}),
   VITE_AUTH_CLIENT_ID: z.string({description: "Authentication client id"}),
+  VITE_API_ENV: z.string({description: "Backend environment used in api"}),
 })
 
 const result = settingsSchema.safeParse(import.meta.env)
@@ -28,6 +29,7 @@ if(!result.success){
 export const settings = {
   apiBase: result.data.VITE_BASE_URL,
   mode: result.data.MODE,
-  authClientId: result.data.VITE_AUTH_CLIENT_ID
+  authClientId: result.data.VITE_AUTH_CLIENT_ID,
+  apiEnv: result.data.VITE_API_ENV,
 }
 export default config;

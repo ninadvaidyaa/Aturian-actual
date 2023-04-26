@@ -8,8 +8,6 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const { token } = useStore(tokenStore);
   const navigate = useNavigate();
   const location = useLocation();
-  console.log({token});
-  
   useEffect(() => {
     if (!token) {
       navigate({
