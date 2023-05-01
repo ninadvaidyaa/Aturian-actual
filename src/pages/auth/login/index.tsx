@@ -8,7 +8,6 @@ import type { LoginFormData } from "validators/auth.validators";
 import { tokenStore, refreshTokenStore } from "hooks/useAuth";
 import AuthWrapper from "../AuthWrapper";
 import LoginForm from "./loginForm";
-
 const LoginPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -16,13 +15,14 @@ const LoginPage = () => {
   const { token, setToken } = useStore(tokenStore);
   const { setTokenRefresh } = useStore(refreshTokenStore);
   const [error, setError] = useState(false);
+  
 
   useEffect(() => {
     if (token) {
       if (navigateTo) {
         navigate(navigateTo);
       } else {
-        navigate("/");
+        navigate("/orders");
       }
     }
   }, []);
@@ -34,11 +34,8 @@ const LoginPage = () => {
         setError(false);
         setToken(resp.data.access_token);
         setTokenRefresh(resp.data.refresh_token);
-        if (navigateTo) {
-          navigate(navigateTo);
-        } else {
-          navigate("/");
-        }
+          navigate("/orders");
+        
       }
     } catch (e) {
       setError(true);

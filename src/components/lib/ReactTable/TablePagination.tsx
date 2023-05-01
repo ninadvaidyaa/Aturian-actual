@@ -87,6 +87,10 @@ const TablePagination = ({
       spacing={1}
       alignItems="center"
       justifyContent="end"
+      sx={{
+        px: theme.spacing(2),
+        py: theme.spacing(2),
+      }}
     >
       <Stack
         direction="row"
@@ -120,7 +124,7 @@ const TablePagination = ({
         </FormControl>
       </Stack>
       <nav>
-        <List sx={{ paddingInline: theme.spacing(2) }}>
+        <List sx={{ paddingInline: theme.spacing(2), marginBlock: 0.5 }}>
           <li>
             <span style={{ color: theme.palette.secondary.main }}>
               {rowCount

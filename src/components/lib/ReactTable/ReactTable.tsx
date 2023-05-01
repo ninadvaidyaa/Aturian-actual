@@ -86,7 +86,7 @@ const ReactTable = <M,>({
     manualPagination: true,
     manualFiltering: true,
   });
-    
+
   return (
     <Fragment>
       <TablePageHeader table={table} />
@@ -97,19 +97,23 @@ const ReactTable = <M,>({
       >
         <ScrollX
           style={{
-            maxHeight: "500px",
+            maxHeight: "calc(100vh - 270px)",
           }}
         >
-          {/* <TableContainer> */}
           <Table
             size={size}
             stickyHeader={true}
           >
             <TableHeader table={table} />
-            {data.length ? <ReactTableBody table={table} /> :<EmptyTable msg="No data" colSpan={table.getAllLeafColumns().length} />} 
-    
+            {data.length ? (
+              <ReactTableBody table={table} />
+            ) : (
+              <EmptyTable
+                msg="No data"
+                colSpan={table.getAllLeafColumns().length}
+              />
+            )}
           </Table>
-          {/* </TableContainer> */}
         </ScrollX>
       </Paper>
       <TablePagination

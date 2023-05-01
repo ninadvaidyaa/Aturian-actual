@@ -5,7 +5,6 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import SyntaxHighlight from 'utils/syntaxHighlight';
 import IconButton from 'components/@extended/IconButton';
 
-// assets
 import { CodeOutlined, CopyOutlined } from '@ant-design/icons';
 
 // ==============================|| CLIPBOARD & HIGHLIGHTER   ||============================== //

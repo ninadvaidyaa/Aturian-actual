@@ -22,9 +22,7 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use(
-  (res) => {
-    return res;
-  },
+  (res) => res,
   async (err) => {
     const originalConfig = err.config;
     const { tokenRefresh, setTokenRefresh } = useVanillaRefreshToken();
@@ -50,8 +48,8 @@ api.interceptors.response.use(
         }
       }
     }
-    setTokenRefresh(null)
-    setToken(null)
+    setTokenRefresh(null);
+    setToken(null);
     return await Promise.reject(err);
   }
 );

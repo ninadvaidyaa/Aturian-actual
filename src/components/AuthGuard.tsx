@@ -14,12 +14,12 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
         pathname: "/login",
         search: createSearchParams({
           next: location.pathname,
-        }).toString(),
+      }).toString(),
       });
     }
   }, [token, navigate, location]);
 
-  return <>{children}</>
+  return <>{children}</>;
 };
 
 export default AuthGuard;

@@ -1,0 +1,44 @@
+.css-rdz4dy-MuiInputBase-input-MuiOutlinedInput-input{
+    padding: 7.5px 8px 7.5px 12px !important;
+}
+
+.anticon-search{
+    color: #262626;
+}
+.css-16r0hgx-MuiButtonBase-root-MuiIconButton-root {
+background-color: transparent !important;
+}
+.css-5isbqk-MuiDrawer-docked .MuiDrawer-paper, .css-1kiiuso-MuiPaper-root-MuiAppBar-root{
+    border: 0 !important;
+}
+
+
+.css-oblp1g-MuiTypography-root{
+    margin: 0;
+    font-weight: 400;
+    font-size: 0.875rem !important;
+    line-height: 1.57;
+    font-family: 'Public Sans',sans-serif;
+    color: #1890ff;
+}
+
+.css-1908t7v-MuiButtonBase-root-MuiListItemButton-root{
+    
+    padding-left: 56px !important;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.css-1uaewpj-MuiTypography-root {
+    margin: 0;
+    font-weight: 400;
+    font-size: 0.875rem !important;
+    line-height: 1.57;
+    font-family: 'Public Sans',sans-serif;
+    color: #262626;
+}
+
+main{
+    background: #f5f5f5;
+    /* margin-left: -10px; */
+}

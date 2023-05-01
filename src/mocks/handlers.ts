@@ -25,8 +25,7 @@ export const handlers = [
   }),
   rest.post(
     `${baseApiUrl}${apiConstants.REFRESH_API}`,
-    async (req, res, ctx) => {
-      return await res(
+    async (req, res, ctx) => await res(
         ctx.status(200),
         ctx.json({
           access_token:
@@ -34,8 +33,7 @@ export const handlers = [
           refresh_token:
             "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Im94elp0a29YSTdnT1E5WE5XOFNBS1lKdXBiTTJhYV9neG9FZGNBeHpoQ0kifQ.eyJpc3MiOiJodHRwczovL21pbGt5d2F5LmVycC5uZXR3b3JrIiwic3ViIjoiZDY4M2I1MTItZmY3NC00YWY0LWFjNjctYjJhOGY1YjVjODQxIiwiY2x0IjoiZGVtbyIsInNjb3BlIjpbInJlZnJlc2hUb2tlbiJdLCJqdGkiOiJmMGRlMmNkZC05NDRmLTQ0NWMtYjRmOS1lMmQ3NWUzNGJhMDciLCJpYXQiOjE2ODE4NzgzMTgsImV4cCI6MTY4MTkyODcxOH0.bHf-2PR_agd4WKQmfBMCEYpQQdcRu8udf0jUm_3GT468LxS2pKjk2IUQOcYEaKBEle-xiUEC29rlYi2_Aphr7GO9VobVRaWnXCozHwK5o6hqHSfzUkJ57pTxiV1Esf5_W_AvRgCdhkeLgk4LZgQ-pKD5nk0uxYY8kYOHwHFuaXY",
         })
-      );
-    }
+      )
   ),
   rest.get(
     `${settings.apiBase}${apiConstants.ORDERS_GET_ALL_API}`,

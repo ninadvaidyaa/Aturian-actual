@@ -14,7 +14,7 @@ const useLocalStorage = <T>(key: string, defaultValue: T):[T, (newValue: T) => v
         e.storageArea === localStorage &&
         e.key === key
       ) {
-        const {newValue} = e
+        const {newValue} = e;
         setValue(newValue != null ? JSON.parse(newValue) : newValue);
       }
     };
@@ -38,4 +38,4 @@ const useLocalStorage = <T>(key: string, defaultValue: T):[T, (newValue: T) => v
   return [value, setValueInLocalStorage];
 };
 
-export default useLocalStorage
+export default useLocalStorage;

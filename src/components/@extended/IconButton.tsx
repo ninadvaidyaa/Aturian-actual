@@ -5,7 +5,7 @@ import MuiIconButton from "@mui/material/IconButton";
 import { alpha, styled, useTheme } from "@mui/material/styles";
 import type { IconButtonProps } from "@mui/material";
 import getColors from "utils/getColors";
-import getShadow from "utils/getShadow";
+// import getShadow from "utils/getShadow";
 import type {
   ButtonVariantProps,
   ExtendedStyleProps,
@@ -21,8 +21,9 @@ function getColorStyle({ variant, theme, color }: IconButtonStyleProps) {
   const colors = getColors(theme, color);
   const { lighter, light, dark, main, contrastText } = colors;
 
-  const buttonShadow = `${color}Button`;
-  const shadows = getShadow(theme, buttonShadow);
+  // const buttonShadow = `${color}Button`;
+  // console.log( 'buttonShadow'+buttonShadow)
+  const shadows = '';
 
   const commonShadow = {
     "&::after": {

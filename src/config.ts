@@ -19,17 +19,17 @@ const settingsSchema = z.object({
   MODE: z.string({description: "The mode the app is running in"}),
   VITE_AUTH_CLIENT_ID: z.string({description: "Authentication client id"}),
   VITE_API_ENV: z.string({description: "Backend environment used in api"}),
-})
+});
 
-const result = settingsSchema.safeParse(import.meta.env)
+const result = settingsSchema.safeParse(import.meta.env);
 if(!result.success){
-  console.error(result.error)
-  throw new Error(`${result.error.errors.join(' ')}`)
+  console.error(result.error);
+  throw new Error(`${result.error.errors.join(' ')}`);
 }
 export const settings = {
   apiBase: result.data.VITE_BASE_URL,
   mode: result.data.MODE,
   authClientId: result.data.VITE_AUTH_CLIENT_ID,
   apiEnv: result.data.VITE_API_ENV,
-}
+};
 export default config;

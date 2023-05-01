@@ -77,13 +77,7 @@ const MainCard = forwardRef(
             theme.palette.mode === "dark"
               ? theme.palette.divider
               : theme.palette.grey.A800,
-          boxShadow:
-            boxShadow && (!border || theme.palette.mode === "dark")
-              ? shadow ?? theme.customShadows.z1
-              : "inherit",
-          ":hover": {
-            boxShadow: boxShadow ? shadow ?? theme.customShadows.z1 : "inherit",
-          },
+         
           ...(codeHighlight && {
             "& pre": {
               m: 0,
@@ -107,7 +101,7 @@ const MainCard = forwardRef(
           ...sx,
         }}
       >
-        {/* card header and action */}
+        
         {!darkTitle && title && (
           <CardHeader
             sx={headerSX}
@@ -125,10 +119,10 @@ const MainCard = forwardRef(
           />
         )}
 
-        {/* content & header divider */}
+        
         {title && divider && <Divider />}
 
-        {/* card content */}
+        
         {content && <CardContent sx={contentSX}>{children}</CardContent>}
         {!content && children}
       </Card>
