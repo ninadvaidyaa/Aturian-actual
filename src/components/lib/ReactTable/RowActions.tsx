@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+
 import { useTheme } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import Fade from "@mui/material/Fade";
@@ -7,7 +8,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Paper from "@mui/material/Paper";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import IconButton from "components/@extended/IconButton";
-import { MoreOutlined, EyeOutlined } from "@ant-design/icons";
+
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
+import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import AvTimerIcon from "@mui/icons-material/AvTimer";
 import NoteAddOutlined from "@mui/icons-material/NoteAddOutlined";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -25,11 +28,12 @@ import type { CellContext } from "@tanstack/react-table";
 import { PopupTransition } from "components/@extended/Transitions";
 import { DRAWER_WIDTH } from "config";
 
+const genericMemo: <T>(component: T) => T = React.memo;
 interface RowActionsProps<TData, P> {
   info: CellContext<TData, P>;
 }
 
-const RowActions = <TData, P>({ info }: RowActionsProps<TData, P>) => {
+const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const openMenu = Boolean(anchorEl);
@@ -44,61 +48,55 @@ const RowActions = <TData, P>({ info }: RowActionsProps<TData, P>) => {
   const handleAdd = () => {
     setAdd(!add);
   };
-  
+
   return (
     <>
-      <Stack direction="row">
+      <Stack
+        direction="row"
+        gap={theme.spacing(2.5)}
+      >
         <Box>
           <IconButton
+            shape="rounded"
             edge="end"
             aria-label="comments"
             color="secondary"
           >
-            <EyeOutlined style={{ fontSize: "1.15rem" }} />
+            <RemoveRedEyeOutlinedIcon style={{ fontSize: "1.15rem" }} />
           </IconButton>
         </Box>
         <Box>
           <IconButton
+            shape="rounded"
             edge="end"
             aria-label="comments"
             color="secondary"
           >
-            <AvTimerIcon style={{ fontSize: "1.15rem" }} />
+            <AvTimerIcon style={{ fontSize: "1.15rem", color: "#1890FF" }} />
           </IconButton>
         </Box>
         <Box>
           <IconButton
+            shape="rounded"
             edge="end"
             aria-label="comments"
             color="secondary"
           >
-            <DeleteOutlineIcon style={{ fontSize: "1.15rem" }} />
+            <DeleteOutlineIcon
+              style={{ fontSize: "1.15rem", color: "#BB0505" }}
+            />
           </IconButton>
         </Box>
         <Box>
           <IconButton
+            shape="rounded"
             edge="end"
             aria-label="comments"
             color="secondary"
             onClick={handleMenuClick}
           >
-            <MoreOutlined style={{ fontSize: "1.15rem" }} />
+            <MoreVertOutlinedIcon style={{ fontSize: "1.15rem" }} />
           </IconButton>
-          {/* <List>
-            <ListItem
-              disablePadding
-              secondaryAction={
-                <IconButton
-                  edge="end"
-                  aria-label="comments"
-                  color="secondary"
-                  onClick={handleMenuClick}
-                >
-                  
-                </IconButton>
-              }
-            ></ListItem>
-          </List> */}
           <Menu
             id="fade-menu"
             MenuListProps={{
@@ -199,4 +197,5 @@ const RowActions = <TData, P>({ info }: RowActionsProps<TData, P>) => {
   );
 };
 
+const RowActions = genericMemo(RowActionComponent);
 export default RowActions;

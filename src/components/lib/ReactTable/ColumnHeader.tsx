@@ -1,11 +1,12 @@
 import type { Table, Header, Column } from "@tanstack/react-table";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { flexRender } from "@tanstack/react-table";
 import { useDrag, useDragLayer, useDrop } from "react-dnd";
 import type { DragLayerMonitor } from "react-dnd";
 import { getEmptyImage } from "react-dnd-html5-backend";
-import { DragOutlined } from "@ant-design/icons";
-
+import DragHandleOutlinedIcon from "@mui/icons-material/DragHandleOutlined";
+import ArrowDropUpOutlinedIcon from "@mui/icons-material/ArrowDropUpOutlined";
+import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import { styled, useTheme } from "@mui/material/styles";
 import type { Theme } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
@@ -14,6 +15,19 @@ import Typography from "@mui/material/Typography";
 import TableCell from "@mui/material/TableCell";
 
 import { reorderColumn } from "./reorderColumn";
+
+const Resize = styled("div")(({ theme }) => ({
+  position: "absolute",
+  right: 0,
+  top: 0,
+  height: "100%",
+  width: theme.spacing(0.5),
+  background: theme.palette.grey[300],
+  cursor: "col-resize",
+  userSelect: "none",
+  touchAction: "none",
+  opacity: 0,
+}));
 
 const DragHeader = styled("div")(
   ({ theme, x, y }: { theme: Theme; x: number; y: number }) => ({
@@ -57,10 +71,10 @@ export const DragPreview = () => {
       {item.header && (
         <Stack
           direction="row"
-          spacing={1}
+          spacing={0.5}
           alignItems="center"
         >
-          <DragOutlined style={{ fontSize: "1rem" }} />
+          <DragHandleOutlinedIcon style={{ fontSize: "1rem" }} />
           <Typography>{item.header}</Typography>
         </Stack>
       )}
@@ -74,6 +88,7 @@ const DraggableColumnHeader = <T,>({ header, table }: ColumnHeaderProps<T>) => {
   const { getState, setColumnOrder } = table;
   const { columnOrder } = getState();
   const { column } = header;
+  const { columnDef } = column;
 
   const [{ isOverCurrent }, drop] = useDrop({
     accept: "column",
@@ -115,28 +130,70 @@ const DraggableColumnHeader = <T,>({ header, table }: ColumnHeaderProps<T>) => {
     borderColor = theme.palette.primary.main;
   }
   drag(drop(ref));
+
+  const sorting = useMemo(
+    () =>
+      columnDef.enableSorting && (
+        <Stack sx={{ color: "secondary.light" }}>
+          <ArrowDropUpOutlinedIcon
+            style={{
+              fontSize: "1.25rem",
+              color:
+                column.getIsSorted() === "asc"
+                  ? theme.palette.text.secondary
+                  : "inherit",
+            }}
+          />
+          <ArrowDropDownOutlinedIcon
+            style={{
+              fontSize: "1.25rem",
+              marginTop: theme.spacing(-1.5),
+              color:
+                column.getIsSorted() === "desc"
+                  ? theme.palette.text.secondary
+                  : "inherit",
+            }}
+          />
+        </Stack>
+      ),
+    [column.getIsSorted()]
+  );
+
   return (
     <TableCell
       colSpan={header.colSpan}
-      style={{ opacity: isDragging ? 0.5 : 1 }}
+      style={{
+        opacity: isDragging ? 0.5 : 1,
+        width: header.getSize(),
+      }}
     >
-      <Box>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        onClick={header.column.getToggleSortingHandler()}
+      >
         <Box
           ref={ref}
-          onClick={header.column.getToggleSortingHandler()}
           sx={{
             color: borderColor,
-            minWidth: theme.spacing(8),
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
           }}
         >
           {header.isPlaceholder
             ? null
-            : flexRender(header.column.columnDef.header, header.getContext())}
+            : flexRender(columnDef.header, header.getContext())}
         </Box>
-      </Box>
+        {sorting}
+        <Resize
+          sx={{
+            opacity: column.getIsResizing() ? 1 : 0,
+          }}
+          {...{
+            onMouseDown: header.getResizeHandler(),
+            onTouchStart: header.getResizeHandler(),
+          }}
+        />
+      </Stack>
     </TableCell>
   );
 };

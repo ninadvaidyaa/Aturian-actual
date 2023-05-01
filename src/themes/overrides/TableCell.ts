@@ -21,12 +21,13 @@ export default function TableCell(theme: Theme) {
       styleOverrides: {
         root: {
           fontSize: "0.875rem",
-          padding: 8,
+          padding: 6,
           borderColor: theme.palette.divider,
           whiteSpace: "nowrap",
           overflow: "hidden",
           textOverflow: "ellipsis",
-          minWidth: "12ch",
+          minWidth: "6ch",
+          position: "relative",
         },
         sizeSmall: {
           padding: 4,
@@ -40,7 +41,7 @@ export default function TableCell(theme: Theme) {
         footer: {
           fontSize: "0.75rem",
           textTransform: "uppercase",
-          ...commonCell,
+          // ...commonCell,
         },
       },
     },

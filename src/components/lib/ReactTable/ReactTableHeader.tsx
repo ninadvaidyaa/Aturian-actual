@@ -4,15 +4,20 @@ import DraggableColumnHeader from "./ColumnHeader";
 import { flexRender, type Table } from "@tanstack/react-table";
 import TextField from "@mui/material/TextField";
 import TableCell from "@mui/material/TableCell";
-
 import Filter from "./ColumnFilter";
 import { Fragment } from "react";
+
 interface TableHeaderProps<M> {
   table: Table<M>;
 }
 
 const TableHeader = <M,>({ table, ...props }: TableHeaderProps<M>) => (
-  <TableHead>
+  <TableHead
+    sx={{
+      zIndex: 10,
+    }}
+    {...props}
+  >
     {table.getHeaderGroups().map((headerGroup) => (
       <Fragment key={headerGroup.id}>
         <TableRow key={`${headerGroup.id}-name`}>
@@ -26,10 +31,6 @@ const TableHeader = <M,>({ table, ...props }: TableHeaderProps<M>) => (
         </TableRow>
         <TableRow key={`${headerGroup.id}-filter`}>
           {headerGroup.headers.map((header) => (
-            // <ColumnHeaderFilter
-            //   key={header.id}
-            //   header={header}
-            // />
             <TableCell
               key={header.id}
               colSpan={header.colSpan}

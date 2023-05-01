@@ -1,13 +1,14 @@
-import LeftOutlined from "@ant-design/icons/LeftOutlined";
-import RightOutlined from "@ant-design/icons/RightOutlined";
-import VerticalLeftOutlined from "@ant-design/icons/VerticalLeftOutlined";
-import VerticalRightOutlined from "@ant-design/icons/VerticalRightOutlined";
+import ArrowLeftOutlinedIcon from "@mui/icons-material/ArrowLeftOutlined";
+import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
+import SkipPreviousOutlinedIcon from "@mui/icons-material/SkipPreviousOutlined";
+import SkipNextOutlinedIcon from "@mui/icons-material/SkipNextOutlined";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { type SelectChangeEvent } from "@mui/material/Select";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
 import IconButton from "components/@extended/IconButton";
 
 import { styled, useTheme } from "@mui/material/styles";
@@ -84,7 +85,6 @@ const TablePagination = ({
   return (
     <Stack
       direction="row"
-      spacing={1}
       alignItems="center"
       justifyContent="end"
       sx={{
@@ -92,108 +92,121 @@ const TablePagination = ({
         py: theme.spacing(2),
       }}
     >
-      <Stack
-        direction="row"
-        spacing={1}
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Typography
-          variant="caption"
-          color="secondary"
+      <Paper elevation={0}>
+        <Stack
+          direction="row"
+          spacing={2}
+          alignItems="center"
+          justifyContent="end"
         >
-          Row per page
-        </Typography>
-        <FormControl sx={{ m: 1 }}>
-          <Select
-            id="demo-controlled-open-select"
-            open={open}
-            onClose={handleClose}
-            onOpen={handleOpen}
-            value={pageSize}
-            onChange={handleChange}
-            size="small"
-            sx={{ "& .MuiSelect-select": { py: 0.75, px: 1.25 } }}
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            justifyContent="center"
+            sx={{
+              px: theme.spacing(2),
+            }}
           >
-            <MenuItem value={5}>5</MenuItem>
-            {/* <MenuItem value={10}>10</MenuItem> */}
-            <MenuItem value={50}>50</MenuItem>
-            {/* <MenuItem value={25}>25</MenuItem> 
+            <Typography
+              variant="caption"
+              color="secondary"
+            >
+              Row per page
+            </Typography>
+            <FormControl sx={{ m: 1 }}>
+              <Select
+                id="demo-controlled-open-select"
+                open={open}
+                onClose={handleClose}
+                onOpen={handleOpen}
+                value={pageSize}
+                onChange={handleChange}
+                size="small"
+                sx={{ "& .MuiSelect-select": { py: 0.75, px: 1.25 } }}
+              >
+                <MenuItem value={5}>5</MenuItem>
+                {/* <MenuItem value={10}>10</MenuItem> */}
+                <MenuItem value={50}>50</MenuItem>
+                {/* <MenuItem value={25}>25</MenuItem> 
             <MenuItem value={100}>100</MenuItem> */}
-          </Select>
-        </FormControl>
-      </Stack>
-      <nav>
-        <List sx={{ paddingInline: theme.spacing(2), marginBlock: 0.5 }}>
-          <li>
-            <span style={{ color: theme.palette.secondary.main }}>
-              {rowCount
-                ? `${countStart}–${countEnd} of ${rowCount}`
-                : `0–0 of 0`}
-            </span>
-          </li>
-          <ListItem>
-            <IconButton
-              aria-label="first"
-              title="first"
-              disabled={!hasPrevPage}
-              onClick={onFirstPageClick}
-              color="inherit"
-            >
-              <VerticalRightOutlined style={{ fontSize: theme.spacing(1.7) }} />
-            </IconButton>
-          </ListItem>
-          <ListItem className="selected">
-            <IconButton
-              color="inherit"
-              aria-label="previous"
-              title="previous"
-              disabled={!hasPrevPage}
-              onClick={onPreviousClick}
-            >
-              <LeftOutlined style={{ fontSize: theme.spacing(1.5) }} />
-            </IconButton>
-          </ListItem>
-          <ListItem style={{ maxWidth: "48px" }}>
-            <TextField
-              className="no-arrow"
-              size="small"
-              type="number"
-              onChange={(e) => {
-                handleChangePagination(e);
-              }}
-              sx={{
-                "& .MuiOutlinedInput-input": { py: 0.5, px: 0.75 },
-              }}
-              defaultValue={pageIndex + 1}
-              variant="outlined"
-              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-            />
-          </ListItem>
-          <ListItem>
-            <IconButton
-              color="inherit"
-              aria-label="next"
-              title="next"
-              disabled={!hasNextPage}
-              onClick={onNextClick}
-            >
-              <RightOutlined style={{ fontSize: theme.spacing(1.5) }} />
-            </IconButton>
-          </ListItem>
-          <ListItem>
-            <IconButton
-              aria-label="last"
-              title="last"
-              disabled={!hasNextPage}
-              onClick={onLastPageClick}
-              color="inherit"
-            >
-              <VerticalLeftOutlined style={{ fontSize: theme.spacing(1.7) }} />
-            </IconButton>
-          </ListItem>
-        </List>
-      </nav>
+              </Select>
+            </FormControl>
+          </Stack>
+          <nav>
+            <List sx={{ paddingInline: theme.spacing(2) }}>
+              <li>
+                <span style={{ color: theme.palette.secondary.main }}>
+                  {rowCount
+                    ? `${countStart}–${countEnd} of ${rowCount}`
+                    : `0–0 of 0`}
+                </span>
+              </li>
+              <ListItem>
+                <IconButton
+                  aria-label="first"
+                  title="first"
+                  disabled={!hasPrevPage}
+                  onClick={onFirstPageClick}
+                  color="inherit"
+                >
+                  <SkipPreviousOutlinedIcon fontSize="medium" />
+                </IconButton>
+              </ListItem>
+              <ListItem className="selected">
+                <IconButton
+                  color="inherit"
+                  aria-label="previous"
+                  title="previous"
+                  disabled={!hasPrevPage}
+                  onClick={onPreviousClick}
+                >
+                  <ArrowLeftOutlinedIcon fontSize="medium" />
+                </IconButton>
+              </ListItem>
+              <ListItem style={{ maxWidth: "48px" }}>
+                <TextField
+                  className="no-arrow"
+                  size="small"
+                  type="number"
+                  onChange={(e) => {
+                    handleChangePagination(e);
+                  }}
+                  sx={{
+                    "& .MuiOutlinedInput-input": { py: 0.5, px: 0.75 },
+                  }}
+                  defaultValue={pageIndex + 1}
+                  variant="outlined"
+                  inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+                  disabled={!rowCount}
+                />
+              </ListItem>
+              <ListItem>
+                <IconButton
+                  color="inherit"
+                  aria-label="next"
+                  title="next"
+                  disabled={!hasNextPage}
+                  onClick={onNextClick}
+                >
+                  <ArrowRightOutlinedIcon fontSize="medium" />
+                </IconButton>
+              </ListItem>
+              <ListItem>
+                <IconButton
+                  aria-label="last"
+                  title="last"
+                  disabled={!hasNextPage}
+                  onClick={onLastPageClick}
+                  color="inherit"
+                >
+                  <SkipNextOutlinedIcon fontSize="medium" />
+                </IconButton>
+              </ListItem>
+            </List>
+          </nav>
+        </Stack>
+      </Paper>
     </Stack>
   );
 };

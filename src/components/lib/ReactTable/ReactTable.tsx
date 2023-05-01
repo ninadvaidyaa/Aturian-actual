@@ -69,6 +69,7 @@ const ReactTable = <M,>({
       sorting,
       columnFilters,
     },
+    columnResizeMode: "onEnd",
     getCoreRowModel: getCoreRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
@@ -93,13 +94,14 @@ const ReactTable = <M,>({
 
       <Paper
         elevation={0}
-        sx={{ padding: "8px" }}
+        sx={{ padding: "8px", isolation: "isolate" }}
       >
         <ScrollX
           style={{
             maxHeight: "calc(100vh - 270px)",
           }}
         >
+          {/* <TableContainer> */}
           <Table
             size={size}
             stickyHeader={true}
@@ -109,11 +111,12 @@ const ReactTable = <M,>({
               <ReactTableBody table={table} />
             ) : (
               <EmptyTable
-                msg="No data"
+                msg="No Records Available"
                 colSpan={table.getAllLeafColumns().length}
               />
             )}
           </Table>
+          {/* </TableContainer> */}
         </ScrollX>
       </Paper>
       <TablePagination

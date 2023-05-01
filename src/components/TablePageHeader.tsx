@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import SettingOutlined from "@ant-design/icons/SettingOutlined";
-import LockOutlined from "@ant-design/icons/LockOutlined";
-import PlusOutlined from "@ant-design/icons/PlusOutlined";
-
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+// import LockOutlinedIcon from '@mui/icons-material/LockOutlined'; // TODO: 
 import { useTheme } from "@mui/material/styles";
 
 import Dialog from "@mui/material/Dialog";
@@ -40,7 +40,7 @@ const Search = () => (
       aria-label="comments"
       color="secondary"
     >
-      <LockOutlined />
+      <LockOpenOutlinedIcon />
     </IconButton>
     <TextField size="small" />
   </Stack>
@@ -102,7 +102,7 @@ const TablePageHeader = <TData,>({ table }: TablePageHeaderProps<TData>) => {
             <Search />
             <Button
               variant="contained"
-              startIcon={<PlusOutlined />}
+              startIcon={<AddOutlinedIcon />}
             >
               Add New Order
             </Button>
@@ -112,7 +112,7 @@ const TablePageHeader = <TData,>({ table }: TablePageHeaderProps<TData>) => {
               color="secondary"
               onClick={handleMenuClick}
             >
-              <SettingOutlined style={{ fontSize: "1.15rem" }} />
+              <SettingsOutlinedIcon style={{ fontSize: "1.15rem" }} />
             </IconButton>
             <Menu
               id="fade-menu"
@@ -165,16 +165,6 @@ const TablePageHeader = <TData,>({ table }: TablePageHeaderProps<TData>) => {
                       label={column.columnDef.header?.toString()}
                     />
                   ) : (
-                    // <label>
-                    //   <input
-                    //     {...{
-                    //       type: "checkbox",
-                    //       checked: column.getIsVisible(),
-                    //       onChange: column.getToggleVisibilityHandler(),
-                    //     }}
-                    //   />
-                    //   {column.id}
-                    // </label>
                     <FormControlLabel
                       control={
                         <Checkbox

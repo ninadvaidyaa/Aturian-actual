@@ -8,13 +8,11 @@ const LoaderWrapper = styled('div')(({ theme }) => ({
   top: 0,
   left: 0,
   zIndex: 2001,
-  width: '100%',
-  '& > * + *': {
-    marginTop: theme.spacing(2)
-  }
+  width: "100%",
+  "& > * + *": {
+    marginTop: theme.spacing(2),
+  },
 }));
-
-// ==============================|| Loader ||============================== //
 
 export interface LoaderProps extends LinearProgressProps {}
 

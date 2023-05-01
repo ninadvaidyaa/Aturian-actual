@@ -11,8 +11,8 @@ export default function TableBody(theme: Theme) {
     MuiTableBody: {
       styleOverrides: {
         root: {
-          overflow: "auto",
-          "&.striped .MuiTableRow-root": {
+          width: "100%",
+          ".MuiTableRow-root": {
             "&:nth-of-type(even)": {
               backgroundColor: theme.palette.grey[50],
             },

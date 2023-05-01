@@ -2,7 +2,7 @@ import * as React from "react";
 import { useTheme, styled } from "@mui/material/styles";
 import Popper from "@mui/material/Popper";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import CheckOutlined from "@ant-design/icons/CheckOutlined";
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -103,8 +103,7 @@ function SelectFilter({ data, label, value, setValue }: SelectFilterProps) {
         onClick={handleClick}
         sx={{ padding: "0px 8px" }}
       >
-        <span style={{ display: "block" }}>{label.slice(0, 8) + "..."}</span>
-        {/* <FilterListIcon /> */}
+        <span style={{  overflow: 'hidden', textOverflow: "ellipsis" }}>{label}</span>
       </Button>
       <StyledPopper
         id={id}
@@ -150,7 +149,7 @@ function SelectFilter({ data, label, value, setValue }: SelectFilterProps) {
               renderOption={(props, option, { selected }) => (
                 <li {...props}>
                   <Box
-                    component={CheckOutlined}
+                    component={CheckOutlinedIcon}
                     sx={{ width: 17, height: 17, mr: "8px", }}
                     style={{
                       visibility: selected ? "visible" : "hidden",

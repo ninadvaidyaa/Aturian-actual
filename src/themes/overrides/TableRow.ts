@@ -1,4 +1,6 @@
-export default function TableRow() {
+import { type Theme } from "@mui/material/styles";
+
+export default function TableRow(theme: Theme) {
   return {
     MuiTableRow: {
       styleOverrides: {
@@ -15,7 +17,10 @@ export default function TableRow() {
             '&:first-of-type': {
               paddingLeft: 24
             }
-          }
+          },
+          '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.grey[200],
+          },
         }
       }
     }

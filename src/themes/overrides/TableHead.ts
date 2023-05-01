@@ -9,7 +9,7 @@ export default function TableHead(theme: Theme) {
           borderTop: `1px solid ${theme.palette.divider}`,
           borderBottom: `2px solid ${theme.palette.divider}`,
           position: "sticky",
-          top: 0
+          top: 0,
         }
       }
     }

@@ -45,11 +45,18 @@ const DebouncedInput = ({
       clearTimeout(timeout);
     };
   }, [value]);
+  const sortedData = useMemo(() => {
+    if (uniqueValues && uniqueValues.length > 0) {
+      return showCheckedFirst(uniqueValues, (value as string).split("|"));
+    }
+    return [];
+  }, [uniqueValues, value]);
+
   if (uniqueValues && uniqueValues.length > 0) {
     return (
       <SelectFilter
         label={props.placeholder as string}
-        data={showCheckedFirst(uniqueValues, (value as string).split("|"))}
+        data={sortedData}
         setValue={(inp: string[]) => {
           setValue(inp.join("|"));
         }}
@@ -103,26 +110,16 @@ const Filter = ({ column }: FilterProps) => {
       placeholder={column.columnDef?.header?.toString()}
     />
   ) : (
-    <>
-      <datalist id={column.id + "list"}>
-        {sortedUniqueValues.slice(0, 5000).map((value: any) => (
-          <option
-            value={value}
-            key={value}
-          />
-        ))}
-      </datalist>
-      <DebouncedInput
-        type="text"
-        columnId={column.id}
-        value={(columnFilterValue ?? "") as string}
-        onChange={(value) => {
-          column.setFilterValue(value);
-        }}
-        placeholder={column.columnDef?.header?.toString()}
-        uniqueValues={sortedUniqueValues}
-      />
-    </>
+    <DebouncedInput
+      type="text"
+      columnId={column.id}
+      value={(columnFilterValue ?? "") as string}
+      onChange={(value) => {
+        column.setFilterValue(value);
+      }}
+      placeholder={column.columnDef?.header?.toString()}
+      uniqueValues={sortedUniqueValues}
+    />
   );
 };
 
