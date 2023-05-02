@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import {
   Button,
   FormHelperText,
@@ -49,9 +50,18 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
   };
 
   return (
-    <form noValidate onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
+    <form
+      noValidate
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Grid
+        container
+        spacing={3}
+      >
+        <Grid
+          item
+          xs={12}
+        >
           <Stack spacing={1}>
             <InputLabel htmlFor="userName">Username:</InputLabel>
             <OutlinedInput
@@ -71,7 +81,10 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
             )}
           </Stack>
         </Grid>
-        <Grid item xs={12}>
+        <Grid
+          item
+          xs={12}
+        >
           <Stack spacing={1}>
             <InputLabel htmlFor="password">Password:</InputLabel>
             <OutlinedInput
@@ -89,7 +102,11 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
                     edge="end"
                     color="secondary"
                   >
-                    {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                    {showPassword ? (
+                      <VisibilityOutlinedIcon />
+                    ) : (
+                      <VisibilityOffOutlinedIcon />
+                    )}
                   </IconButton>
                 </InputAdornment>
               }
@@ -116,7 +133,10 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
           </Stack>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid
+          item
+          xs={12}
+        >
           <AnimateButton>
             <Button
               disableElevation

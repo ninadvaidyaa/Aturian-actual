@@ -25,7 +25,7 @@ export const refreshTokenStore = createStore<{
       },
     }),
     {
-      name: "food-storage",
+      name: "_at",
       storage: createJSONStorage(() => localStorage),
     }
   )

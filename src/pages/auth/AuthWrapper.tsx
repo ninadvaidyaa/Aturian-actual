@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
-import { Box, Grid } from "@mui/material";
+import  Box from "@mui/material/Box";
+import  Grid from "@mui/material/Grid";
 
 import AuthCard from "./AuthCard";
 

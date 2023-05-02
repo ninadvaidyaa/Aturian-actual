@@ -1,6 +1,6 @@
 import axios from "axios";
 import { settings } from "config";
-import { LOGIN_API, REFRESH_API } from "./constants";
+import { LOGIN_API, REFRESH_API } from "constants/api.constants";
 import { useVanillaRefreshToken, userVanillaToken } from "hooks/useAuth";
 // TODO: test interceptors
 interface TokenResponse {
@@ -16,7 +16,7 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   const { token } = userVanillaToken();
   if (token !== "") {
-    config.headers.Authorization = `Bearer ${token }`;
+    config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
@@ -27,15 +27,22 @@ api.interceptors.response.use(
     const originalConfig = err.config;
     const { tokenRefresh, setTokenRefresh } = useVanillaRefreshToken();
     const { setToken } = userVanillaToken();
+
     if (originalConfig.url !== LOGIN_API && err.response) {
-      // Access Token was expired
+      // Access Token has expired
       if (err.response.status === 401 && !originalConfig._retry) {
         originalConfig._retry = true;
-
         try {
-          const rs = await api.post<TokenResponse>(REFRESH_API, {
-            refreshToken: tokenRefresh,
-          });
+          const rs = await axios.post<TokenResponse>(
+            `${settings.apiBase}${REFRESH_API}`,
+            {},
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${tokenRefresh}`,
+              },
+            }
+          );
 
           // eslint-disable-next-line @typescript-eslint/naming-convention
           const { access_token, refresh_token } = rs.data;
