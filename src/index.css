@@ -1,44 +1,32 @@
-.css-rdz4dy-MuiInputBase-input-MuiOutlinedInput-input{
-    padding: 7.5px 8px 7.5px 12px !important;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.anticon-search{
-    color: #262626;
-}
-.css-16r0hgx-MuiButtonBase-root-MuiIconButton-root {
-background-color: transparent !important;
-}
-.css-5isbqk-MuiDrawer-docked .MuiDrawer-paper, .css-1kiiuso-MuiPaper-root-MuiAppBar-root{
-    border: 0 !important;
-}
+@layer base {
+    :root {
+        --color-text-base: 255, 255, 255;
+        --color-text-primary: 24, 144, 255;
+        --color-text-muted: 199, 210, 254;
+        --color-text-inverted: 79, 70, 229;
+        --color-fill: 24, 144, 255;
+        --bg-fill-muted: 230, 247, 255;
+        --bg-base: 245, 245, 245;
+        --bg-hover: 245, 245, 245;
+        --color-button-accent: 255, 255, 255;
+        --color-button-accent-hover: 238, 242, 255;
+        --color-button-muted: 99, 102, 241;
+    }
 
-
-.css-oblp1g-MuiTypography-root{
-    margin: 0;
-    font-weight: 400;
-    font-size: 0.875rem !important;
-    line-height: 1.57;
-    font-family: 'Public Sans',sans-serif;
-    color: #1890ff;
-}
-
-.css-1908t7v-MuiButtonBase-root-MuiListItemButton-root{
-    
-    padding-left: 56px !important;
-    padding-top: 8px;
-    padding-bottom: 8px;
-}
-
-.css-1uaewpj-MuiTypography-root {
-    margin: 0;
-    font-weight: 400;
-    font-size: 0.875rem !important;
-    line-height: 1.57;
-    font-family: 'Public Sans',sans-serif;
-    color: #262626;
-}
-
-main{
-    background: #f5f5f5;
-    /* margin-left: -10px; */
+    .theme-swiss {
+        --color-text-base: 255, 255, 255;
+        --color-text-muted: 199, 210, 254;
+        --color-text-inverted: 79, 70, 229;
+        --color-fill: 24, 144, 255;
+        --bg-fill-muted: 230, 247, 255;
+        --bg-base: 245, 245, 245;
+        --bg-hover: 245, 245, 245;
+        --color-button-accent: 255, 255, 255;
+        --color-button-accent-hover: 238, 242, 255;
+        --color-button-muted: 99, 102, 241;
+    }
 }

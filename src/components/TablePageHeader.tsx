@@ -1,187 +1,241 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
+import { Menu, Transition, Dialog } from "@headlessui/react";
 
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined'; // TODO: 
-import { useTheme } from "@mui/material/styles";
-
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import Divider from "@mui/material/Divider";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Fade from "@mui/material/Fade";
-import Button from "@mui/material/Button";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import Checkbox from "@mui/material/Checkbox";
-
-import { PopupTransition } from "components/@extended/Transitions";
-import MainCard from "components/MainCard";
-import IconButton from "components/@extended/IconButton";
 import { type Table } from "@tanstack/react-table";
-import ScrollX from "./ScrollX";
+import {
+  MdOutlineAdd,
+  MdOutlineLockOpen,
+  MdOutlineSettings,
+} from "react-icons/md";
 
 const Search = () => (
-  <Stack
-    direction="row"
-    justifyContent="space-between"
-    spacing={1}
-    alignItems="center"
-  >
-    <IconButton
-      edge="end"
-      aria-label="comments"
-      color="secondary"
+  <div className="flex flex-row justify-between items-center gap-1">
+    <button
+      type="button"
+      className="text-gray-400 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium  text-sm p-1 text-center inline-flex items-center  bg-white"
     >
-      <LockOpenOutlinedIcon />
-    </IconButton>
-    <TextField size="small" />
-  </Stack>
+      <MdOutlineLockOpen className="w-6 h-6" />
+      <span className="sr-only">Icon</span>
+    </button>
+    <form className="w-full">
+      <label
+        htmlFor="default-search"
+        className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+      >
+        Search
+      </label>
+      <div className="relative">
+        <input
+          type="search"
+          id="default-search"
+          className="bg-white border border-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 active:border-blue-500 block w-full pr-10 p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Search Mockups, Logos..."
+        />
+        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+          <svg
+            aria-hidden="true"
+            className="w-5 h-5 text-gray-500 dark:text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            ></path>
+          </svg>
+        </div>
+      </div>
+    </form>
+  </div>
 );
 interface TablePageHeaderProps<M> {
   table: Table<M>;
+  title: string;
 }
 
-const TablePageHeader = <TData,>({ table }: TablePageHeaderProps<TData>) => {
-  const theme = useTheme();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const openMenu = Boolean(anchorEl);
-  const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
+const TablePageHeader = <TData,>({
+  table,
+  title,
+}: TablePageHeaderProps<TData>) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-  const [show, setShow] = useState<boolean>(false);
-  const handleShow = () => {
-    setShow(!show);
-  };
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
   return (
     <>
-      <MainCard
-        elevation={0}
-        sx={{
-          height: 1,
-          "& .MuiCardContent-root": {
-            height: 1,
-            display: "flex",
-            flexDirection: "column",
-          },
-          backgroundColor: "inherit",
-          border: "none",
-        }}
-      >
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          gap={3}
-        >
-          <Box>
-            <Typography
-              variant="subtitle1"
-              fontSize={theme.spacing(2)}
-            >
-              Order List
-            </Typography>
-          </Box>
-          <Stack
-            direction="row"
-            justifyContent="flex-end"
-            gap={2}
-            alignContent="center"
-          >
+      <div className="z-20">
+        <div className="flex flex-row justify-between items-center gap-1 ">
+          <div>
+            <h2 className="text-2xl font-semibold">{title} List</h2>
+          </div>
+          <div className="flex flex-row justify-end gap-2 items-center col-span-8">
             <Search />
-            <Button
-              variant="contained"
-              startIcon={<AddOutlinedIcon />}
+            <button
+              type="button"
+              className="text-white bg-skin-fill hover:bg-skin-fill focus:ring-4 focus:outline-none focus:ring-slate-50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-              Add New Order
-            </Button>
-            <IconButton
-              edge="end"
-              aria-label="comments"
-              color="secondary"
-              onClick={handleMenuClick}
-            >
-              <SettingsOutlinedIcon style={{ fontSize: "1.15rem" }} />
-            </IconButton>
+              <MdOutlineAdd className="w-5 h-5 mr-2 -ml-1" />
+              Add New {title}
+            </button>
             <Menu
-              id="fade-menu"
-              MenuListProps={{
-                "aria-labelledby": "fade-button",
-              }}
-              anchorEl={anchorEl}
-              open={openMenu}
-              onClose={handleMenuClose}
-              TransitionComponent={Fade}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
+              as="div"
+              className="relative inline-block text-left"
             >
-              <MenuItem onClick={handleShow}>Show/Hide Column</MenuItem>
+              <div>
+                <Menu.Button className="text-gray-600 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm pl-1 text-center inline-flex items-center">
+                  <MdOutlineSettings
+                    className="w-6 h-6"
+                    aria-hidden="true"
+                  />
+                </Menu.Button>
+              </div>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+              >
+                <Menu.Items className="absolute right-0 mt-2 w-min origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+                  <div className="px-1 py-1">
+                    <Menu.Item>
+                      {({ active }) => (
+                        <button
+                          className={`${
+                            active ? "bg-slate-200" : "text-gray-900"
+                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                          onClick={openModal}
+                        >
+                          Show/Hide
+                        </button>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <button
+                          className={`${
+                            active ? "bg-slate-200" : "text-gray-900"
+                          } group flex w-full items-center rounded-md px-3 py-2 text-sm`}
+                        >
+                          Other
+                        </button>
+                      )}
+                    </Menu.Item>
+                  </div>
+                </Menu.Items>
+              </Transition>
             </Menu>
-          </Stack>
-        </Stack>
-      </MainCard>
+          </div>
+        </div>
+      </div>
 
       {/* edit customer dialog */}
-      <Dialog
-        maxWidth="sm"
-        fullWidth
-        TransitionComponent={PopupTransition}
-        onClose={handleShow}
-        open={show}
-        sx={{ "& .MuiDialog-paper": { p: 0 } }}
+      <Transition
+        appear
+        show={isOpen}
+        as={Fragment}
       >
-        <ScrollX>
-          <DialogTitle>Show/Hide Column</DialogTitle>
-          <Divider />
-          <Box>
-            <List>
-              {table.getAllLeafColumns().map((column) => (
-                <ListItem key={column.id}>
-                  {column.columnDef.enableHiding === false ? (
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={column.getIsVisible()}
-                          color="secondary"
-                        />
-                      }
-                      label={column.columnDef.header?.toString()}
-                    />
-                  ) : (
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={column.getIsVisible()}
-                          onChange={column.getToggleVisibilityHandler()}
-                          color="primary"
-                        />
-                      }
-                      label={column.columnDef.header?.toString()}
-                    />
-                  )}
-                </ListItem>
-              ))}
-            </List>
-          </Box>
-        </ScrollX>
-      </Dialog>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={closeModal}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    Show/Hide Columns
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    {table.getAllLeafColumns().map((column) => (
+                      <div key={column.id}>
+                        {column.columnDef.enableHiding === false ? (
+                          <div className="flex items-center">
+                            <input
+                              checked={column.getIsVisible()}
+                              disabled
+                              id={column.id}
+                              type="checkbox"
+                              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            />
+                            <label
+                              htmlFor={column.id}
+                              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                            >
+                              {column.columnDef.header?.toString()}
+                            </label>
+                          </div>
+                        ) : (
+                          <div className="flex items-center">
+                            <input
+                              id={column.id}
+                              type="checkbox"
+                              checked={column.getIsVisible()}
+                              onChange={column.getToggleVisibilityHandler()}
+                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                            />
+                            <label
+                              htmlFor={column.id}
+                              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                            >
+                              {column.columnDef.header?.toString()}
+                            </label>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-4">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={closeModal}
+                    >
+                      close
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </>
   );
 };

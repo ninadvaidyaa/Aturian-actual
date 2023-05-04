@@ -5,7 +5,12 @@ import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 const LoginPage = Loadable(lazy(async () => await import("pages/auth/login")));
 const OrderPage = Loadable(lazy(async () => await import("pages/orders")));
-const CustomerPage = Loadable(lazy(async () => await import("pages/customers")));
+const OrderDetailPage = Loadable(
+  lazy(async () => await import("pages/orders/OrderDetailPage"))
+);
+const CustomerPage = Loadable(
+  lazy(async () => await import("pages/customers"))
+);
 
 const router = createBrowserRouter([
   {
@@ -13,25 +18,27 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element:
-        <AuthGuard>
-        <MainLayout />
-       </AuthGuard>,
-      
+        element: (
+          <AuthGuard>
+            <MainLayout />
+          </AuthGuard>
+        ),
+
         children: [
           {
             path: "/",
             children: [
               {
-                path: 'orders',
-                element: <OrderPage />
+                path: "orders",
+                element: <OrderPage />,
               },
+              { path: "orders/:orderId", element: <OrderDetailPage /> },
               {
-                path: 'customers',
-                element: <CustomerPage />
+                path: "customers",
+                element: <CustomerPage />,
               },
-            ]
-          
+              { path: "customers/:orderId", element: <OrderDetailPage /> }, // TODO: change it
+            ],
           },
         ],
       },

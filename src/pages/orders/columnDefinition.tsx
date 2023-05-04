@@ -1,28 +1,26 @@
 import { type ColumnDef } from "@tanstack/react-table";
-import { type OrdersList } from "validators/orders.validators";
+import { type UserViews, type OrdersList } from "validators/orders.validators";
 import RowActions from "components/lib/ReactTable/RowActions";
 import { getFormattedDate } from "utils/date";
 import StatusCell from "components/lib/ReactTable/StatusCell";
 import { Link } from "react-router-dom";
-import MUILink from "@mui/material/Link";
 import { getUSCurrency } from "utils/number";
 import FlagComponent from "components/lib/ReactTable/RowFlags";
 export const defaultColumns: Array<ColumnDef<OrdersList>> = [
   {
     accessorKey: "number",
     id: "number",
-    header: "Order Number",
+    header: "Order #",
     cell: (info) => (
-      <MUILink
-        component={Link}
-        underline="none"
-        to={"#"}
+      <Link
+        to={`/orders/${info.getValue() as string}`}
+        className="text-skin-primary"
       >
         {info.getValue() as string}
-      </MUILink>
+      </Link>
     ),
     footer: (props) => props.column.id,
-    size:20,
+    size: 100,
     enablePinning: true,
     enableHiding: false,
     enableSorting: true,
@@ -35,7 +33,7 @@ export const defaultColumns: Array<ColumnDef<OrdersList>> = [
     header: "Flags",
     cell: (info) => <FlagComponent info={info} />,
     footer: (props) => props.column.id,
-    size:20,
+    size: 180,
     enableHiding: true,
     enableColumnFilter: false,
     enableGlobalFilter: false,
@@ -50,10 +48,77 @@ export const defaultColumns: Array<ColumnDef<OrdersList>> = [
     header: "Job Id",
     cell: (info) => info.getValue(),
     footer: (props) => props.column.id,
-    size:20,
+    size: 100,
     enableSorting: true,
     meta: {
       dataType: "string",
+    },
+  },
+  {
+    // accessorFn: (value) => value.customer, // option to keep all data
+    accessorFn: (value) => value.customer.name,
+    id: "customer",
+    header: "Customer Name",
+    // cell: (info) => info.getValue().name, // option to keep all data
+    cell: (info) => info.getValue(),
+    footer: (props) => props.column.id,
+    size: 120,
+    enableSorting: true,
+    meta: {
+      dataType: "string",
+    },
+  },
+  {
+    accessorKey: "date",
+    id: "date",
+    header: "Order Date",
+    cell: (info) =>
+      `${getFormattedDate(info.getValue() as string, "M/D/YYYY h:mm:ss A")}`,
+    footer: (props) => props.column.id,
+    size: 100,
+    enableSorting: true,
+    meta: {
+      dataType: "date",
+      dateFormate: "M/D/YYYY h:mm:ss A",
+    },
+  },
+  {
+    accessorKey: "shipDate",
+    id: "shipDate",
+    header: "Ship Date",
+    cell: (info) =>
+      `${getFormattedDate(info.getValue() as string, "M/D/YYYY h:mm:ss A")}`,
+    footer: (props) => props.column.id,
+    size: 100,
+    enableSorting: true,
+    meta: {
+      dataType: "date",
+      dateFormate: "M/D/YYYY h:mm:ss A",
+    },
+  },
+  {
+    accessorKey: "salesperson",
+    id: "salesperson",
+    header: "Sales Person",
+    cell: (info) => info.getValue(),
+    footer: (props) => props.column.id,
+    size: 100,
+    enableSorting: true,
+    meta: {
+      dataType: "string",
+    },
+  },
+  {
+    accessorKey: "csr",
+    id: "csr",
+    header: "Admin/CSR",
+    cell: (info) => info.getValue(),
+    footer: (props) => props.column.id,
+    size: 100,
+    enableSorting: true,
+    meta: {
+      dataType: "string",
+      isSelectable: true,
     },
   },
   {
@@ -116,7 +181,7 @@ export const defaultColumns: Array<ColumnDef<OrdersList>> = [
       }
     },
     footer: (props) => props.column.id,
-    size:20,
+    size: 100,
     enableSorting: true,
     meta: {
       dataType: "string",
@@ -125,74 +190,27 @@ export const defaultColumns: Array<ColumnDef<OrdersList>> = [
     },
   },
   {
-    accessorKey: "csr",
-    id: "csr",
-    header: "Admin/CSR",
+    accessorKey: "types",
+    id: "types",
+    header: "Type",
     cell: (info) => info.getValue(),
     footer: (props) => props.column.id,
-    size:20,
+    size: 100,
     enableSorting: true,
     meta: {
       dataType: "string",
-      isSelectable: true,
     },
   },
   {
-    // accessorFn: (value) => value.customer, // option to keep all data
-    accessorFn: (value) => value.customer.name,
-    id: "customer",
-    header: "Customer Name",
-    // cell: (info) => info.getValue().name, // option to keep all data
+    accessorKey: "createdBy",
+    id: "createdBy",
+    header: "By",
     cell: (info) => info.getValue(),
     footer: (props) => props.column.id,
-    size:20,
+    size: 100,
     enableSorting: true,
     meta: {
       dataType: "string",
-    },
-  },
-  {
-    accessorKey: "date",
-    id: "date",
-    header: "Order Date",
-    cell: (info) =>
-      `${getFormattedDate(info.getValue() as string, "M/D/YYYY h:mm:ss A")}`,
-    footer: (props) => props.column.id,
-    size:20,
-    enableSorting: true,
-    meta: {
-      dataType: "date",
-      dateFormate: "M/D/YYYY h:mm:ss A",
-    },
-  },
-  {
-    accessorKey: "salesperson",
-    id: "salesperson",
-    header: "Sales Person",
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size:20,
-    enableSorting: true,
-    meta: {
-      dataType: "string",
-    },
-  },
-  {
-    accessorKey: "total",
-    id: "total",
-    header: "Total",
-    cell: (info) => {
-      if (info.row.index === 0) {
-        return info.getValue();
-      }
-      return getUSCurrency(info.getValue() as number);
-    },
-    footer: (props) => props.column.id,
-    size:20,
-    enableSorting: true,
-    meta: {
-      dataType: "string",
-      isCurrency: true,
     },
   },
   {
@@ -206,24 +224,29 @@ export const defaultColumns: Array<ColumnDef<OrdersList>> = [
       return getUSCurrency(info.getValue() as number);
     },
     footer: (props) => props.column.id,
-    size:20,
+    size: 100,
     enableSorting: true,
     meta: {
       dataType: "string",
       isCurrency: true,
     },
   },
-
   {
-    accessorKey: "createdBy",
-    id: "createdBy",
-    header: "Created By",
-    cell: (info) => info.getValue(),
+    accessorKey: "total",
+    id: "total",
+    header: "Total",
+    cell: (info) => {
+      if (info.row.index === 0) {
+        return info.getValue();
+      }
+      return getUSCurrency(info.getValue() as number);
+    },
     footer: (props) => props.column.id,
-    size:20,
+    size: 100,
     enableSorting: true,
     meta: {
       dataType: "string",
+      isCurrency: true,
     },
   },
   {
@@ -231,7 +254,7 @@ export const defaultColumns: Array<ColumnDef<OrdersList>> = [
     header: "Action",
     cell: (info) => <RowActions info={info} />,
     footer: (props) => props.column.id,
-    size:20,
+    size: 150,
     enableHiding: false,
     enableColumnFilter: false,
     enableGlobalFilter: false,
@@ -242,3 +265,121 @@ export const defaultColumns: Array<ColumnDef<OrdersList>> = [
     },
   },
 ];
+export const views: UserViews = {
+  view1: {
+    name: "view1",
+    id: 1,
+    columns: [
+      {
+        id: "number",
+        index: 0,
+      },
+      {
+        id: "flags",
+        index: 1,
+      },
+      {
+        id: "jobId",
+        index: 2,
+      },
+      {
+        id: "customer",
+        index: 3,
+      },
+      {
+        id: "shipDate",
+        index: 4,
+      },
+      {
+        id: "salesperson",
+        index: 5,
+      },
+      {
+        id: "csr",
+        index: 6,
+      },
+      {
+        id: "status",
+        index: 7,
+      },
+      {
+        id: "types",
+        index: 8,
+      },
+      {
+        id: "createdBy",
+        index: 9,
+      },
+      {
+        id: "cost",
+        index: 10,
+      },
+      {
+        id: "total",
+        index: 11,
+      },
+      {
+        id: "action",
+        index: 12,
+      },
+    ],
+  },
+  view2: {
+    name: "view 2",
+    id: 2,
+    columns: [
+      {
+        id: "total",
+        index: 11,
+      },
+      {
+        id: "cost",
+        index: 10,
+      },
+      {
+        id: "createdBy",
+        index: 9,
+      },
+      {
+        id: "types",
+        index: 8,
+      },
+      {
+        id: "status",
+        index: 7,
+      },
+      {
+        id: "csr",
+        index: 6,
+      },
+      {
+        id: "salesperson",
+        index: 5,
+      },
+      {
+        id: "shipDate",
+        index: 4,
+      },
+      {
+        id: "customer",
+        index: 3,
+      },
+      {
+        id: "jobId",
+        index: 2,
+      },
+      {
+        id: "flags",
+        index: 1,
+      },
+      {
+        id: "number",
+        index: 0,
+      },
+      {
+        id: "action",
+        index: 12,
+      },
+    ],
+  },
+};

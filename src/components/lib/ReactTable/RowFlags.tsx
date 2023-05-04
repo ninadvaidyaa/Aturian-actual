@@ -1,111 +1,87 @@
-import { useTheme } from "@mui/material/styles";
-import IconButton from "components/@extended/IconButton";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
 import type { CellContext } from "@tanstack/react-table";
-import SpeedOutlinedIcon from "@mui/icons-material/SpeedOutlined";
-import PauseCircleOutlineOutlinedIcon from "@mui/icons-material/PauseCircleOutlineOutlined";
-import ReportProblemOutlinedIcon from "@mui/icons-material/ReportProblemOutlined";
-import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
 import MultiOrder from "components/icons/MultiOrder";
 import React from "react";
-
+import {
+  MdOutlineSpeed,
+  MdPauseCircleOutline,
+  MdOutlineReportProblem,
+  MdCheckCircleOutline,
+  MdOutlineDateRange,
+} from "react-icons/md";
 const genericMemo: <T>(component: T) => T = React.memo;
 
 interface RowActionsProps<TData, P> {
   info: CellContext<TData, P>;
 }
 
-const FlagComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
-  const theme = useTheme();
-
-  return (
-    <>
-      <Stack
-        direction="row"
-        gap={theme.spacing(0.1)}
+const FlagComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => (
+  <>
+    <div className="flex flex-row gap-1">
+      <button
+        type="button"
+        className="w-6 h-6 text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  "
       >
-        <Box>
-          <IconButton
-            size="small"
-            shape="rounded"
-            edge="start"
-            aria-label="comments"
-            color="secondary"
-          >
-            <SpeedOutlinedIcon
-              style={{ fontSize: "1.15rem", color: "#D80B0B" }}
-            />
-          </IconButton>
-        </Box>
-        <Box>
-          <IconButton
-            size="small"
-            shape="rounded"
-            edge="end"
-            aria-label="comments"
-            color="secondary"
-          >
-            <PauseCircleOutlineOutlinedIcon
-              style={{ fontSize: "1.15rem", color: "#D2AC06" }}
-            />
-          </IconButton>
-        </Box>
-        <Box>
-          <IconButton
-            size="small"
-            shape="rounded"
-            edge="end"
-            aria-label="comments"
-            color="secondary"
-          >
-            <ReportProblemOutlinedIcon
-              style={{ fontSize: "1.15rem", color: "#DB9409" }}
-            />
-          </IconButton>
-        </Box>
-        <Box>
-          <IconButton
-            size="small"
-            shape="rounded"
-            edge="end"
-            aria-label="comments"
-            color="secondary"
-          >
-            <CheckCircleOutlineOutlinedIcon
-              style={{ fontSize: "1.15rem", color: "#008000" }}
-            />
-          </IconButton>
-        </Box>
-        <Box>
-          <IconButton
-            size="small"
-            shape="rounded"
-            edge="end"
-            aria-label="comments"
-            color="secondary"
-          >
-            <MultiOrder style={{ fontSize: "1.15rem" }} />
-          </IconButton>
-        </Box>
-        <Box>
-          <IconButton
-            size="small"
-            shape="rounded"
-            edge="end"
-            aria-label="comments"
-            color="secondary"
-          >
-            <DateRangeOutlinedIcon
-              style={{ fontSize: "1.15rem", color: "#1890FF" }}
-            />
-          </IconButton>
-        </Box>
-      </Stack>
-    </>
-  );
-};
+        <MdOutlineSpeed
+          className="w-4 h-4"
+          color="#D80B0B"
+        />
+        <span className="sr-only">Icon</span>
+      </button>
 
-const  Flags = genericMemo(FlagComponent);
+      <button
+        type="button"
+        className="w-6 h-6 text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  "
+      >
+        <MdPauseCircleOutline
+          className="w-4 h-4"
+          color="#D2AC06"
+        />
+        <span className="sr-only">Icon</span>
+      </button>
+
+      <button
+        type="button"
+        className="w-6 h-6 text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  "
+      >
+        <MdOutlineReportProblem
+          className="w-4 h-4"
+          color="#DB9409"
+        />
+        <span className="sr-only">Icon</span>
+      </button>
+
+      <button
+        type="button"
+        className="w-6 h-6 text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  "
+      >
+        <MdCheckCircleOutline
+          className="w-4 h-4"
+          color="#008000"
+        />
+        <span className="sr-only">Icon</span>
+      </button>
+
+      <button
+        type="button"
+        className="w-6 h-6 text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center justify-center"
+      >
+        <span className="sr-only">Icon</span>
+        <MultiOrder  className="w-5 h-5"/>
+      </button>
+
+      <button
+        type="button"
+        className="w-6 h-6 text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  "
+      >
+        <MdOutlineDateRange
+          className="w-4 h-4"
+          color="#1890FF"
+        />
+        <span className="sr-only">Icon</span>
+      </button>
+    </div>
+  </>
+);
+
+const Flags = genericMemo(FlagComponent);
 export default Flags;

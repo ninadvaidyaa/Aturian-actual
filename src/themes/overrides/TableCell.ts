@@ -35,7 +35,7 @@ export default function TableCell(theme: Theme) {
         head: {
           fontSize: "0.75rem",
           fontWeight: 700,
-          textTransform: "uppercase",
+          textTransform: "capitalize",
           ...commonCell,
         },
         footer: {

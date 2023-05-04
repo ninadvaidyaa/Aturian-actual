@@ -1,35 +1,14 @@
-import ArrowLeftOutlinedIcon from "@mui/icons-material/ArrowLeftOutlined";
-import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
-import SkipPreviousOutlinedIcon from "@mui/icons-material/SkipPreviousOutlined";
-import SkipNextOutlinedIcon from "@mui/icons-material/SkipNextOutlined";
-import FormControl from "@mui/material/FormControl";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { type SelectChangeEvent } from "@mui/material/Select";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import IconButton from "components/@extended/IconButton";
+import { Listbox, Transition } from "@headlessui/react";
+import {
+  MdOutlineCheck,
+  MdOutlineExpandMore,
+  MdOutlineArrowLeft,
+  MdOutlineArrowRight,
+  MdSkipPrevious,
+  MdSkipNext,
+} from "react-icons/md";
 
-import { styled, useTheme } from "@mui/material/styles";
-import { useState } from "react";
-
-const List = styled("ul")(({ theme }) => ({
-  display: "flex",
-  paddingInlineStart: theme.spacing(1),
-  listStyleType: "none",
-  alignItems: "center",
-  gap: theme.spacing(0.5),
-}));
-
-const ListItem = styled("li")(({ theme }) => ({
-  height: theme.spacing(4),
-  minWidth: theme.spacing(4),
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  color: theme.palette.secondary.main,
-}));
+import { Fragment } from "react";
 
 interface TablePaginationProps {
   gotoPage: (value: number) => void;
@@ -58,18 +37,9 @@ const TablePagination = ({
   onFirstPageClick,
   onLastPageClick,
 }: TablePaginationProps) => {
-  const theme = useTheme();
-  const [open, setOpen] = useState(false);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
   const countStart = pageIndex === 0 ? 1 : pageIndex * pageSize + 1;
-  const countEnd = pageIndex === 0 ? pageSize : pageIndex * pageSize + pageSize;
+  let countEnd = pageIndex === 0 ? pageSize : pageIndex * pageSize + pageSize;
+  countEnd = rowCount > countEnd ? countEnd : rowCount;
 
   const handleChangePagination = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -78,136 +48,158 @@ const TablePagination = ({
     gotoPage(page);
   };
 
-  const handleChange = (event: SelectChangeEvent<number>) => {
-    setPageSize(Number(event.target.value));
+  const handleChange = (event: number) => {
+    setPageSize(event);
   };
 
   return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      justifyContent="end"
-      sx={{
-        px: theme.spacing(2),
-        py: theme.spacing(2),
-      }}
-    >
-      <Paper elevation={0}>
-        <Stack
-          direction="row"
-          spacing={2}
-          alignItems="center"
-          justifyContent="end"
-        >
-          <Stack
-            direction="row"
-            spacing={1}
-            alignItems="center"
-            justifyContent="center"
-            sx={{
-              px: theme.spacing(2),
-            }}
-          >
-            <Typography
-              variant="caption"
-              color="secondary"
+    <div className="flex flex-row items-center justify-end pt-2">
+      <div className="bg-white rounded-md px-2">
+        <div className="flex flex-row items-center justify-center gap-2">
+          <div className="flex flex-row items-center justify-center gap-1 pl-2">
+            <p color="secondary ">Row per page</p>
+            <Listbox
+              value={pageSize}
+              onChange={handleChange}
             >
-              Row per page
-            </Typography>
-            <FormControl sx={{ m: 1 }}>
-              <Select
-                id="demo-controlled-open-select"
-                open={open}
-                onClose={handleClose}
-                onOpen={handleOpen}
-                value={pageSize}
-                onChange={handleChange}
-                size="small"
-                sx={{ "& .MuiSelect-select": { py: 0.75, px: 1.25 } }}
-              >
-                <MenuItem value={5}>5</MenuItem>
-                {/* <MenuItem value={10}>10</MenuItem> */}
-                <MenuItem value={50}>50</MenuItem>
-                {/* <MenuItem value={25}>25</MenuItem> 
-            <MenuItem value={100}>100</MenuItem> */}
-              </Select>
-            </FormControl>
-          </Stack>
+              <div className="relative mt-1">
+                <Listbox.Button className="relative w-full cursor-default rounded-sm bg-white py-1 pl-1 pr-8 text-left focus:outline-none focus-visible:border-gray-300 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-300">
+                  <span className="block truncate min-h-[20px]">
+                    {pageSize}
+                  </span>
+                  <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                    <MdOutlineExpandMore
+                      className="h-5 w-5 text-gray-500"
+                      aria-hidden="true"
+                    />
+                  </span>
+                </Listbox.Button>
+                <Transition
+                  as={Fragment}
+                  leave="transition ease-in duration-100"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                  <Listbox.Options className="absolute -top-2 transform -translate-y-full mb-1 z-10 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                    {[10, 20, 30, 40, 50].map((_pageSize) => (
+                      <Listbox.Option
+                        key={_pageSize}
+                        value={_pageSize}
+                        className={({ active }) =>
+                          `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                            active
+                              ? "bg-slate-100 text-gray-900"
+                              : "text-gray-900"
+                          }`
+                        }
+                      >
+                        {({ selected }) => (
+                          <>
+                            <span
+                              className={`block truncate ${
+                                selected ? "font-medium" : "font-normal"
+                              }`}
+                            >
+                              {_pageSize}
+                            </span>
+                            {selected ? (
+                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-600">
+                                <MdOutlineCheck
+                                  className="h-5 w-5"
+                                  aria-hidden="true"
+                                />
+                              </span>
+                            ) : null}
+                          </>
+                        )}
+                      </Listbox.Option>
+                    ))}
+                  </Listbox.Options>
+                </Transition>
+              </div>
+            </Listbox>
+          </div>
           <nav>
-            <List sx={{ paddingInline: theme.spacing(2) }}>
+            <ul className="flex flex-wrap items-center justify-center gap-2 text-gray-900 dark:text-white">
               <li>
-                <span style={{ color: theme.palette.secondary.main }}>
-                  {rowCount
-                    ? `${countStart}–${countEnd} of ${rowCount}`
-                    : `0–0 of 0`}
-                </span>
+                {rowCount
+                  ? `${countStart}–${countEnd} of ${rowCount}`
+                  : `0–0 of 0`}
               </li>
-              <ListItem>
-                <IconButton
+              <li>
+                <button
+                  type="button"
+                  className={`${
+                    hasPrevPage ? "text-slate-500" : "text-gray-300"
+                  } focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center`}
                   aria-label="first"
                   title="first"
                   disabled={!hasPrevPage}
                   onClick={onFirstPageClick}
-                  color="inherit"
                 >
-                  <SkipPreviousOutlinedIcon fontSize="medium" />
-                </IconButton>
-              </ListItem>
-              <ListItem className="selected">
-                <IconButton
-                  color="inherit"
+                  <MdSkipPrevious className="w-6 h-6" />
+                </button>
+              </li>
+              <li className="selected">
+                <button
+                  type="button"
+                  className={`${
+                    hasPrevPage ? "text-slate-500" : "text-gray-300"
+                  } focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center`}
                   aria-label="previous"
                   title="previous"
                   disabled={!hasPrevPage}
                   onClick={onPreviousClick}
                 >
-                  <ArrowLeftOutlinedIcon fontSize="medium" />
-                </IconButton>
-              </ListItem>
-              <ListItem style={{ maxWidth: "48px" }}>
-                <TextField
-                  className="no-arrow"
-                  size="small"
-                  type="number"
-                  onChange={(e) => {
-                    handleChangePagination(e);
-                  }}
-                  sx={{
-                    "& .MuiOutlinedInput-input": { py: 0.5, px: 0.75 },
-                  }}
-                  defaultValue={pageIndex + 1}
-                  variant="outlined"
-                  inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-                  disabled={!rowCount}
-                />
-              </ListItem>
-              <ListItem>
-                <IconButton
-                  color="inherit"
+                  <MdOutlineArrowLeft className="w-6 h-6" />
+                </button>
+              </li>
+              <li style={{ maxWidth: "48px" }}>
+                <div>
+                  <label>
+                    <input
+                      type="number"
+                      id="page"
+                      value={pageIndex + 1}
+                      onChange={handleChangePagination}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+                  </label>
+                </div>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  className={`${
+                    hasNextPage ? "text-slate-500" : "text-gray-300"
+                  } focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center`}
                   aria-label="next"
                   title="next"
                   disabled={!hasNextPage}
                   onClick={onNextClick}
                 >
-                  <ArrowRightOutlinedIcon fontSize="medium" />
-                </IconButton>
-              </ListItem>
-              <ListItem>
-                <IconButton
+                  <MdOutlineArrowRight className="w-6 h-6" />
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  className={`${
+                    hasNextPage ? "text-slate-500" : "text-gray-300"
+                  } focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center`}
                   aria-label="last"
                   title="last"
                   disabled={!hasNextPage}
                   onClick={onLastPageClick}
-                  color="inherit"
                 >
-                  <SkipNextOutlinedIcon fontSize="medium" />
-                </IconButton>
-              </ListItem>
-            </List>
+                  <MdSkipNext className="w-6 h-6" />
+                </button>
+              </li>
+            </ul>
           </nav>
-        </Stack>
-      </Paper>
-    </Stack>
+        </div>
+      </div>
+    </div>
   );
 };
 

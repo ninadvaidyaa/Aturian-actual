@@ -1,18 +1,17 @@
 import { lazy, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useTableContext } from "contexts/TableContext";
 import Loadable from "components/Loadable";
 import { fetchAllOrders } from "api/order.api";
 import { defaultColumns } from "./columnDefinition";
+import { useColumnFilters, usePagination, useSorting } from "hooks/useTable";
 
 const ReactTable = Loadable(
   lazy(async () => await import("components/lib/ReactTable/ReactTable"))
 );
 const OrderPageComponent = () => {
-  const pagination = useTableContext((s) => s.pagination);
-  const columnFilters = useTableContext((s) => s.columnFilters);
-  const columnOrder = useTableContext((s) => s.columnOrder);
-  const sorting = useTableContext((s) => s.sorting);
+  const pagination = usePagination();
+  const columnFilters = useColumnFilters();
+  const sorting = useSorting();
   const queryParams = useMemo(() => {
     let params = "";
     let sortParam = "";
@@ -45,13 +44,7 @@ const OrderPageComponent = () => {
       params = params.slice(1, params.length);
     }
     return params;
-  }, [
-    pagination?.pageIndex,
-    pagination?.pageSize,
-    columnFilters,
-    columnOrder,
-    sorting,
-  ]);
+  }, [pagination?.pageIndex, pagination?.pageSize, columnFilters, sorting]);
   const { data } = useQuery({
     queryKey: [
       "ordersList",
@@ -71,6 +64,7 @@ const OrderPageComponent = () => {
   return (
     <ReactTable
       size="medium"
+      title="Order"
       data={data?.data ?? []}
       totalRows={data?.results ?? 0}
       defaultColumns={defaultColumns}

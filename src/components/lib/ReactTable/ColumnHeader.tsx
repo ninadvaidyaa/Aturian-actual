@@ -4,42 +4,23 @@ import { flexRender } from "@tanstack/react-table";
 import { useDrag, useDragLayer, useDrop } from "react-dnd";
 import type { DragLayerMonitor } from "react-dnd";
 import { getEmptyImage } from "react-dnd-html5-backend";
-import DragHandleOutlinedIcon from "@mui/icons-material/DragHandleOutlined";
-import ArrowDropUpOutlinedIcon from "@mui/icons-material/ArrowDropUpOutlined";
-import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import { styled, useTheme } from "@mui/material/styles";
-import type { Theme } from "@mui/material/styles";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import TableCell from "@mui/material/TableCell";
 
 import { reorderColumn } from "./reorderColumn";
+import {
+  MdOutlineArrowDropDown,
+  MdOutlineArrowDropUp,
+  MdOutlineDragHandle,
+} from "react-icons/md";
 
-const Resize = styled("div")(({ theme }) => ({
-  position: "absolute",
-  right: 0,
-  top: 0,
-  height: "100%",
-  width: theme.spacing(0.5),
-  background: theme.palette.grey[300],
-  cursor: "col-resize",
-  userSelect: "none",
-  touchAction: "none",
-  opacity: 0,
+const DragHeader = styled("div")(({ x, y }: { x: number; y: number }) => ({
+  position: "fixed",
+  pointerEvents: "none",
+  left: 12,
+  top: 24,
+  transform: `translate(${x}px, ${y}px)`,
+  opacity: 0.6,
 }));
-
-const DragHeader = styled("div")(
-  ({ theme, x, y }: { theme: Theme; x: number; y: number }) => ({
-    color: theme.palette.text.secondary,
-    position: "fixed",
-    pointerEvents: "none",
-    left: 12,
-    top: 24,
-    transform: `translate(${x}px, ${y}px)`,
-    opacity: 0.6,
-  })
-);
 
 interface ColumnHeaderProps<P> {
   header: Header<P, unknown>;
@@ -69,14 +50,10 @@ export const DragPreview = () => {
       y={y!}
     >
       {item.header && (
-        <Stack
-          direction="row"
-          spacing={0.5}
-          alignItems="center"
-        >
-          <DragHandleOutlinedIcon style={{ fontSize: "1rem" }} />
-          <Typography>{item.header}</Typography>
-        </Stack>
+        <div className="flex flex-row items-center gap-1">
+          <MdOutlineDragHandle style={{ fontSize: "1rem" }} />
+          <p>{item.header}</p>
+        </div>
       )}
     </DragHeader>
   ) : null;
@@ -84,7 +61,7 @@ export const DragPreview = () => {
 
 const DraggableColumnHeader = <T,>({ header, table }: ColumnHeaderProps<T>) => {
   const theme = useTheme();
-  const ref = useRef();
+  const ref = useRef<HTMLDivElement | null>(null);
   const { getState, setColumnOrder } = table;
   const { columnOrder } = getState();
   const { column } = header;
@@ -134,8 +111,11 @@ const DraggableColumnHeader = <T,>({ header, table }: ColumnHeaderProps<T>) => {
   const sorting = useMemo(
     () =>
       columnDef.enableSorting && (
-        <Stack sx={{ color: "secondary.light" }}>
-          <ArrowDropUpOutlinedIcon
+        <div
+          className="flex flex-col"
+          onClick={header.column.getToggleSortingHandler()}
+        >
+          <MdOutlineArrowDropUp
             style={{
               fontSize: "1.25rem",
               color:
@@ -144,7 +124,7 @@ const DraggableColumnHeader = <T,>({ header, table }: ColumnHeaderProps<T>) => {
                   : "inherit",
             }}
           />
-          <ArrowDropDownOutlinedIcon
+          <MdOutlineArrowDropDown
             style={{
               fontSize: "1.25rem",
               marginTop: theme.spacing(-1.5),
@@ -154,47 +134,44 @@ const DraggableColumnHeader = <T,>({ header, table }: ColumnHeaderProps<T>) => {
                   : "inherit",
             }}
           />
-        </Stack>
+        </div>
       ),
     [column.getIsSorted()]
   );
 
   return (
-    <TableCell
+    <th
+      className={
+        "min-w-[10ch] px-1.5 py-2 text-left group text-ellipsis whitespace-nowrap"
+      }
       colSpan={header.colSpan}
       style={{
         opacity: isDragging ? 0.5 : 1,
         width: header.getSize(),
+        borderColor,
       }}
     >
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        onClick={header.column.getToggleSortingHandler()}
-      >
-        <Box
+      <div className="flex flex-row items-center justify-between relative">
+        <div
           ref={ref}
-          sx={{
-            color: borderColor,
-          }}
+          className="overflow-hidden text-ellipsis whitespace-nowrap"
         >
           {header.isPlaceholder
             ? null
             : flexRender(columnDef.header, header.getContext())}
-        </Box>
+        </div>
         {sorting}
-        <Resize
-          sx={{
-            opacity: column.getIsResizing() ? 1 : 0,
-          }}
+        <div
+          className={`absolute right-0 top-0 h-full w-1 ${
+            header.column.getIsResizing() ? "bg-gray-200" : "bg-gray-100"
+          } select-none touch-none cursor-col-resize hover:opacity-1 opacity-1`}
           {...{
             onMouseDown: header.getResizeHandler(),
             onTouchStart: header.getResizeHandler(),
           }}
         />
-      </Stack>
-    </TableCell>
+      </div>
+    </th>
   );
 };
 

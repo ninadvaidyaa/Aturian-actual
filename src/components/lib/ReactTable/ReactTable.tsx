@@ -1,8 +1,6 @@
-import { Fragment, useMemo, lazy } from "react";
+import { useMemo, lazy, Fragment } from "react";
 import Loadable from "components/Loadable";
 
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
 import {
   type ColumnDef,
   useReactTable,
@@ -13,14 +11,18 @@ import {
   getSortedRowModel,
   getFacetedMinMaxValues,
   getFacetedUniqueValues,
+
 } from "@tanstack/react-table";
 
 import ReactTableBody from "./TableBody";
-import TableHeader from "./ReactTableHeader";
-import { useTableContext } from "contexts/TableContext";
-import ScrollX from "components/ScrollX";
 import TablePageHeader from "components/TablePageHeader";
 import EmptyTable from "./EmptyTable";
+import { useTableStore } from "hooks/useTable";
+import ViewSelector from "./ViewSelector";
+import { views } from "pages/orders/columnDefinition";
+import DraggableColumnHeader from "./ColumnHeader";
+import Filter from "./ColumnFilter";
+import ScrollX from "components/ScrollX";
 
 const TablePagination = Loadable(
   lazy(async () => await import("./TablePagination"))
@@ -31,6 +33,7 @@ interface ReactTableProps<P> {
   totalRows: number;
   data: P[];
   size: "small" | "medium";
+  title: string
 }
 
 const ReactTable = <M,>({
@@ -38,8 +41,10 @@ const ReactTable = <M,>({
   data,
   totalRows,
   size = "medium",
+  title
 }: ReactTableProps<M>) => {
   const columns = useMemo(() => [...defaultColumns], []);
+
   const {
     columnOrder,
     pagination,
@@ -47,13 +52,15 @@ const ReactTable = <M,>({
     columnPinning,
     sorting,
     columnFilters,
-    setColumnOrder,
-    setColumnFilters,
-    setPagination,
-    setColumnVisibility,
-    setColumnPinning,
-    setSorting,
-  } = useTableContext((state) => state);
+    actions: {
+      setColumnOrder,
+      setColumnFilters,
+      setPagination,
+      setColumnVisibility,
+      setColumnPinning,
+      setSorting,
+    },
+  } = useTableStore((state) => state);
 
   const defaultData = useMemo(() => [], []);
 
@@ -69,7 +76,7 @@ const ReactTable = <M,>({
       sorting,
       columnFilters,
     },
-    columnResizeMode: "onEnd",
+    columnResizeMode: "onChange",
     getCoreRowModel: getCoreRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
@@ -89,24 +96,49 @@ const ReactTable = <M,>({
   });
 
   return (
-    <Fragment>
-      <TablePageHeader table={table} />
-
-      <Paper
-        elevation={0}
-        sx={{ padding: "8px", isolation: "isolate" }}
-      >
-        <ScrollX
-          style={{
-            maxHeight: "calc(100vh - 270px)",
-          }}
-        >
-          {/* <TableContainer> */}
-          <Table
-            size={size}
-            stickyHeader={true}
+    <div className="">
+      <TablePageHeader
+        title={title}
+        table={table}
+      />
+      <ViewSelector views={views} />
+      <div className="p-2 bg-white rounded-sm">
+        <ScrollX className="h-[calc(100vh_-_270px)] relative overflow-auto rounded-sm">
+          <table
+            className="table-fixed"
+            style={{ width: table.getCenterTotalSize() }}
           >
-            <TableHeader table={table} />
+            <thead className="sticky top-0 capitalize bg-gray-50">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <Fragment key={headerGroup.id}>
+                  <tr key={`${headerGroup.id}-name`}>
+                    {headerGroup.headers.map((header) => (
+                      <DraggableColumnHeader
+                        key={header.id}
+                        header={header}
+                        table={table}
+                      />
+                    ))}
+                  </tr>
+                  <tr key={`${headerGroup.id}-filter`}>
+                    {headerGroup.headers.map((header) => (
+                      <th
+                        className="overflow-hidden text-ellipsis whitespace-nowrap px-1 py-2 text-left font-normal"
+                        key={header.id}
+                        colSpan={header.colSpan}
+                      >
+                        {header.column.getCanFilter() ? (
+                          <Filter
+                            key={header.id}
+                            column={header.column}
+                          />
+                        ) : null}
+                      </th>
+                    ))}
+                  </tr>
+                </Fragment>
+              ))}
+            </thead>
             {data.length ? (
               <ReactTableBody table={table} />
             ) : (
@@ -115,10 +147,9 @@ const ReactTable = <M,>({
                 colSpan={table.getAllLeafColumns().length}
               />
             )}
-          </Table>
-          {/* </TableContainer> */}
+          </table>
         </ScrollX>
-      </Paper>
+      </div>
       <TablePagination
         pageSize={table.getState().pagination.pageSize}
         pageIndex={table.getState().pagination.pageIndex}
@@ -144,7 +175,7 @@ const ReactTable = <M,>({
           table.setPageIndex(table.getPageCount() - 1);
         }}
       />
-    </Fragment>
+    </div>
   );
 };
 

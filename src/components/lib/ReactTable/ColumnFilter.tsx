@@ -1,6 +1,6 @@
 import { type Column } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
-import TextField, { type TextFieldProps } from "@mui/material/TextField";
+import { type TextFieldProps } from "@mui/material/TextField";
 import SelectFilter from "./TableFilterDropDown";
 
 type DebouncedInputProps = {
@@ -65,18 +65,13 @@ const DebouncedInput = ({
     );
   }
   return (
-    <TextField
-      variant="outlined"
-      sx={{
-        "& .MuiOutlinedInput-input": { py: 0.5, px: 0.75 },
-      }}
-      size="small"
-      {...props}
+    <input
+      className="bg-white border border-gray-200 text-gray-700 text-sm  rounded-md focus:ring-slate-500 focus:border-slate-500 block w-full py-1 px-1.5"
       value={value}
       onChange={(e) => {
         setValue(e.target.value);
       }}
-      inputProps={{ ...props }}
+      placeholder={props.placeholder}
     />
   );
 };

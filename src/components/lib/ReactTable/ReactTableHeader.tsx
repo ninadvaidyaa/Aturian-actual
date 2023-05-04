@@ -1,9 +1,5 @@
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import DraggableColumnHeader from "./ColumnHeader";
-import { flexRender, type Table } from "@tanstack/react-table";
-import TextField from "@mui/material/TextField";
-import TableCell from "@mui/material/TableCell";
+import { type Table } from "@tanstack/react-table";
 import Filter from "./ColumnFilter";
 import { Fragment } from "react";
 
@@ -12,15 +8,10 @@ interface TableHeaderProps<M> {
 }
 
 const TableHeader = <M,>({ table, ...props }: TableHeaderProps<M>) => (
-  <TableHead
-    sx={{
-      zIndex: 10,
-    }}
-    {...props}
-  >
+  <thead className="text-gray-700 capitalize bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     {table.getHeaderGroups().map((headerGroup) => (
       <Fragment key={headerGroup.id}>
-        <TableRow key={`${headerGroup.id}-name`}>
+        <tr key={`${headerGroup.id}-name`}>
           {headerGroup.headers.map((header) => (
             <DraggableColumnHeader
               key={header.id}
@@ -28,10 +19,10 @@ const TableHeader = <M,>({ table, ...props }: TableHeaderProps<M>) => (
               table={table}
             />
           ))}
-        </TableRow>
-        <TableRow key={`${headerGroup.id}-filter`}>
+        </tr>
+        <tr key={`${headerGroup.id}-filter`}>
           {headerGroup.headers.map((header) => (
-            <TableCell
+            <th className="overflow-hidden text-ellipsis whitespace-nowrap px-1 py-2 text-left font-normal"
               key={header.id}
               colSpan={header.colSpan}
             >
@@ -40,27 +31,13 @@ const TableHeader = <M,>({ table, ...props }: TableHeaderProps<M>) => (
                   key={header.id}
                   column={header.column}
                 />
-              ) : (
-                <TextField
-                  key={header.id}
-                  variant="outlined"
-                  sx={{
-                    "& .MuiOutlinedInput-input": { py: 0.5, px: 0.75 },
-                  }}
-                  size="small"
-                  disabled
-                  value={flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                />
-              )}
-            </TableCell>
+              ) : null}
+            </th>
           ))}
-        </TableRow>
+        </tr>
       </Fragment>
     ))}
-  </TableHead>
+  </thead>
 );
 
 export default TableHeader;

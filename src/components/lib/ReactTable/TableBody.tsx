@@ -1,6 +1,3 @@
-import TableBody from "@mui/material/TableBody";
-import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
 import { flexRender } from "@tanstack/react-table";
 import type { Table } from "@tanstack/react-table";
 
@@ -9,13 +6,20 @@ interface TableBodyProps<M> {
 }
 
 const ReactTableBody = <M,>({ table, ...props }: TableBodyProps<M>) => (
-  <TableBody {...props}>
+  <tbody>
     {table.getRowModel().rows.map((row) => (
-      <TableRow key={row.id}>
+      <tr
+        key={row.id}
+        className="odd:bg-white even:bg-slate-50 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+      >
         {row.getVisibleCells().map((cell) => (
-          <TableCell
+          <td
             key={cell.id}
-            sx={{
+            scope="row"
+            className={`px-1.5 py-2 font-medium text-gray-900 whitespace-nowrap  text-ellipsis  dark:text-white ${
+              cell.column.id !== "action" ? "truncate" : ""
+            }`}
+            style={{
               width: cell.column.getSize(),
               textAlign:
                 !cell.column.columnDef.meta?.isCurrency &&
@@ -25,11 +29,11 @@ const ReactTableBody = <M,>({ table, ...props }: TableBodyProps<M>) => (
             }}
           >
             {flexRender(cell.column.columnDef.cell, cell.getContext())}
-          </TableCell>
+          </td>
         ))}
-      </TableRow>
+      </tr>
     ))}
-  </TableBody>
+  </tbody>
 );
 
 export default ReactTableBody;

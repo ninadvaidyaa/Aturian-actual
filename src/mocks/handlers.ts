@@ -5,6 +5,7 @@ import { rest } from "msw";
 import * as apiConstants from "constants/api.constants";
 import { orderData } from "./orders";
 import { settings } from "config";
+import { customerData } from "./customers";
 
 const baseApiUrl = import.meta.env.VITE_BASE_URL;
 export const handlers = [
@@ -50,6 +51,25 @@ export const handlers = [
         ctx.json({
           data: orderData.slice(offset * limit, offset * limit + limit),
           results: orderData.length
+        })
+      );
+    }
+  ),
+  rest.get(
+    `${settings.apiBase}${apiConstants.CUSTOMER_GET_ALL_API}`,
+    async (req, res, ctx) => {
+      
+      const offset: number = req.url.searchParams.get("offset")
+        ? parseInt(req.url.searchParams.get("offset"))
+        : 0;
+      const limit: number = req.url.searchParams.get("limit")
+        ? parseInt(req.url.searchParams.get("limit"))
+        : 1;
+      return await res(
+        ctx.status(200),
+        ctx.json({
+          data: customerData.slice(offset * limit, offset * limit + limit),
+          total: customerData.length
         })
       );
     }
