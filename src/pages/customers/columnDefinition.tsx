@@ -46,7 +46,7 @@ export const defaultColumns: Array<ColumnDef<CustomerList>> = [
     },
   },
   {
-    accessorFn: (value) => value.contact.name,
+    accessorFn: (value) => value.salesperson.name,
     id: "salesperson",
     header: "Sales Person",
     cell: (info) => info.getValue(),

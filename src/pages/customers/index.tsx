@@ -5,6 +5,7 @@ import { fetchAllCustomers } from "api/customer.api";
 import { defaultColumns, views } from "./columnDefinition";
 import { useColumnFilters, usePagination, useSorting } from "hooks/useTable";
 import Loader from "components/Loader";
+import { useQuery } from "@tanstack/react-query";
 
 const ReactTable = Loadable(
   lazy(async () => await import("components/lib/ReactTable/ReactTable"))
