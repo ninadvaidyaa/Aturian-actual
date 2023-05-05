@@ -25,9 +25,10 @@ import { menuStore } from "hooks/useNavBar";
 interface Props {
   item: NavItemType;
   level: number;
+  handleChange: any
 }
 
-const NavItem = ({ item, level }: Props) => {
+const NavItem = ({ item, level ,handleChange}: Props) => {
   const theme = useTheme();
 
   const matchDownLg = useMediaQuery(theme.breakpoints.down("lg"));
@@ -79,6 +80,7 @@ const NavItem = ({ item, level }: Props) => {
 
   const { pathname } = useLocation();
 
+ 
   useEffect(() => {
     if (pathname === item.url) {
       setActiveItem([item.id]);
@@ -97,6 +99,7 @@ const NavItem = ({ item, level }: Props) => {
       {menuOrientation === LAYOUT_CONST.VERTICAL_LAYOUT || downLG ? (
         <ListItemButton
           {...listItemProps}
+          onClick={handleChange}
           disabled={item.disabled}
           selected={isSelected}
           sx={{

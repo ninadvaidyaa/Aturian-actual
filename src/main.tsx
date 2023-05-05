@@ -16,6 +16,7 @@ if (import.meta.env.MODE === "development") {
 }
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ConfigProvider>
@@ -24,4 +25,5 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>
+  
 );

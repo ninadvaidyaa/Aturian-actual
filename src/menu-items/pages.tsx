@@ -17,6 +17,7 @@ const pages: NavItemType = {
       children: [
         {
           id: 'order-list',
+          
           title: 'Orders List',
           type: 'item',
           url: '/orders',
@@ -36,7 +37,8 @@ const pages: NavItemType = {
       icon: 'customerIcon',
       children: [
         {
-          id: 'Order',
+          id: 'customer-list',
+          
           title: 'Customers List',
           type: 'item',
           url: '/customers',

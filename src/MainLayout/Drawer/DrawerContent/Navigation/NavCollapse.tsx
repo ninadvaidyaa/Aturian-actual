@@ -87,8 +87,10 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
   const [anchorEl, setAnchorEl] = useState<VirtualElement | (() => VirtualElement) | null | undefined>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLDivElement, MouseEvent> | undefined) => {
+    // console.log(menu)
     setAnchorEl(null);
     setSelectedLevel(level);
+    
     if (drawerOpen) {
       setOpen(!open);
       setSelected(!selected ? menu.id : null);
@@ -97,6 +99,7 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
     } else {
       setAnchorEl(event?.currentTarget);
     }
+    
   };
 
   const handlerIconLink = () => {
@@ -114,6 +117,9 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
     setSelected(null);
     setAnchorEl(null);
   };
+  const handleClosePopup = () =>{
+    setAnchorEl(null);
+  }
 
   useMemo(() => {
     if (selected === selectedItems) {
@@ -121,7 +127,7 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
         setOpen(true);
       }
     } else {
-      if (level === selectedLevel) {
+      if (drawerOpen && level === selectedLevel) {
         setOpen(false);
         setSelected(null);
       }
@@ -174,6 +180,13 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
     }
   }, [pathname, menu]);
 
+  const handelItemClick = (event: any) =>{
+    
+    setSelected(menu.id);
+    setOpen(true);
+    setSelectedItems( menu.id);
+    
+  };
   const navCollapse = menu.children?.map((item) => {
     switch (item.type) {
       case 'collapse':
@@ -190,7 +203,7 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
           />
         );
       case 'item':
-        return <NavItem key={item.id} item={item} level={level + 1} />;
+        return <NavItem key={item.id} item={item} level={level + 1}  handleChange={handelItemClick}/>;
       default:
         return (
           <Typography key={item.id} variant="h6" color="error" align="center">
@@ -217,7 +230,7 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
           <ListItemButton
             disableRipple
             selected={selected === menu.id}
-            {...(!drawerOpen && { onMouseEnter: handleClick, onMouseLeave: handleClose })}
+            {...(!drawerOpen && { onMouseEnter: handleClick, onMouseLeave: handleClosePopup })}
             onClick={handleClick}
             sx={{
               pl: drawerOpen ? `${level * 28}px` : 1.5,

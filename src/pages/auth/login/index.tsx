@@ -26,7 +26,7 @@ const LoginPage = () => {
       if (navigateTo) {
         navigate(navigateTo);
       } else {
-        navigate("/");
+        navigate("/orders");
       }
     } else {
       setLoading(true);
@@ -62,11 +62,8 @@ const LoginPage = () => {
         setError(false);
         setToken(resp.data.access_token);
         setTokenRefresh(resp.data.refresh_token);
-        if (navigateTo) {
-          navigate(navigateTo);
-        } else {
-          navigate("/");
-        }
+          navigate("/orders");
+        
       }
     } catch (e) {
       setError(true);

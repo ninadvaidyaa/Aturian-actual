@@ -145,7 +145,11 @@ const NavGroup = ({
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const handelItemClick = (event: any) =>{
+    
+    setAnchorEl(null);
+    
+  };
   const navCollapse = item.children?.map((menuItem, index) => {
     // console.log(menuItem)
     switch (menuItem.type) {
@@ -168,6 +172,7 @@ const NavGroup = ({
             key={menuItem.id}
             item={menuItem}
             level={1}
+            handleChange={handelItemClick}
           />
         );
       default:
@@ -215,6 +220,7 @@ const NavGroup = ({
                 key={menu.id}
                 item={menu}
                 level={1}
+                handleChange={handelItemClick}
               />
             );
           default:
@@ -255,6 +261,7 @@ const NavGroup = ({
             key={menu.id}
             item={menu}
             level={1}
+            handleChange={handelItemClick}
           />
         );
       default:
