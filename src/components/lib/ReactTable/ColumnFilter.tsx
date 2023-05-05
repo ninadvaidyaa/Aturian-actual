@@ -1,6 +1,5 @@
 import { type Column } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
-import { type TextFieldProps } from "@mui/material/TextField";
 import SelectFilter from "./TableFilterDropDown";
 
 type DebouncedInputProps = {
@@ -9,8 +8,7 @@ type DebouncedInputProps = {
   debounce?: number;
   columnId: string;
   uniqueValues?: string[];
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> &
-  Partial<TextFieldProps>;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> 
 
 const showCheckedFirst = (data: string[], value: string[]) =>
   data.sort((a, b) => {
@@ -66,12 +64,13 @@ const DebouncedInput = ({
   }
   return (
     <input
-      className="bg-white border border-gray-200 text-gray-700 text-sm  rounded-md focus:ring-slate-500 focus:border-slate-500 block w-full py-1 px-1.5"
+      className="bg-white border border-gray-200 text-gray-700 text-sm  rounded-md focus:ring-slate-300 focus:border-slate-300 block w-full py-1 px-1.5"
       value={value}
       onChange={(e) => {
         setValue(e.target.value);
       }}
       placeholder={props.placeholder}
+      {...props}
     />
   );
 };
@@ -93,18 +92,34 @@ const Filter = ({ column }: FilterProps) => {
         : [],
     [column?.getFacetedUniqueValues()]
   );
-
-  return column.columnDef.meta?.dataType === "number" ? (
-    <DebouncedInput
-      type="number"
+  if (column.columnDef.meta?.dataType === "number") {
+    return (
+      <DebouncedInput
+        type="number"
+        columnId={column.id}
+        value={(columnFilterValue as [number, number])?.[0] ?? ""}
+        onChange={(value) => {
+          column.setFilterValue((old: [number, number]) => [value, old?.[1]]);
+        }}
+        placeholder={column.columnDef?.header?.toString()}
+      />
+    );
+  }
+  if (column.columnDef.meta?.dataType === "date") {
+    return (
+      <DebouncedInput
+      type="date"
       columnId={column.id}
-      value={(columnFilterValue as [number, number])?.[0] ?? ""}
+      value={(columnFilterValue ?? "") as string}
       onChange={(value) => {
-        column.setFilterValue((old: [number, number]) => [value, old?.[1]]);
+        column.setFilterValue(value);
       }}
       placeholder={column.columnDef?.header?.toString()}
+      uniqueValues={sortedUniqueValues}
     />
-  ) : (
+    );
+  }
+  return (
     <DebouncedInput
       type="text"
       columnId={column.id}

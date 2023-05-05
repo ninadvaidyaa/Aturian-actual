@@ -1,9 +1,12 @@
 import { lazy, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import Loadable from "components/Loadable";
+
 import { fetchAllOrders } from "api/order.api";
-import { defaultColumns } from "./columnDefinition";
 import { useColumnFilters, usePagination, useSorting } from "hooks/useTable";
+import Loader from "components/Loader";
+import Loadable from "components/Loadable";
+
+import { defaultColumns, views } from "./columnDefinition";
 
 const ReactTable = Loadable(
   lazy(async () => await import("components/lib/ReactTable/ReactTable"))
@@ -45,7 +48,7 @@ const OrderPageComponent = () => {
     }
     return params;
   }, [pagination?.pageIndex, pagination?.pageSize, columnFilters, sorting]);
-  const { data } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: [
       "ordersList",
       pagination?.pageIndex,
@@ -62,13 +65,17 @@ const OrderPageComponent = () => {
   });
 
   return (
-    <ReactTable
-      size="medium"
-      title="Order"
-      data={data?.data ?? []}
-      totalRows={data?.results ?? 0}
-      defaultColumns={defaultColumns}
-    />
+    <>
+      {isFetching && <Loader />}
+      <ReactTable
+        size="medium"
+        title="Order"
+        data={data?.data ?? []}
+        totalRows={data?.results ?? 0}
+        defaultColumns={defaultColumns}
+        views={views}
+      />
+    </>
   );
 };
 

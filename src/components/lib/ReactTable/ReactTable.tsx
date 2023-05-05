@@ -1,6 +1,5 @@
 import { useMemo, lazy, Fragment } from "react";
-import Loadable from "components/Loadable";
-
+import { useQueryClient } from "@tanstack/react-query";
 import {
   type ColumnDef,
   useReactTable,
@@ -14,15 +13,17 @@ import {
 
 } from "@tanstack/react-table";
 
-import ReactTableBody from "./TableBody";
+import Loadable from "components/Loadable";
+import ScrollX from "components/ScrollX";
 import TablePageHeader from "components/TablePageHeader";
-import EmptyTable from "./EmptyTable";
 import { useTableStore } from "hooks/useTable";
-import ViewSelector from "./ViewSelector";
-import { views } from "pages/orders/columnDefinition";
+import { useSelectedRow, useSetRowSelection } from "hooks/useSelectRow";
+import { type UserViews } from "types/userViews";
 import DraggableColumnHeader from "./ColumnHeader";
 import Filter from "./ColumnFilter";
-import ScrollX from "components/ScrollX";
+import EmptyTable from "./EmptyTable";
+import ViewSelector from "./ViewSelector";
+import ReactTableBody from "./TableBody";
 
 const TablePagination = Loadable(
   lazy(async () => await import("./TablePagination"))
@@ -33,7 +34,8 @@ interface ReactTableProps<P> {
   totalRows: number;
   data: P[];
   size: "small" | "medium";
-  title: string
+  title: string;
+  views: UserViews;
 }
 
 const ReactTable = <M,>({
@@ -41,10 +43,11 @@ const ReactTable = <M,>({
   data,
   totalRows,
   size = "medium",
-  title
+  title,
+  views,
 }: ReactTableProps<M>) => {
   const columns = useMemo(() => [...defaultColumns], []);
-
+  const queryClient = useQueryClient();
   const {
     columnOrder,
     pagination,
@@ -61,8 +64,9 @@ const ReactTable = <M,>({
       setSorting,
     },
   } = useTableStore((state) => state);
-
   const defaultData = useMemo(() => [], []);
+  const rowSelection = useSelectedRow();
+  const setRowSelection = useSetRowSelection();
 
   const table = useReactTable({
     data: data ?? defaultData,
@@ -75,8 +79,10 @@ const ReactTable = <M,>({
       columnPinning,
       sorting,
       columnFilters,
+      rowSelection,
     },
     columnResizeMode: "onChange",
+    enableRowSelection: true,
     getCoreRowModel: getCoreRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
@@ -90,6 +96,7 @@ const ReactTable = <M,>({
     onColumnVisibilityChange: setColumnVisibility,
     onColumnPinningChange: setColumnPinning,
     onSortingChange: setSorting,
+    onRowSelectionChange: setRowSelection,
     // debugTable: true,
     manualPagination: true,
     manualFiltering: true,
@@ -108,7 +115,7 @@ const ReactTable = <M,>({
             className="table-fixed"
             style={{ width: table.getCenterTotalSize() }}
           >
-            <thead className="sticky top-0 capitalize bg-gray-50">
+            <thead className="sticky top-0 capitalize bg-gray-50 z-20">
               {table.getHeaderGroups().map((headerGroup) => (
                 <Fragment key={headerGroup.id}>
                   <tr key={`${headerGroup.id}-name`}>
@@ -139,13 +146,13 @@ const ReactTable = <M,>({
                 </Fragment>
               ))}
             </thead>
-            {data.length ? (
-              <ReactTableBody table={table} />
-            ) : (
+            {!queryClient.isFetching && data.length === 0 ? (
               <EmptyTable
                 msg="No Records Available"
                 colSpan={table.getAllLeafColumns().length}
               />
+            ) : (
+              <ReactTableBody table={table} />
             )}
           </table>
         </ScrollX>

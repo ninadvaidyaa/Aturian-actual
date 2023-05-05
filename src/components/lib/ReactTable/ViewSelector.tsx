@@ -1,10 +1,10 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 
 import { Listbox, Transition } from "@headlessui/react";
 import { MdOutlineCheck, MdOutlineExpandMore } from "react-icons/md";
 
 import { useTableStore } from "hooks/useTable";
-import { type UserViews } from "validators/orders.validators";
+import { type UserViews } from "types/userViews";
 
 const ViewSelector = ({ views }: { views: UserViews }) => {
   const [view, setView] = useState("");
@@ -13,10 +13,15 @@ const ViewSelector = ({ views }: { views: UserViews }) => {
     setView(val);
     setColumnOrder(views[val].columns.map((e) => e.id));
   };
+
+  useEffect(() => {
+    if (Object.keys(views).length)
+      handleChange(views[Object.keys(views)[0]].name);
+  }, []);
+
   return (
     <div className="w-28 mb-1">
       <Listbox
-        defaultValue={views?.[0]?.name}
         value={view}
         onChange={handleChange}
       >
@@ -36,7 +41,7 @@ const ViewSelector = ({ views }: { views: UserViews }) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute mt-1 z-10 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Listbox.Options className="absolute mt-1  max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-30">
               {Object.keys(views).map((objKey) => (
                 <Listbox.Option
                   key={objKey}

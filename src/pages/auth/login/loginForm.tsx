@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import {
-  Button,
   FormHelperText,
   Grid,
   InputAdornment,
@@ -17,8 +16,8 @@ import {
 
 import { loginFormSchema } from "validators/auth.validators";
 import type { LoginFormData } from "validators/auth.validators";
-import AnimateButton from "components/@extended/AnimateButton";
 import IconButton from "components/@extended/IconButton";
+
 
 interface LoginFormProps {
   onSubmit: (data: LoginFormData) => void;
@@ -137,18 +136,11 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
           item
           xs={12}
         >
-          <AnimateButton>
-            <Button
-              disableElevation
-              fullWidth
-              size="large"
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
-              Login
-            </Button>
-          </AnimateButton>
+          <button
+           className="w-full bg-skin-fill text-white  focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
+          >
+            Login
+          </button>
         </Grid>
       </Grid>
     </form>

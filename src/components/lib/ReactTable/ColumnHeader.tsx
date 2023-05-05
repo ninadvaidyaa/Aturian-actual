@@ -97,8 +97,12 @@ const DraggableColumnHeader = <T,>({ header, table }: ColumnHeaderProps<T>) => {
   }, [preview]);
 
   useEffect(() => {
-    if (header.column.columnDef.enablePinning) {
-      header.column.pin("left");
+    if (columnDef.enablePinning) {
+      if (column.id === "action") {
+        header.column.pin("right");
+      } else {
+        column.pin("left");
+      }
     }
   }, []);
 

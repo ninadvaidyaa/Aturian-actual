@@ -1,8 +1,9 @@
 import { type ColumnDef } from "@tanstack/react-table";
-import { type UserViews } from "validators/orders.validators";
-import RowActions from "components/lib/ReactTable/RowActions";
+import RowActions from "./RowActions";
 import { Link } from "react-router-dom";
 import { type CustomerList } from "validators/customer.validators";
+import { type UserViews } from "types/userViews";
+
 export const defaultColumns: Array<ColumnDef<CustomerList>> = [
   {
     accessorKey: "id",
@@ -10,7 +11,7 @@ export const defaultColumns: Array<ColumnDef<CustomerList>> = [
     header: "Cust #",
     cell: (info) => <Link className="text-skin-primary" to={`/customers/${info.getValue() as string}`}>{info.getValue() as string}</Link>,
     footer: (props) => props.column.id,
-    size: 100,
+    size: 200,
     enablePinning: true,
     enableHiding: false,
     enableSorting: true,
@@ -25,7 +26,7 @@ export const defaultColumns: Array<ColumnDef<CustomerList>> = [
     header: "Customer Name",
     cell: (info) => info.getValue(),
     footer: (props) => props.column.id,
-    size: 100,
+    size: 200,
     enableSorting: true,
     meta: {
       dataType: "string",
@@ -38,7 +39,7 @@ export const defaultColumns: Array<ColumnDef<CustomerList>> = [
     header: "Alias(es)",
     cell: (info) => info.getValue(),
     footer: (props) => props.column.id,
-    size: 100,
+    size: 200,
     enableSorting: true,
     meta: {
       dataType: "string",
@@ -50,7 +51,7 @@ export const defaultColumns: Array<ColumnDef<CustomerList>> = [
     header: "Sales Person",
     cell: (info) => info.getValue(),
     footer: (props) => props.column.id,
-    size: 120,
+    size: 220,
     enableSorting: true,
     meta: {
       dataType: "string",
@@ -62,7 +63,7 @@ export const defaultColumns: Array<ColumnDef<CustomerList>> = [
     header: "Contact",
     cell: (info) => info.getValue(),
     footer: (props) => props.column.id,
-    size: 120,
+    size: 220,
     enableSorting: true,
     meta: {
       dataType: "string",
@@ -74,7 +75,7 @@ export const defaultColumns: Array<ColumnDef<CustomerList>> = [
     header: "Email",
     cell: (info) => info.getValue(),
     footer: (props) => props.column.id,
-    size: 120,
+    size: 220,
     enableSorting: true,
     meta: {
       dataType: "string",
@@ -86,7 +87,7 @@ export const defaultColumns: Array<ColumnDef<CustomerList>> = [
     header: "Phone",
     cell: (info) => info.getValue(),
     footer: (props) => props.column.id,
-    size: 120,
+    size: 220,
     enableSorting: true,
     meta: {
       dataType: "string",
@@ -98,7 +99,7 @@ export const defaultColumns: Array<ColumnDef<CustomerList>> = [
     header: "Action",
     cell: (info) => <RowActions info={info} />,
     footer: (props) => props.column.id,
-    size: 150,
+    size: 250,
     enableHiding: false,
     enableColumnFilter: false,
     enableGlobalFilter: false,

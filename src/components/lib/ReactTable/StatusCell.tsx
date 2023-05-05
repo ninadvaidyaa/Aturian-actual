@@ -10,7 +10,7 @@ const StatusCellComponent = ({
   label: string;
 }) => (
   <span
-    className="text-md font-medium px-1.5 py-1 rounded-sm"
+    className="text-md font-medium px-1.5 py-1 rounded-md"
     style={{ color, backgroundColor: lighten(color, 0.9) }}
   >
     {label}

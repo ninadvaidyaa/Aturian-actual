@@ -2,8 +2,9 @@ import { lazy, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Loadable from "components/Loadable";
 import { fetchAllCustomers } from "api/customer.api";
-import { defaultColumns } from "./columnDefinition";
+import { defaultColumns, views } from "./columnDefinition";
 import { useColumnFilters, usePagination, useSorting } from "hooks/useTable";
+import Loader from "components/Loader";
 
 const ReactTable = Loadable(
   lazy(async () => await import("components/lib/ReactTable/ReactTable"))
@@ -49,8 +50,8 @@ const CustomerPage = () => {
         }
       }
     });
-    params = sortParam; 
-    params = params !==''? params  + filterParams : filterParams ;
+    params = sortParam;
+    params = params !== "" ? params + filterParams : filterParams;
     if (params[params.length - 1] === "&") {
       params = params.slice(0, -1);
     }
@@ -59,7 +60,7 @@ const CustomerPage = () => {
     }
     return params;
   }, [pagination?.pageIndex, pagination?.pageSize, columnFilters, sorting]);
-  const { data } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: [
       "customers",
       pagination?.pageIndex,
@@ -75,14 +76,18 @@ const CustomerPage = () => {
     keepPreviousData: true,
   });
 
-  return (
+  return (<>
+  {isFetching && <Loader />}
     <ReactTable
       title="Customer"
       size="medium"
       data={data?.data ?? []}
       totalRows={data?.total ?? 0}
       defaultColumns={defaultColumns}
+      views={views}
     />
+  </>
+
   );
 };
 

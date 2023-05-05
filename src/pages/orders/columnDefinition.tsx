@@ -1,24 +1,38 @@
 import { type ColumnDef } from "@tanstack/react-table";
-import { type UserViews, type OrdersList } from "validators/orders.validators";
+import { type OrdersList } from "validators/orders.validators";
+import { type UserViews } from "types/userViews";
+
 import RowActions from "components/lib/ReactTable/RowActions";
 import { getFormattedDate } from "utils/date";
 import StatusCell from "components/lib/ReactTable/StatusCell";
 import { Link } from "react-router-dom";
 import { getUSCurrency } from "utils/number";
 import FlagComponent from "components/lib/ReactTable/RowFlags";
+
 export const defaultColumns: Array<ColumnDef<OrdersList>> = [
   {
     accessorKey: "number",
     id: "number",
     header: "Order #",
-    cell: (info) => (
-      <Link
-        to={`/orders/${info.getValue() as string}`}
-        className="text-skin-primary"
-      >
-        {info.getValue() as string}
-      </Link>
-    ),
+    cell: (info) => {
+      const { table, row } = info;
+      return (
+        <Link
+          to={`/orders/${info.getValue() as string}`}
+          onClick={() => {
+            table.toggleAllRowsSelected(false);
+            row.toggleSelected(!row.getIsSelected());
+          }}
+          className={`text-skin-primary inline-block w-full h-full ${
+            row.getIsSelected()
+              ? "underline underline-offset-2 decoration-2"
+              : ""
+          }`}
+        >
+          {info.getValue() as string}
+        </Link>
+      );
+    },
     footer: (props) => props.column.id,
     size: 100,
     enablePinning: true,
@@ -29,6 +43,7 @@ export const defaultColumns: Array<ColumnDef<OrdersList>> = [
     },
   },
   {
+    accessorKey: "flags",
     id: "flags",
     header: "Flags",
     cell: (info) => <FlagComponent info={info} />,
@@ -127,7 +142,6 @@ export const defaultColumns: Array<ColumnDef<OrdersList>> = [
     header: "Status",
     cell: (info) => {
       const value = info.getValue();
-
       switch (value) {
         case "In Production":
           return (
@@ -150,7 +164,7 @@ export const defaultColumns: Array<ColumnDef<OrdersList>> = [
               label="Partially Shipped"
             />
           );
-        case "Shipped":
+        case "SHIPPED":
           return (
             <StatusCell
               color="#00840F"
@@ -260,6 +274,7 @@ export const defaultColumns: Array<ColumnDef<OrdersList>> = [
     enableGlobalFilter: false,
     enableSorting: false,
     enableResizing: false,
+    enablePinning: true,
     meta: {
       dataType: "string",
     },

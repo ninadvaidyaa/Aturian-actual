@@ -3,11 +3,10 @@ import { Transition, Popover, Dialog } from "@headlessui/react";
 
 import type { CellContext } from "@tanstack/react-table";
 import {
-  MdOutlineRemoveRedEye,
-  MdOutlineAvTimer,
   MdOutlineDeleteOutline,
   MdOutlineMoreVert,
   MdOutlineNoteAdd,
+  MdOutlineEditNote,
   MdOutlineStickyNote2,
   MdOutlineNotificationsNone,
   MdOutlineCameraAlt,
@@ -30,25 +29,13 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
 
   return (
     <>
-      <div className="flex flex-row gap-1">
+      <div className="flex flex-row gap-1 justify-end">
         <div>
           <button
             type="button"
             className="text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  "
           >
-            <MdOutlineRemoveRedEye
-              className="w-4 h-4"
-              color="#8C8C8C"
-            />
-            <span className="sr-only">Icon</span>
-          </button>
-        </div>
-        <div>
-          <button
-            type="button"
-            className="text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  "
-          >
-            <MdOutlineAvTimer
+            <MdOutlineEditNote
               className="w-4 h-4"
               color="#1890FF"
             />
@@ -61,8 +48,20 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
             className="text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  "
           >
             <MdOutlineDeleteOutline
-              className="w-4 h-4 "
+              className="w-4 h-4"
               color="#BB0505"
+            />
+            <span className="sr-only">Icon</span>
+          </button>
+        </div>
+        <div>
+          <button
+            type="button"
+            className="text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  "
+          >
+            <MdOutlineStickyNote2
+              className="w-4 h-4 "
+              color="#8C8C8C"
             />
             <span className="sr-only">Icon</span>
           </button>
@@ -75,6 +74,7 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
                   className={`${open ? "" : "text-opacity-70"}
                    h-4 w-4 transition duration-150 ease-in-out group-hover:text-opacity-80`}
                   aria-hidden="true"
+                  color="#1C1B1F"
                 />
               </Popover.Button>
               <Transition

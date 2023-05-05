@@ -1,4 +1,3 @@
-import type { Theme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 
 import MainCard, { type MainCardProps } from "components/MainCard";

@@ -1,8 +1,8 @@
-import type React from 'react';
-import { useEffect, useState, useMemo } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import type React from "react";
+import { useEffect, useState, useMemo } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import { styled, useTheme } from '@mui/material/styles';
+import { styled, useTheme } from "@mui/material/styles";
 import {
   Box,
   Collapse,
@@ -15,25 +15,23 @@ import {
   Popper,
   Typography,
   useMediaQuery,
-} from '@mui/material';
+} from "@mui/material";
 
-import NavItem from './NavItem';
+import NavItem from "./NavItem";
 
-import Transitions from 'components/@extended/Transitions';
+import Transitions from "components/@extended/Transitions";
 
-import useConfig from 'hooks/useConfig';
+import useConfig from "hooks/useConfig";
 
-import CheckBoxOutlineBlankSharpIcon from '@mui/icons-material/CheckBoxOutlineBlankSharp';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { type NavItemType } from 'types/menu';
-import { LAYOUT_CONST } from 'types/config';
+import CheckBoxOutlineBlankSharpIcon from "@mui/icons-material/CheckBoxOutlineBlankSharp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import { type NavItemType } from "types/menu";
+import { LAYOUT_CONST } from "types/config";
 
-
-import { menuStore } from 'hooks/useNavBar';
-import NavIcon from './NavIcon';
-
+import { menuStore } from "hooks/useNavBar";
+import NavIcon from "./NavIcon";
 
 interface VirtualElement {
   getBoundingClientRect: () => ClientRect | DOMRect;
@@ -42,23 +40,23 @@ interface VirtualElement {
 
 // mini-menu - wrapper
 const PopperStyled = styled(Popper)(({ theme }) => ({
-  overflow: 'visible',
+  overflow: "visible",
   zIndex: 1202,
   minWidth: 180,
-  '&:before': {
+  "&:before": {
     content: '""',
-    display: 'block',
-    position: 'absolute',
+    display: "block",
+    position: "absolute",
     top: 38,
     left: -5,
     width: 10,
     height: 10,
     backgroundColor: theme.palette.background.paper,
-    transform: 'translateY(-50%) rotate(45deg)',
+    transform: "translateY(-50%) rotate(45deg)",
     zIndex: 120,
     borderLeft: `1px solid ${theme.palette.grey.A800}`,
-    borderBottom: `1px solid ${theme.palette.grey.A800}`
-  }
+    borderBottom: `1px solid ${theme.palette.grey.A800}`,
+  },
 }));
 
 // ==============================|| NAVIGATION - LIST COLLAPSE ||============================== //
@@ -73,33 +71,49 @@ interface Props {
   selectedLevel: number;
 }
 
-const NavCollapse = ({ menu, level, parentId, setSelectedItems, selectedItems, setSelectedLevel, selectedLevel }: Props) => {
+const NavCollapse = ({
+  menu,
+  level,
+  parentId,
+  setSelectedItems,
+  selectedItems,
+  setSelectedLevel,
+  selectedLevel,
+}: Props) => {
   const theme = useTheme();
 
-  const downLG = useMediaQuery(theme.breakpoints.down('lg'));
- 
-const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen);
+  const downLG = useMediaQuery(theme.breakpoints.down("lg"));
+
+  const drawerOpen = menuStore(
+    (state: { drawerOpen: any }) => state.drawerOpen
+  );
   const { menuOrientation } = useConfig();
   const Navigation = useNavigate();
 
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<string | null | undefined>(null);
-  const [anchorEl, setAnchorEl] = useState<VirtualElement | (() => VirtualElement) | null | undefined>(null);
+  const [anchorEl, setAnchorEl] = useState<
+    VirtualElement | (() => VirtualElement) | null | undefined
+  >(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLDivElement, MouseEvent> | undefined) => {
+  const handleClick = (
+    event:
+      | React.MouseEvent<HTMLAnchorElement>
+      | React.MouseEvent<HTMLDivElement, MouseEvent>
+      | undefined
+  ) => {
     // console.log(menu)
     setAnchorEl(null);
     setSelectedLevel(level);
-    
+
     if (drawerOpen) {
       setOpen(!open);
       setSelected(!selected ? menu.id : null);
-      setSelectedItems(!selected ? menu.id : '');
+      setSelectedItems(!selected ? menu.id : "");
       if (menu.url) Navigation(`${menu.url}`);
     } else {
       setAnchorEl(event?.currentTarget);
     }
-    
   };
 
   const handlerIconLink = () => {
@@ -108,7 +122,12 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
     }
   };
 
-  const handleHover = (event: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLDivElement, MouseEvent> | undefined) => {
+  const handleHover = (
+    event:
+      | React.MouseEvent<HTMLAnchorElement>
+      | React.MouseEvent<HTMLDivElement, MouseEvent>
+      | undefined
+  ) => {
     setAnchorEl(event?.currentTarget);
   };
 
@@ -117,9 +136,9 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
     setSelected(null);
     setAnchorEl(null);
   };
-  const handleClosePopup = () =>{
+  const handleClosePopup = () => {
     setAnchorEl(null);
-  }
+  };
 
   useMemo(() => {
     if (selected === selectedItems) {
@@ -155,8 +174,8 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
         if (item.children?.length && menu.id) {
           checkOpenForParent(item.children, menu.id);
         }
-        if (pathname?.includes('product-details')) {
-          if (item.url?.includes('product-details')) {
+        if (pathname?.includes("product-details")) {
+          if (item.url?.includes("product-details")) {
             setSelected(menu.id);
             setOpen(true);
           }
@@ -169,7 +188,9 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
     }
   }, [pathname, menu.children]);
 
-  const setActiveItem = menuStore((state: { setActiveItem: any; }) => state.setActiveItem);
+  const setActiveItem = menuStore(
+    (state: { setActiveItem: any }) => state.setActiveItem
+  );
 
   useEffect(() => {
     if (menu.url === pathname) {
@@ -180,16 +201,14 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
     }
   }, [pathname, menu]);
 
-  const handelItemClick = (event: any) =>{
-    
+  const handelItemClick = (event: any) => {
     setSelected(menu.id);
     setOpen(true);
-    setSelectedItems( menu.id);
-    
+    setSelectedItems(menu.id);
   };
   const navCollapse = menu.children?.map((item) => {
     switch (item.type) {
-      case 'collapse':
+      case "collapse":
         return (
           <NavCollapse
             key={item.id}
@@ -202,27 +221,54 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
             parentId={parentId}
           />
         );
-      case 'item':
-        return <NavItem key={item.id} item={item} level={level + 1}  handleChange={handelItemClick}/>;
+      case "item":
+        return (
+          <NavItem
+            key={item.id}
+            item={item}
+            level={level + 1}
+            handleChange={handelItemClick}
+          />
+        );
       default:
         return (
-          <Typography key={item.id} variant="h6" color="error" align="center">
+          <Typography
+            key={item.id}
+            variant="h6"
+            color="error"
+            align="center"
+          >
             Fix - Collapse or Item
           </Typography>
         );
     }
   });
 
-  
-
   const isSelected = selected === menu.id;
-  const borderIcon = level === 1 ? <CheckBoxOutlineBlankSharpIcon style={{ fontSize: '1rem' }} /> : false;
+  const borderIcon =
+    level === 1 ? (
+      <CheckBoxOutlineBlankSharpIcon style={{ fontSize: "1rem" }} />
+    ) : (
+      false
+    );
   const Icon = menu.icon;
-  const menuIcon = menu.icon ? <Icon style={{ fontSize: drawerOpen ? '1rem' : '1.25rem' }} /> : borderIcon;
-  const textColor = theme.palette.mode === 'dark' ? 'grey.400' : 'text.primary';
-  const iconSelectedColor = theme.palette.mode === 'dark' && drawerOpen ? theme.palette.text.primary : theme.palette.primary.main;
+  const menuIcon = menu.icon ? (
+    <Icon style={{ fontSize: drawerOpen ? "1rem" : "1.25rem" }} />
+  ) : (
+    borderIcon
+  );
+  const textColor = theme.palette.mode === "dark" ? "grey.400" : "text.primary";
+  const iconSelectedColor =
+    theme.palette.mode === "dark" && drawerOpen
+      ? theme.palette.text.primary
+      : theme.palette.primary.main;
   const popperId = openMini ? `collapse-pop-${menu.id}` : undefined;
-  const FlexBox = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' };
+  const FlexBox = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+  };
   return (
     <>
       {menuOrientation === LAYOUT_CONST.VERTICAL_LAYOUT || downLG ? (
@@ -230,32 +276,42 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
           <ListItemButton
             disableRipple
             selected={selected === menu.id}
-            {...(!drawerOpen && { onMouseEnter: handleClick, onMouseLeave: handleClosePopup })}
+            {...(!drawerOpen && {
+              onMouseEnter: handleClick,
+              onMouseLeave: handleClosePopup,
+            })}
             onClick={handleClick}
             sx={{
               pl: drawerOpen ? `${level * 28}px` : 1.5,
               py: !drawerOpen && level === 1 ? 1.25 : 1,
               ...(drawerOpen && {
-                '&:hover': {
-                  bgcolor: theme.palette.mode === 'dark' ? 'divider' : 'primary.lighter'
+                "&:hover": {
+                  bgcolor:
+                    theme.palette.mode === "dark"
+                      ? "divider"
+                      : "primary.lighter",
                 },
-                '&.Mui-selected': {
-                  bgcolor: 'transparent',
+                "&.Mui-selected": {
+                  bgcolor: "transparent",
                   color: iconSelectedColor,
-                  '&:hover': { color: iconSelectedColor, bgcolor: theme.palette.mode === 'dark' ? 'divider' : 'transparent' }
-                }
+                  "&:hover": {
+                    color: iconSelectedColor,
+                    bgcolor:
+                      theme.palette.mode === "dark" ? "divider" : "transparent",
+                  },
+                },
               }),
               ...(!drawerOpen && {
-                '&:hover': {
-                  bgcolor: 'transparent'
+                "&:hover": {
+                  bgcolor: "transparent",
                 },
-                '&.Mui-selected': {
-                  '&:hover': {
-                    bgcolor: 'transparent'
+                "&.Mui-selected": {
+                  "&:hover": {
+                    bgcolor: "transparent",
                   },
-                  bgcolor: 'transparent'
-                }
-              })
+                  bgcolor: "transparent",
+                },
+              }),
             }}
           >
             {menuIcon && (
@@ -263,52 +319,75 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
                 onClick={handlerIconLink}
                 sx={{
                   minWidth: 28,
-                  color: selected === menu.id ? 'primary.main' : textColor,
+                  color: selected === menu.id ? "primary.main" : textColor,
                   ...(!drawerOpen && {
                     borderRadius: 1.5,
                     width: 15,
                     height: 36,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    '&:hover': {
-                      bgcolor: theme.palette.mode === 'dark' ? 'secondary.light' : 'secondary.lighter'
-                    }
+                    alignItems: "center",
+                    justifyContent: "center",
+                    "&:hover": {
+                      bgcolor:
+                        theme.palette.mode === "dark"
+                          ? "secondary.light"
+                          : "secondary.lighter",
+                    },
                   }),
                   ...(!drawerOpen &&
                     selected === menu.id && {
-                      bgcolor: theme.palette.mode === 'dark' ? 'primary.900' : 'primary.lighter',
-                      '&:hover': {
-                        bgcolor: theme.palette.mode === 'dark' ? 'primary.darker' : 'primary.lighter'
-                      }
-                    })
+                      bgcolor:
+                        theme.palette.mode === "dark"
+                          ? "primary.900"
+                          : "primary.lighter",
+                      "&:hover": {
+                        bgcolor:
+                          theme.palette.mode === "dark"
+                            ? "primary.darker"
+                            : "primary.lighter",
+                      },
+                    }),
                 }}
               >
                 {NavIcon(menu.icon)}
               </ListItemIcon>
             )}
-            
-            {(drawerOpen ) && (
+
+            {drawerOpen && (
               <ListItemText
                 primary={
-                  <Typography variant="h6" color={selected === menu.id ? 'primary' : textColor}>
+                  <Typography
+                    variant="h6"
+                    color={selected === menu.id ? "primary" : textColor}
+                  >
                     {menu.title}
                   </Typography>
                 }
                 secondary={
                   menu.caption && (
-                    <Typography variant="caption" color="secondary">
+                    <Typography
+                      variant="caption"
+                      color="secondary"
+                    >
                       {menu.caption}
                     </Typography>
                   )
                 }
               />
             )}
-            
+
             {(drawerOpen || (!drawerOpen && level !== 1)) &&
               (openMini || open ? (
-                <KeyboardArrowUpIcon style={{ fontSize: theme.spacing(2), marginLeft: 1, color: theme.palette.primary.main }} />
+                <KeyboardArrowUpIcon
+                  style={{
+                    fontSize: theme.spacing(2),
+                    marginLeft: 1,
+                    color: theme.palette.primary.main,
+                  }}
+                />
               ) : (
-                <KeyboardArrowDownIcon style={{ fontSize: theme.spacing(2), marginLeft: 1 }} />
+                <KeyboardArrowDownIcon
+                  style={{ fontSize: theme.spacing(2), marginLeft: 1 }}
+                />
               ))}
 
             {!drawerOpen && (
@@ -317,28 +396,31 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
                 anchorEl={anchorEl}
                 placement="right-start"
                 style={{
-                  zIndex: 2001
+                  zIndex: 2001,
                 }}
                 popperOptions={{
                   modifiers: [
                     {
-                      name: 'offset',
+                      name: "offset",
                       options: {
-                        offset: [-12, 1]
-                      }
-                    }
-                  ]
+                        offset: [-12, 1],
+                      },
+                    },
+                  ],
                 }}
               >
                 {({ TransitionProps }) => (
-                  <Transitions in={openMini} {...TransitionProps}>
+                  <Transitions
+                    in={openMini}
+                    {...TransitionProps}
+                  >
                     <Paper
                       sx={{
-                        overflow: 'hidden',
+                        overflow: "hidden",
                         mt: 1.5,
-                        
-                        backgroundImage: 'none',
-                        border: `1px solid ${theme.palette.divider}`
+
+                        backgroundImage: "none",
+                        border: `1px solid ${theme.palette.divider}`,
                       }}
                     >
                       <ClickAwayListener onClickAway={handleClose}>
@@ -351,7 +433,11 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
             )}
           </ListItemButton>
           {drawerOpen && (
-            <Collapse in={open} timeout="auto" unmountOnExit>
+            <Collapse
+              in={open}
+              timeout="auto"
+              unmountOnExit
+            >
               <List sx={{ p: 0 }}>{navCollapse}</List>
             </Collapse>
           )}
@@ -367,28 +453,41 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
             onClick={handleHover}
             aria-describedby={popperId}
             sx={{
-              '&.Mui-selected': {
-                bgcolor: 'transparent'
-              }
+              "&.Mui-selected": {
+                bgcolor: "transparent",
+              },
             }}
           >
-            <Box onClick={handlerIconLink} sx={FlexBox}>
-             
+            <Box
+              onClick={handlerIconLink}
+              sx={FlexBox}
+            >
               {!menuIcon && level !== 1 && (
                 <ListItemIcon
-                  sx={{ my: 'auto', minWidth: !menu.icon ? 18 : 36, bgcolor: 'transparent', '&:hover': { bgcolor: 'transparent' } }}
-                >
-                 
-                </ListItemIcon>
+                  sx={{
+                    my: "auto",
+                    minWidth: !menu.icon ? 18 : 36,
+                    bgcolor: "transparent",
+                    "&:hover": { bgcolor: "transparent" },
+                  }}
+                ></ListItemIcon>
               )}
               <ListItemText
                 primary={
-                  <Typography variant="body1" color="inherit" sx={{ my: 'auto' }}>
+                  <Typography
+                    variant="body1"
+                    color="inherit"
+                    sx={{ my: "auto" }}
+                  >
                     {menu.title}
                   </Typography>
                 }
               />
-              {openMini ? <KeyboardArrowRightIcon /> : <KeyboardArrowDownIcon />}
+              {openMini ? (
+                <KeyboardArrowRightIcon />
+              ) : (
+                <KeyboardArrowDownIcon />
+              )}
             </Box>
 
             {anchorEl && (
@@ -398,26 +497,29 @@ const  drawerOpen  = menuStore((state: { drawerOpen: any; }) => state.drawerOpen
                 anchorEl={anchorEl}
                 placement="right-start"
                 style={{
-                  zIndex: 2001
+                  zIndex: 2001,
                 }}
                 modifiers={[
                   {
-                    name: 'offset',
+                    name: "offset",
                     options: {
-                      offset: [-10, 0]
-                    }
-                  }
+                      offset: [-10, 0],
+                    },
+                  },
                 ]}
               >
                 {({ TransitionProps }) => (
-                  <Transitions in={openMini} {...TransitionProps}>
+                  <Transitions
+                    in={openMini}
+                    {...TransitionProps}
+                  >
                     <Paper
                       sx={{
-                        overflow: 'hidden',
+                        overflow: "hidden",
                         mt: 1.5,
                         py: 0.5,
                         boxShadow: theme.shadows[8],
-                        backgroundImage: 'none'
+                        backgroundImage: "none",
                       }}
                     >
                       <ClickAwayListener onClickAway={handleClose}>

@@ -10,7 +10,11 @@ const ReactTableBody = <M,>({ table, ...props }: TableBodyProps<M>) => (
     {table.getRowModel().rows.map((row) => (
       <tr
         key={row.id}
-        className="odd:bg-white even:bg-slate-50 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+        // onClick={() => {
+        //   table.toggleAllRowsSelected(false);
+        //   row.toggleSelected(!row.getIsSelected());
+        // }}
+        className={`odd:bg-white even:bg-slate-50 hover:bg-gray-50  border-b  `}
       >
         {row.getVisibleCells().map((cell) => (
           <td

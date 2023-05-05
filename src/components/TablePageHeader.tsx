@@ -9,10 +9,10 @@ import {
 } from "react-icons/md";
 
 const Search = () => (
-  <div className="flex flex-row justify-between items-center gap-1">
+  <div className="flex flex-row justify-between items-center gap-1 ">
     <button
       type="button"
-      className="text-gray-400 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium  text-sm p-1 text-center inline-flex items-center  bg-white"
+      className="text-gray-400 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium  text-sm p-1 text-center inline-flex items-center  bg-white rounded-md"
     >
       <MdOutlineLockOpen className="w-6 h-6" />
       <span className="sr-only">Icon</span>
@@ -107,7 +107,7 @@ const TablePageHeader = <TData,>({
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-0 mt-2 w-min origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+                <Menu.Items className="absolute right-0 mt-2 w-min origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-30">
                   <div className="px-1 py-1">
                     <Menu.Item>
                       {({ active }) => (
@@ -117,7 +117,7 @@ const TablePageHeader = <TData,>({
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                           onClick={openModal}
                         >
-                          Show/Hide
+                          Column
                         </button>
                       )}
                     </Menu.Item>
@@ -128,7 +128,7 @@ const TablePageHeader = <TData,>({
                             active ? "bg-slate-200" : "text-gray-900"
                           } group flex w-full items-center rounded-md px-3 py-2 text-sm`}
                         >
-                          Other
+                          Filter
                         </button>
                       )}
                     </Menu.Item>
