@@ -51,13 +51,13 @@ api.interceptors.response.use(
 
           return await api(originalConfig);
         } catch (_error) {
+          setTokenRefresh(null);
           return await Promise.reject(_error);
         }
       }
     }
-    setTokenRefresh(null);
-    setToken(null);
-    return await Promise.reject(err);
+    /* eslint-disable */
+    return  Promise.reject(err);
   }
 );
 

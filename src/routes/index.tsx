@@ -1,5 +1,6 @@
 import MainLayout from "MainLayout";
 import AuthGuard from "components/AuthGuard";
+import ErrorPage from "components/ErrorPage";
 import Loadable from "components/Loadable";
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/",
+            errorElement: <ErrorPage />,
             children: [
               {
                 path: "orders",

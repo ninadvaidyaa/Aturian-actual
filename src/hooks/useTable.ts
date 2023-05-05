@@ -27,11 +27,12 @@ interface TableState extends TableStateProps {
     setColumnOrder: OnChangeFn<ColumnOrderState>;
     setPagination: OnChangeFn<PaginationState>;
     setSorting: OnChangeFn<SortingState>;
+    reset: ()=> void
   };
 }
 const DEFAULT_PROPS: TableStateProps = {
   columnOrder: [],
-  pagination: { pageIndex: 0, pageSize: 5 },
+  pagination: { pageIndex: 0, pageSize: 50 },
   columnVisibility: {},
   columnPinning: {},
   sorting: [],
@@ -94,6 +95,9 @@ export const useTableStore = create<TableState>()((set) => ({
         // @ts-expect-error
         sorting: updater(state.sorting as ColumnSort[]),
       }));
+    },
+    reset: () => {
+      set(DEFAULT_PROPS);
     },
   },
 }));

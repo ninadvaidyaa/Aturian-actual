@@ -4,10 +4,11 @@ import type { ElementType } from "react";
 
 import Loader from "./Loader";
 import { ErrorBoundary } from "react-error-boundary";
+import ErrorPage from "./ErrorPage";
 
 const Loadable = (Component: ElementType) => (props: any) =>
   (
-    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+    <ErrorBoundary fallback={<ErrorPage />}>
       <Suspense fallback={<Loader />}>
         <Component {...props} />
       </Suspense>
