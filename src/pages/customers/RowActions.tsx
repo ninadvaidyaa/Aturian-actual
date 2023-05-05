@@ -5,15 +5,13 @@ import type { CellContext } from "@tanstack/react-table";
 import {
   MdOutlineDeleteOutline,
   MdOutlineMoreVert,
-  MdOutlineNoteAdd,
+  MdOutlineInventory,
   MdOutlineEditNote,
   MdOutlineStickyNote2,
-  MdOutlineNotificationsNone,
-  MdOutlineCameraAlt,
-  MdOutlineFactCheck,
-  MdOutlineFileCopy,
-  MdOutlineTextSnippet,
-  MdOutlineAssignmentTurnedIn,
+  MdOutlineRemoveRedEye,
+  MdOutlineCreditCard,
+  MdOutlineAvTimer,
+  MdOutlineContactPage,
 } from "react-icons/md";
 
 const genericMemo: <T>(component: T) => T = React.memo;
@@ -86,63 +84,42 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1"
               >
-                <Popover.Panel className="absolute flex flex-col ms-[-170px] z-10 mt-3 max-w-sm bg-white rounded-lg shadow">
+                <Popover.Panel className="absolute flex flex-col ms-[-250px] z-10 mt-3 max-w-sm bg-white rounded-lg shadow">
                   <button
                     type="button"
                     onClick={handleAdd}
-                    className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center"
+                    className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center first:mt-1"
                   >
-                    <MdOutlineNoteAdd className="w-4 h-4 mr-2" />
-                    Order Notes
+                    <MdOutlineRemoveRedEye className="w-4 h-4 mr-2" />
+                    Customer Overview
                   </button>
                   <button
                     type="button"
                     className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center"
                   >
-                    <MdOutlineStickyNote2 className="w-4 h-4 mr-2" />
-                    Data Entry
+                    <MdOutlineInventory className="w-4 h-4 mr-2" />
+                    Orders
                   </button>
                   <button
                     type="button"
                     className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center"
                   >
-                    <MdOutlineNotificationsNone className="w-4 h-4 mr-2" />
-                    Order Notification
+                    <MdOutlineCreditCard className="w-4 h-4 mr-2" />
+                    A/R Details
                   </button>
                   <button
                     type="button"
                     className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center"
                   >
-                    <MdOutlineCameraAlt className="w-4 h-4 mr-2" />
-                    Order Proof
+                    <MdOutlineAvTimer className="w-4 h-4 mr-2" />
+                    Activity Log
                   </button>
                   <button
                     type="button"
-                    className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center"
+                    className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center last:mb-1"
                   >
-                    <MdOutlineFactCheck className="w-4 h-4 mr-2" />
-                    Preview
-                  </button>
-                  <button
-                    type="button"
-                    className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center"
-                  >
-                    <MdOutlineFileCopy className="w-4 h-4 mr-2" />
-                    Duplicate Order
-                  </button>
-                  <button
-                    type="button"
-                    className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center"
-                  >
-                    <MdOutlineTextSnippet className="w-4 h-4 mr-2" />
-                    Add Pink Slip
-                  </button>
-                  <button
-                    type="button"
-                    className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center"
-                  >
-                    <MdOutlineAssignmentTurnedIn className="w-4 h-4 mr-2" />
-                    Assign
+                    <MdOutlineContactPage className="w-4 h-4 mr-2" />
+                    Additional Customer Contacts
                   </button>
                 </Popover.Panel>
               </Transition>
@@ -172,7 +149,7 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
             <div className="fixed inset-0 bg-black bg-opacity-25" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
+          <div className="fixed inset-0 overflow-y-auto p-2">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
@@ -192,7 +169,9 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit ipsam aliquid enim similique nemo consequatur, a optio tempore aliquam quis!
+                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                      Reprehenderit ipsam aliquid enim similique nemo
+                      consequatur, a optio tempore aliquam quis!
                     </p>
                   </div>
 

@@ -99,7 +99,7 @@ export const defaultColumns: Array<ColumnDef<CustomerList>> = [
     header: "Action",
     cell: (info) => <RowActions info={info} />,
     footer: (props) => props.column.id,
-    size: 250,
+    size: 160,
     enableHiding: false,
     enableColumnFilter: false,
     enableGlobalFilter: false,
