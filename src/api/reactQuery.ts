@@ -6,8 +6,8 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      retry: 2,
-      staleTime: 60 * 1000, // 1 minute
+      retry: false,
+      staleTime: 24 * 60 * 60 * 1000, // 1 day
     },
   },
 });

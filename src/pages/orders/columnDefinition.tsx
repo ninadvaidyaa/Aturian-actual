@@ -112,7 +112,7 @@ export const defaultColumns: Array<ColumnDef<OrdersList>> = [
     },
   },
   {
-    accessorKey: "salesperson",
+    accessorFn: (value)=> value.salesperson.name,
     id: "salesperson",
     header: "Sales Person",
     cell: (info) => info.getValue(),

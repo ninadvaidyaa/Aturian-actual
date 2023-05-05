@@ -1,5 +1,5 @@
 import { lazy, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
+
 import Loadable from "components/Loadable";
 import { fetchAllCustomers } from "api/customer.api";
 import { defaultColumns, views } from "./columnDefinition";
@@ -76,18 +76,18 @@ const CustomerPage = () => {
     keepPreviousData: true,
   });
 
-  return (<>
-  {isFetching && <Loader />}
-    <ReactTable
-      title="Customer"
-      size="medium"
-      data={data?.data ?? []}
-      totalRows={data?.total ?? 0}
-      defaultColumns={defaultColumns}
-      views={views}
-    />
-  </>
-
+  return (
+    <>
+      {isFetching && <Loader />}
+      <ReactTable
+        title="Customer"
+        size="medium"
+        data={data?.data ?? []}
+        totalRows={data?.total ?? 0}
+        defaultColumns={defaultColumns}
+        views={views}
+      />
+    </>
   );
 };
 
