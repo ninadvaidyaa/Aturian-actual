@@ -20,7 +20,7 @@ const Search = () => (
     <form className="w-full">
       <label
         htmlFor="default-search"
-        className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+        className="mb-2 text-sm font-medium text-gray-900 sr-only"
       >
         Search
       </label>
@@ -28,13 +28,13 @@ const Search = () => (
         <input
           type="search"
           id="default-search"
-          className="bg-white border border-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 active:border-blue-500 block w-full pr-10 p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="bg-white border border-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 active:border-blue-500 block w-full pr-10 p-2"
           placeholder="Search Mockups, Logos..."
         />
         <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
           <svg
             aria-hidden="true"
-            className="w-5 h-5 text-gray-500 dark:text-gray-400"
+            className="w-5 h-5 text-gray-500"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -81,7 +81,7 @@ const TablePageHeader = <TData,>({
             <Search />
             <button
               type="button"
-              className="text-white bg-skin-fill hover:bg-skin-fill focus:ring-4 focus:outline-none focus:ring-slate-50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="text-white bg-skin-fill hover:bg-skin-fill focus:ring-4 focus:outline-none focus:ring-slate-50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2"
             >
               <MdOutlineAdd className="w-5 h-5 mr-2 -ml-1" />
               Add New {title}
@@ -191,11 +191,11 @@ const TablePageHeader = <TData,>({
                               disabled
                               id={column.id}
                               type="checkbox"
-                              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                             />
                             <label
                               htmlFor={column.id}
-                              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                              className="ml-2 text-sm font-medium text-gray-900"
                             >
                               {column.columnDef.header?.toString()}
                             </label>
@@ -211,7 +211,7 @@ const TablePageHeader = <TData,>({
                             />
                             <label
                               htmlFor={column.id}
-                              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                              className="ml-2 text-sm font-medium text-gray-900"
                             >
                               {column.columnDef.header?.toString()}
                             </label>

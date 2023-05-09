@@ -120,7 +120,7 @@ const TablePagination = ({
             </Listbox>
           </div>
           <nav>
-            <ul className="flex flex-wrap items-center justify-center gap-2 text-gray-900 dark:text-white">
+            <ul className="flex flex-wrap items-center justify-center gap-2 text-gray-900">
               <li>
                 {rowCount
                   ? `${countStart}–${countEnd} of ${rowCount}`
@@ -162,7 +162,7 @@ const TablePagination = ({
                       id="page"
                       value={pageIndex + 1}
                       onChange={handleChangePagination}
-                      className="block w-full rounded-sm border border-gray-300 bg-gray-50 p-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                      className="block w-full rounded-sm border border-gray-300 bg-gray-50 p-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                     />
                   </label>
                 </div>
