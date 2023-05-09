@@ -2,7 +2,7 @@ import { Box, Grid, Toolbar, useMediaQuery } from "@mui/material";
 import MainDrawer from "MainLayout/Drawer";
 import Header from "MainLayout/Header";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet , useLocation } from "react-router-dom";
 
 import useConfig from "hooks/useConfig";
 import { LAYOUT_CONST } from "types/config";
@@ -15,6 +15,9 @@ import InfoIcon from "@mui/icons-material/Info";
 function MainLayout(): JSX.Element {
   const { menuOrientation } = useConfig();
   const theme = useTheme();
+  const location = useLocation();
+  console.log(location.pathname.split("/"));
+  
   const downLG = useMediaQuery(theme.breakpoints.down("lg"));
   const [open, setOpen] = useState(true);
 

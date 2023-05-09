@@ -14,13 +14,13 @@ const ReactTableBody = <M,>({ table, ...props }: TableBodyProps<M>) => (
         //   table.toggleAllRowsSelected(false);
         //   row.toggleSelected(!row.getIsSelected());
         // }}
-        className={`odd:bg-white even:bg-slate-50 hover:bg-gray-50  border-b  `}
+        className={`odd:bg-white even:bg-gray-50 hover:bg-base-hover  border-b  `}
       >
         {row.getVisibleCells().map((cell) => (
           <td
             key={cell.id}
             scope="row"
-            className={`px-1.5 py-2 font-medium text-gray-900 whitespace-nowrap  text-ellipsis  dark:text-white ${
+            className={`p-1 font-medium text-gray-900 whitespace-nowrap  text-ellipsis ${
               cell.column.id !== "action" ? "truncate" : ""
             }`}
             style={{

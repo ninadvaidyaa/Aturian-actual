@@ -53,8 +53,8 @@ const TablePagination = ({
   };
 
   return (
-    <div className="flex flex-row items-center justify-end pt-2">
-      <div className="bg-white rounded-md px-2">
+    <div className="flex flex-row items-center justify-end bg-white">
+      <div className="rounded-md bg-white px-2">
         <div className="flex flex-row items-center justify-center gap-2">
           <div className="flex flex-row items-center justify-center gap-1 pl-2">
             <p color="secondary ">Row per page</p>
@@ -64,7 +64,7 @@ const TablePagination = ({
             >
               <div className="relative mt-1">
                 <Listbox.Button className="relative w-full cursor-default rounded-sm bg-white py-1 pl-1 pr-8 text-left focus:outline-none focus-visible:border-gray-300 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-300">
-                  <span className="block truncate min-h-[20px]">
+                  <span className="block min-h-[20px] truncate">
                     {pageSize}
                   </span>
                   <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
@@ -80,7 +80,7 @@ const TablePagination = ({
                   leaveFrom="opacity-100"
                   leaveTo="opacity-0"
                 >
-                  <Listbox.Options className="absolute -top-2 transform -translate-y-full mb-1 z-10 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                  <Listbox.Options className="absolute -top-2 z-10 mb-1 max-h-60 -translate-y-full transform overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                     {[10, 20, 30, 40, 50].map((_pageSize) => (
                       <Listbox.Option
                         key={_pageSize}
@@ -131,13 +131,13 @@ const TablePagination = ({
                   type="button"
                   className={`${
                     hasPrevPage ? "text-slate-500" : "text-gray-300"
-                  } focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center`}
+                  } inline-flex items-center rounded-full p-1 text-center text-sm font-medium focus:outline-none focus:ring-1 focus:ring-blue-300`}
                   aria-label="first"
                   title="first"
                   disabled={!hasPrevPage}
                   onClick={onFirstPageClick}
                 >
-                  <MdSkipPrevious className="w-6 h-6" />
+                  <MdSkipPrevious className="h-6 w-6" />
                 </button>
               </li>
               <li className="selected">
@@ -145,13 +145,13 @@ const TablePagination = ({
                   type="button"
                   className={`${
                     hasPrevPage ? "text-slate-500" : "text-gray-300"
-                  } focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center`}
+                  } inline-flex items-center rounded-full p-1 text-center text-sm font-medium focus:outline-none focus:ring-1 focus:ring-blue-300`}
                   aria-label="previous"
                   title="previous"
                   disabled={!hasPrevPage}
                   onClick={onPreviousClick}
                 >
-                  <MdOutlineArrowLeft className="w-6 h-6" />
+                  <MdOutlineArrowLeft className="h-6 w-6" />
                 </button>
               </li>
               <li style={{ maxWidth: "48px" }}>
@@ -162,7 +162,7 @@ const TablePagination = ({
                       id="page"
                       value={pageIndex + 1}
                       onChange={handleChangePagination}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="block w-full rounded-sm border border-gray-300 bg-gray-50 p-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     />
                   </label>
                 </div>
@@ -172,13 +172,13 @@ const TablePagination = ({
                   type="button"
                   className={`${
                     hasNextPage ? "text-slate-500" : "text-gray-300"
-                  } focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center`}
+                  } inline-flex items-center rounded-full p-1 text-center text-sm font-medium focus:outline-none focus:ring-1 focus:ring-blue-300`}
                   aria-label="next"
                   title="next"
                   disabled={!hasNextPage}
                   onClick={onNextClick}
                 >
-                  <MdOutlineArrowRight className="w-6 h-6" />
+                  <MdOutlineArrowRight className="h-6 w-6" />
                 </button>
               </li>
               <li>
@@ -186,13 +186,13 @@ const TablePagination = ({
                   type="button"
                   className={`${
                     hasNextPage ? "text-slate-500" : "text-gray-300"
-                  } focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center`}
+                  } inline-flex items-center rounded-full p-1 text-center text-sm font-medium focus:outline-none focus:ring-1 focus:ring-blue-300`}
                   aria-label="last"
                   title="last"
                   disabled={!hasNextPage}
                   onClick={onLastPageClick}
                 >
-                  <MdSkipNext className="w-6 h-6" />
+                  <MdSkipNext className="h-6 w-6" />
                 </button>
               </li>
             </ul>
