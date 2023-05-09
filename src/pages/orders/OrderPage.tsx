@@ -1,11 +1,12 @@
-import { lazy, useMemo } from "react";
+import { lazy, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { fetchAllOrders } from "api/order.api";
 import {
   useColumnFilters,
   usePagination,
-  useSorting
+  useSorting,
+  useTableActions,
 } from "hooks/useTable";
 import Loader from "components/Loader";
 import Loadable from "components/Loadable";
@@ -18,8 +19,11 @@ const ReactTable = Loadable(
 );
 const OrderPageComponent = () => {
   const pagination = usePagination();
+  const { reset } = useTableActions();
   const columnFilters = useColumnFilters();
   const sorting = useSorting();
+  useEffect(() => () => { reset(); }, []);
+
   const queryParams = useMemo(() => {
     let params = "";
     let sortParam = "";
