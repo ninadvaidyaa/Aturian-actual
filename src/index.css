@@ -1,24 +1,23 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+  
 @layer base {
     :root {
+        --clr-primary-50: 235, 242, 254;
+        --clr-primary-100: 215, 230, 253;
+        --clr-primary-200: 176, 205, 251;
+        --clr-primary-300: 137, 180, 250;
+        --clr-primary-400: 98, 155, 248;
+        --clr-primary-500: 59, 130, 246;
+        --clr-primary-600: 10, 97, 237;
+        --clr-primary-700: 8, 75, 184;
+        --clr-primary-800: 6, 53, 131;
+        --clr-primary-900: 4, 31, 77;
+        /*  */
         --color-text-base: 255, 255, 255;
         --color-text-primary: 24, 144, 255;
-        --color-text-muted: 199, 210, 254;
-        --color-text-inverted: 79, 70, 229;
-        --color-fill: 24, 144, 255;
-        --bg-fill-muted: 230, 247, 255;
-        --bg-base: 245, 245, 245;
-        --bg-hover: 245, 245, 245;
-        --color-button-accent: 255, 255, 255;
-        --color-button-accent-hover: 238, 242, 255;
-        --color-button-muted: 99, 102, 241;
-    }
-
-    .theme-swiss {
-        --color-text-base: 255, 255, 255;
         --color-text-muted: 199, 210, 254;
         --color-text-inverted: 79, 70, 229;
         --color-fill: 24, 144, 255;
