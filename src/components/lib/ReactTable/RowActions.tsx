@@ -157,7 +157,7 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
       >
         <Dialog
           as="div"
-          className="relative z-10"
+          className="relative z-20"
           onClose={handleAdd}
         >
           <Transition.Child
