@@ -1,5 +1,5 @@
 import type { Table, Header, Column } from "@tanstack/react-table";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { flexRender } from "@tanstack/react-table";
 import { useDrag, useDragLayer, useDrop } from "react-dnd";
 import type { DragLayerMonitor } from "react-dnd";
@@ -112,41 +112,10 @@ const DraggableColumnHeader = <T,>({ header, table }: ColumnHeaderProps<T>) => {
   }
   drag(drop(ref));
 
-  const sorting = useMemo(
-    () =>
-      columnDef.enableSorting && (
-        <div
-          className="flex flex-col"
-          onClick={header.column.getToggleSortingHandler()}
-        >
-          <MdOutlineArrowDropUp
-            style={{
-              fontSize: "1.25rem",
-              color:
-                column.getIsSorted() === "asc"
-                  ? theme.palette.text.secondary
-                  : "inherit",
-            }}
-          />
-          <MdOutlineArrowDropDown
-            style={{
-              fontSize: "1.25rem",
-              marginTop: theme.spacing(-1.5),
-              color:
-                column.getIsSorted() === "desc"
-                  ? theme.palette.text.secondary
-                  : "inherit",
-            }}
-          />
-        </div>
-      ),
-    [column.getIsSorted()]
-  );
-
   return (
     <th
       className={
-        "min-w-[10ch] px-1.5 py-2 text-left group text-ellipsis whitespace-nowrap"
+        "group min-w-[10ch] text-ellipsis whitespace-nowrap px-1.5 py-2 text-left"
       }
       colSpan={header.colSpan}
       style={{
@@ -155,7 +124,7 @@ const DraggableColumnHeader = <T,>({ header, table }: ColumnHeaderProps<T>) => {
         borderColor,
       }}
     >
-      <div className="flex flex-row items-center justify-between relative">
+      <div className="relative flex flex-row items-center justify-between">
         <div
           ref={ref}
           className="overflow-hidden text-ellipsis whitespace-nowrap"
@@ -164,11 +133,36 @@ const DraggableColumnHeader = <T,>({ header, table }: ColumnHeaderProps<T>) => {
             ? null
             : flexRender(columnDef.header, header.getContext())}
         </div>
-        {sorting}
+        {columnDef.enableSorting && (
+          <div
+            className="flex flex-col"
+            onClick={header.column.getToggleSortingHandler()}
+          >
+            <MdOutlineArrowDropUp
+              style={{
+                fontSize: "1.25rem",
+                color:
+                  column.getIsSorted() === "asc"
+                    ? theme.palette.text.secondary
+                    : "inherit",
+              }}
+            />
+            <MdOutlineArrowDropDown
+              style={{
+                fontSize: "1.25rem",
+                marginTop: theme.spacing(-1.5),
+                color:
+                  column.getIsSorted() === "desc"
+                    ? theme.palette.text.secondary
+                    : "inherit",
+              }}
+            />
+          </div>
+        )}
         <div
           className={`absolute right-0 top-0 h-full w-1 ${
             header.column.getIsResizing() ? "bg-gray-200" : "bg-gray-100"
-          } select-none touch-none cursor-col-resize hover:opacity-1 opacity-1`}
+          } hover:opacity-1 opacity-1 cursor-col-resize touch-none select-none`}
           {...{
             onMouseDown: header.getResizeHandler(),
             onTouchStart: header.getResizeHandler(),

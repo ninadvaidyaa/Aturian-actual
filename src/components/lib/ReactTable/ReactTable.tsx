@@ -10,7 +10,6 @@ import {
   getSortedRowModel,
   getFacetedMinMaxValues,
   getFacetedUniqueValues,
-
 } from "@tanstack/react-table";
 
 import Loadable from "components/Loadable";
@@ -91,7 +90,9 @@ const ReactTable = <M,>({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onColumnOrderChange: setColumnOrder,
-    onColumnFiltersChange: setColumnFilters,
+    onColumnFiltersChange: (updater) => {
+      setColumnFilters(updater);
+    },
     onPaginationChange: setPagination,
     onColumnVisibilityChange: setColumnVisibility,
     onColumnPinningChange: setColumnPinning,
@@ -109,13 +110,13 @@ const ReactTable = <M,>({
         table={table}
       />
       <ViewSelector views={views} />
-      <div className="p-2 bg-white rounded-sm">
-        <ScrollX className="h-[calc(100vh_-_270px)] relative overflow-auto rounded-sm">
+      <div className="rounded-sm bg-white p-2">
+        <ScrollX className="relative h-[calc(100vh_-_270px)] overflow-auto rounded-sm">
           <table
             className="table-fixed"
             style={{ width: table.getCenterTotalSize() }}
           >
-            <thead className="sticky top-0 capitalize bg-gray-50 z-20">
+            <thead className="sticky top-0 z-20 bg-gray-50 capitalize">
               {table.getHeaderGroups().map((headerGroup) => (
                 <Fragment key={headerGroup.id}>
                   <tr key={`${headerGroup.id}-name`}>
@@ -167,19 +168,24 @@ const ReactTable = <M,>({
         }}
         gotoPage={(n: number) => {
           table.setPageIndex(n);
+          setRowSelection({});
         }}
         rowCount={totalRows}
         onPreviousClick={() => {
           table.previousPage();
+          setRowSelection({});
         }}
         onNextClick={() => {
           table.nextPage();
+          setRowSelection({});
         }}
         onFirstPageClick={() => {
           table.setPageIndex(0);
+          setRowSelection({});
         }}
         onLastPageClick={() => {
           table.setPageIndex(table.getPageCount() - 1);
+          setRowSelection({});
         }}
       />
     </div>
