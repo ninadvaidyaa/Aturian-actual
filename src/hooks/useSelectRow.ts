@@ -12,12 +12,18 @@ const useSelectedRowStore = create<SelectedRowProps>()((set) => ({
   rowSelection: {},
   actions: {
     setRowSelection: (updater) => {
-      set((state) => ({
-        ...state,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        rowSelection: updater(state.rowSelection),
-      }));
+      set((state) => {
+        if (typeof updater === "function") {
+          return {
+            rowSelection: updater(state.rowSelection as RowSelectionState),
+          };
+        } else {
+          return {
+            ...state,
+            rowSelection: updater,
+          };
+        }
+      });
     },
   },
 }));

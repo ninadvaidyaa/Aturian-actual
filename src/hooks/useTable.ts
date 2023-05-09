@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import type {
   ColumnFiltersState,
-  ColumnSort,
   ColumnOrderState,
   VisibilityState,
   PaginationState,
@@ -27,7 +26,7 @@ interface TableState extends TableStateProps {
     setColumnOrder: OnChangeFn<ColumnOrderState>;
     setPagination: OnChangeFn<PaginationState>;
     setSorting: OnChangeFn<SortingState>;
-    reset: ()=> void
+    reset: () => void;
   };
 }
 const DEFAULT_PROPS: TableStateProps = {
@@ -42,28 +41,48 @@ export const useTableStore = create<TableState>()((set) => ({
   ...DEFAULT_PROPS,
   actions: {
     setColumnVisibility: (updater) => {
-      set((state) => ({
-        ...state,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        columnVisibility: updater(state.columnVisibility as VisibilityState),
-      }));
+      set((state) => {
+        if (typeof updater === "function") {
+          return {
+            columnVisibility: updater(
+              state.columnVisibility as VisibilityState
+            ),
+          };
+        } else {
+          return {
+            ...state,
+            columnVisibility: updater,
+          };
+        }
+      });
     },
     setColumnPinning: (updater) => {
-      set((state) => ({
-        ...state,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        columnPinning: updater(state.columnPinning as ColumnPinningState),
-      }));
+      set((state) => {
+        if (typeof updater === "function") {
+          return {
+            columnPinning: updater(state.columnPinning as ColumnPinningState),
+          };
+        } else {
+          return {
+            ...state,
+            columnPinning: updater,
+          };
+        }
+      });
     },
     setColumnFilters: (updater) => {
-      set((state) => ({
-        ...state,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        columnFilters: updater(state.columnFilters as ColumnFiltersState),
-      }));
+      set((state) => {
+        if (typeof updater === "function") {
+          return {
+            columnFilters: updater(state.columnFilters as ColumnFiltersState),
+          };
+        } else {
+          return {
+            ...state,
+            columnFilters: updater,
+          };
+        }
+      });
     },
     setColumnOrder: (newOrder) => {
       set((state) => {
@@ -81,20 +100,34 @@ export const useTableStore = create<TableState>()((set) => ({
       });
     },
     setPagination: (updater) => {
-      set((state) => ({
-        ...state,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        pagination: updater(state.pagination as PaginationState),
-      }));
+      set((state) => {
+        if (typeof updater === "function") {
+          return {
+            ...state,
+            pagination: updater(state.pagination as PaginationState),
+          };
+        } else {
+          return {
+            ...state,
+            pagination: updater,
+          };
+        }
+      });
     },
     setSorting: (updater) => {
-      set((state) => ({
-        ...state,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        sorting: updater(state.sorting as ColumnSort[]),
-      }));
+      set((state) => {
+        if (updater instanceof Array) {
+          return {
+            ...state,
+            sorting: updater,
+          };
+        } else {
+          return {
+            ...state,
+            sorting: updater(state.sorting as SortingState),
+          };
+        }
+      });
     },
     reset: () => {
       set(DEFAULT_PROPS);
