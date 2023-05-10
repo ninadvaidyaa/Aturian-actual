@@ -1,9 +1,14 @@
-import { lazy, useMemo } from "react";
+import { lazy, useEffect, useMemo } from "react";
 
 import Loadable from "components/Loadable";
 import { fetchAllCustomers } from "api/customer.api";
 import { defaultColumns, views } from "./columnDefinition";
-import { useColumnFilters, usePagination, useSorting } from "hooks/useTable";
+import {
+  useColumnFilters,
+  usePagination,
+  useSorting,
+  useTableActions,
+} from "hooks/useTable";
 import Loader from "components/Loader";
 import { useQuery } from "@tanstack/react-query";
 
@@ -14,6 +19,14 @@ const CustomerPage = () => {
   const pagination = usePagination();
   const columnFilters = useColumnFilters();
   const sorting = useSorting();
+  const { reset } = useTableActions();
+  useEffect(
+    () => () => {
+      reset();
+    },
+    []
+  );
+
   const queryParams = useMemo(() => {
     let params = "";
     let sortParam = "";

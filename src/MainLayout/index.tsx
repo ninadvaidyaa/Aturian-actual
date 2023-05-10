@@ -15,6 +15,7 @@ import InfoIcon from "@mui/icons-material/Info";
 function MainLayout(): JSX.Element {
   const { menuOrientation } = useConfig();
   const theme = useTheme();
+    
   const downLG = useMediaQuery(theme.breakpoints.down("lg"));
   const [open, setOpen] = useState(true);
 

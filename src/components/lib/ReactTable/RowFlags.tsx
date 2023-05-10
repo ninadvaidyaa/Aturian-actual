@@ -20,10 +20,10 @@ const FlagComponent = <TData, P>({ info }: RowActionsProps<TData, P>) =>
   // TODO: update color based on flag code
    (
     <>
-      <div className="flex flex-row gap-1">
+      <div className="flex flex-row gap-0.5">
         <button
           type="button"
-          className="w-6 h-6 text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  "
+          className="text-skin-inverted focus:ring-1 p-0.5 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm text-center"
         >
           <MdOutlineSpeed
             className="w-4 h-4"

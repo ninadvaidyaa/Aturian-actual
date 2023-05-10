@@ -8,7 +8,7 @@ interface TableHeaderProps<M> {
 }
 
 const TableHeader = <M,>({ table, ...props }: TableHeaderProps<M>) => (
-  <thead className="text-gray-700 capitalize bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+  <thead className="text-gray-700 capitalize bg-gray-50">
     {table.getHeaderGroups().map((headerGroup) => (
       <Fragment key={headerGroup.id}>
         <tr key={`${headerGroup.id}-name`}>

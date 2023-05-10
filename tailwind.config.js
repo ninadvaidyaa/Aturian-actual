@@ -9,10 +9,24 @@ function withOpacity(variableName) {
   };
 }
 
+function generateColors(color) {
+  const colorMap = {};
+  [50, 100, 200, 300, 400, 500, 600, 700, 800, 900].forEach((index) => {
+    colorMap[index] = withOpacity(`${color}-${index}`);
+  });
+  return colorMap;
+}
+
 export default {
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      colors: {
+        primary: generateColors("--clr-primary"),
+      },
+      gradientColorStops: {
+        primary: generateColors("--clr-primary"),
+      },
       textColor: {
         skin: {
           base: withOpacity("--color-text-base"),
@@ -22,6 +36,8 @@ export default {
         },
       },
       backgroundColor: {
+        base: withOpacity("--bg-base"),
+        "base-hover": withOpacity("--bg-hover"),
         skin: {
           fill: withOpacity("--color-fill"),
           "fill-hover": withOpacity("--bg-fill-muted"),
@@ -37,11 +53,11 @@ export default {
           hue: withOpacity("--color-fill"),
         },
       },
-      ringColor:{
+      ringColor: {
         skin: {
           primary: withOpacity("--bg-hover"),
         },
-      }
+      },
     },
   },
   plugins: [require("tailwind-scrollbar")({ nocompatible: true })],
