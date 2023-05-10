@@ -1,20 +1,25 @@
-import { lazy, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
-import Loadable from "components/Loadable";
 import { fetchAllCustomers } from "api/customer.api";
 import { defaultColumns, views } from "./columnDefinition";
 import {
   useColumnFilters,
   usePagination,
   useSorting,
+  useTable,
   useTableActions,
 } from "hooks/useTable";
 import Loader from "components/Loader";
 import { useQuery } from "@tanstack/react-query";
+import ErrorPage from "components/ErrorPage";
+import TablePageHeader from "components/TablePageHeader";
+import {
+  Table,
+  TablePagination,
+  ViewSelector,
+} from "components/lib/ReactTable";
+import { useSetRowSelection } from "hooks/useSelectRow";
 
-const ReactTable = Loadable(
-  lazy(async () => await import("components/lib/ReactTable/ReactTable"))
-);
 const CustomerPage = () => {
   const pagination = usePagination();
   const columnFilters = useColumnFilters();
@@ -26,8 +31,10 @@ const CustomerPage = () => {
     },
     []
   );
+  const setRowSelection = useSetRowSelection();
+  const defaultData = useMemo(() => [], []);
 
-  const queryParams = useMemo(() => {
+  const queryParams = () => {
     let params = "";
     let sortParam = "";
     if (sorting && sorting?.length > 0) {
@@ -73,34 +80,75 @@ const CustomerPage = () => {
       params = params.slice(1, params.length);
     }
     return params;
-  }, [pagination?.pageIndex, pagination?.pageSize, columnFilters, sorting]);
-  const { data, isFetching } = useQuery({
+  };
+  const { data, isError, isFetching } = useQuery({
     queryKey: [
       "customers",
       pagination?.pageIndex,
       pagination?.pageSize,
-      queryParams,
+      queryParams(),
     ],
     queryFn: async () =>
       await fetchAllCustomers(
         pagination?.pageIndex,
         pagination?.pageSize,
-        queryParams
+        queryParams()
       ),
     keepPreviousData: true,
   });
+  // instantiate the table
+  const table = useTable({
+    data: data?.data ?? defaultData,
+    defaultColumns,
+    totalRows: data?.total ?? 0,
+  });
 
+  if (isError) {
+    return <ErrorPage />;
+  }
   return (
     <>
       {isFetching && <Loader />}
-      <ReactTable
-        title="Customer"
-        size="medium"
-        data={data?.data ?? []}
-        totalRows={data?.total ?? 0}
-        defaultColumns={defaultColumns}
-        views={views}
-      />
+      {!isError && (
+        <div className="">
+          <TablePageHeader
+            title={"Orders"}
+            table={table}
+          />
+          <ViewSelector views={views} />
+          <Table table={table} isError={isError}/>
+          <TablePagination
+            pageSize={table.getState().pagination.pageSize}
+            pageIndex={table.getState().pagination.pageIndex}
+            hasNextPage={table.getCanNextPage()}
+            hasPrevPage={table.getCanPreviousPage()}
+            setPageSize={(newSize: number) => {
+              table.setPageSize(newSize);
+            }}
+            gotoPage={(n: number) => {
+              table.setPageIndex(n);
+              setRowSelection({});
+            }}
+            rowCount={data?.total ?? 0}
+            onPreviousClick={() => {
+              table.previousPage();
+              setRowSelection({});
+            }}
+            onNextClick={() => {
+              table.nextPage();
+              setRowSelection({});
+            }}
+            onFirstPageClick={() => {
+              table.setPageIndex(0);
+              setRowSelection({});
+            }}
+            onLastPageClick={() => {
+              table.setPageIndex(table.getPageCount() - 1);
+              setRowSelection({});
+            }}
+          />
+        </div>
+      )}
     </>
   );
 };

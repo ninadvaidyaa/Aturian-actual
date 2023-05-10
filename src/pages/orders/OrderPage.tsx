@@ -1,30 +1,44 @@
-import { lazy, useMemo, useEffect } from "react";
+import { useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { fetchAllOrders } from "api/order.api";
+import Loader from "components/Loader";
+
+import { defaultColumns, views } from "./columnDefinition";
 import {
   useColumnFilters,
   usePagination,
   useSorting,
+  useTable,
   useTableActions,
 } from "hooks/useTable";
-import Loader from "components/Loader";
-import Loadable from "components/Loadable";
+import { useSetRowSelection } from "hooks/useSelectRow";
 
-import { defaultColumns, views } from "./columnDefinition";
-import ErrorPage from "components/ErrorPage";
+import TablePageHeader from "components/TablePageHeader";
 
-const ReactTable = Loadable(
-  lazy(async () => await import("components/lib/ReactTable/ReactTable"))
-);
+import {
+  ViewSelector,
+  TablePagination,
+  Table,
+} from "components/lib/ReactTable";
+
 const OrderPageComponent = () => {
   const pagination = usePagination();
-  const { reset } = useTableActions();
+  const tableActions = useTableActions();
   const columnFilters = useColumnFilters();
   const sorting = useSorting();
-  useEffect(() => () => { reset(); }, []);
+  const setRowSelection = useSetRowSelection();
 
-  const queryParams = useMemo(() => {
+  const defaultData = useMemo(() => [], []);
+
+  useEffect(
+    () => () => {
+      tableActions.reset();
+    },
+    []
+  );
+
+  const queryParams = () => {
     let params = "";
     let sortParam = "";
     if (sorting && sorting?.length > 0) {
@@ -56,43 +70,76 @@ const OrderPageComponent = () => {
       params = params.slice(1, params.length);
     }
     return params;
-  }, [pagination?.pageIndex, pagination?.pageSize, columnFilters, sorting]);
-  const { data, isFetching, isError } = useQuery({
+  };
+  const { data, isFetching, isError, error } = useQuery({
     queryKey: [
       "ordersList",
       pagination?.pageIndex,
       pagination?.pageSize,
-      queryParams,
+      queryParams(),
     ],
     queryFn: async () =>
       await fetchAllOrders(
         pagination?.pageIndex,
         pagination?.pageSize,
-        queryParams
+        queryParams()
       ),
     keepPreviousData: true,
-    // useErrorBoundary: true,
-    onError: (e) => {
-      console.log(e);
-    },
   });
-  if (isError) {
-    return <ErrorPage />;
-  }
+
+  // instantiate the table
+  const table = useTable({
+    data: data?.data ?? defaultData,
+    defaultColumns,
+    totalRows: data?.results ?? 0,
+  });
 
   return (
     <>
       {isFetching && <Loader />}
-      {!isError && (
-        <ReactTable
-          size="medium"
-          title="Order"
-          data={data?.data ?? []}
-          totalRows={data?.results ?? 0}
-          defaultColumns={defaultColumns}
-          views={views}
+
+      <div className="">
+        <TablePageHeader
+          title={"Orders"}
+          table={table}
         />
-      )}
+        <ViewSelector views={views} />
+        <Table
+          table={table}
+          isError={isError}
+          error={error}
+        />
+        <TablePagination
+          pageSize={table.getState().pagination.pageSize}
+          pageIndex={table.getState().pagination.pageIndex}
+          hasNextPage={table.getCanNextPage()}
+          hasPrevPage={table.getCanPreviousPage()}
+          setPageSize={(newSize: number) => {
+            table.setPageSize(newSize);
+          }}
+          gotoPage={(n: number) => {
+            table.setPageIndex(n);
+            setRowSelection({});
+          }}
+          rowCount={data?.results ?? 0}
+          onPreviousClick={() => {
+            table.previousPage();
+            setRowSelection({});
+          }}
+          onNextClick={() => {
+            table.nextPage();
+            setRowSelection({});
+          }}
+          onFirstPageClick={() => {
+            table.setPageIndex(0);
+            setRowSelection({});
+          }}
+          onLastPageClick={() => {
+            table.setPageIndex(table.getPageCount() - 1);
+            setRowSelection({});
+          }}
+        />
+      </div>
     </>
   );
 };
