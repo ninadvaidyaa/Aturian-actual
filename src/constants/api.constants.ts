@@ -4,3 +4,5 @@ export const LOGIN_API = "/auth/login";
 export const REFRESH_API = "/auth/refresh";
 export const ORDERS_GET_ALL_API = `/${settings.apiEnv}/orders`;
 export const CUSTOMER_GET_ALL_API = `/${settings.apiEnv}/customers`;
+export const SETTINGS_GET_ALL_STATUS = `/${settings.apiEnv}/settings/statuses`;
+export const SETTINGS_GET_ALL_FLAG = `/${settings.apiEnv}/settings/flags`;

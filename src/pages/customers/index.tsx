@@ -11,7 +11,6 @@ import {
 } from "hooks/useTable";
 import Loader from "components/Loader";
 import { useQuery } from "@tanstack/react-query";
-import ErrorPage from "components/ErrorPage";
 import TablePageHeader from "components/TablePageHeader";
 import {
   Table,
@@ -81,7 +80,7 @@ const CustomerPage = () => {
     }
     return params;
   };
-  const { data, isError, isFetching } = useQuery({
+  const { data, isError, isFetching,error } = useQuery({
     queryKey: [
       "customers",
       pagination?.pageIndex,
@@ -103,52 +102,52 @@ const CustomerPage = () => {
     totalRows: data?.total ?? 0,
   });
 
-  if (isError) {
-    return <ErrorPage />;
-  }
   return (
     <>
       {isFetching && <Loader />}
-      {!isError && (
-        <div className="">
-          <TablePageHeader
-            title={"Orders"}
-            table={table}
-          />
-          <ViewSelector views={views} />
-          <Table table={table} isError={isError}/>
-          <TablePagination
-            pageSize={table.getState().pagination.pageSize}
-            pageIndex={table.getState().pagination.pageIndex}
-            hasNextPage={table.getCanNextPage()}
-            hasPrevPage={table.getCanPreviousPage()}
-            setPageSize={(newSize: number) => {
-              table.setPageSize(newSize);
-            }}
-            gotoPage={(n: number) => {
-              table.setPageIndex(n);
-              setRowSelection({});
-            }}
-            rowCount={data?.total ?? 0}
-            onPreviousClick={() => {
-              table.previousPage();
-              setRowSelection({});
-            }}
-            onNextClick={() => {
-              table.nextPage();
-              setRowSelection({});
-            }}
-            onFirstPageClick={() => {
-              table.setPageIndex(0);
-              setRowSelection({});
-            }}
-            onLastPageClick={() => {
-              table.setPageIndex(table.getPageCount() - 1);
-              setRowSelection({});
-            }}
-          />
-        </div>
-      )}
+
+      <div className="">
+        <TablePageHeader
+          title={"Customer"}
+          table={table}
+        />
+        <ViewSelector views={views} />
+        <Table
+          table={table}
+          isError={isError}
+          error={error}
+        />
+        <TablePagination
+          pageSize={table.getState().pagination.pageSize}
+          pageIndex={table.getState().pagination.pageIndex}
+          hasNextPage={table.getCanNextPage()}
+          hasPrevPage={table.getCanPreviousPage()}
+          setPageSize={(newSize: number) => {
+            table.setPageSize(newSize);
+          }}
+          gotoPage={(n: number) => {
+            table.setPageIndex(n);
+            setRowSelection({});
+          }}
+          rowCount={data?.total ?? 0}
+          onPreviousClick={() => {
+            table.previousPage();
+            setRowSelection({});
+          }}
+          onNextClick={() => {
+            table.nextPage();
+            setRowSelection({});
+          }}
+          onFirstPageClick={() => {
+            table.setPageIndex(0);
+            setRowSelection({});
+          }}
+          onLastPageClick={() => {
+            table.setPageIndex(table.getPageCount() - 1);
+            setRowSelection({});
+          }}
+        />
+      </div>
     </>
   );
 };

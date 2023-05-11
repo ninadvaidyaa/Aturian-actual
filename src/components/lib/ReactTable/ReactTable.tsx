@@ -17,8 +17,7 @@ const ReactTable = <M,>({ table, isError, error }: ReactTableProps<M>) => (
     <div className="rounded-sm bg-white p-2">
       <ScrollX className="relative h-[calc(100vh_-_270px)] overflow-auto rounded-sm">
         <table
-          className="table-fixed"
-          style={{ width: table.getCenterTotalSize() }}
+          className="table-fixed w-full"
         >
           <thead className="sticky top-0 z-20 bg-gray-50 capitalize">
             {table.getHeaderGroups().map((headerGroup) => (

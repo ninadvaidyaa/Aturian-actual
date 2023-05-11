@@ -21,6 +21,7 @@ import {
   TablePagination,
   Table,
 } from "components/lib/ReactTable";
+import { fetchAllFlags, fetchAllStatus } from "api/settings.api";
 
 const OrderPageComponent = () => {
   const pagination = usePagination();
@@ -71,6 +72,9 @@ const OrderPageComponent = () => {
     }
     return params;
   };
+  const { data:statusData, } = useQuery(["status"], fetchAllStatus);
+  const { data:flagData } = useQuery(["flags"], fetchAllFlags);
+  
   const { data, isFetching, isError, error } = useQuery({
     queryKey: [
       "ordersList",
@@ -85,6 +89,7 @@ const OrderPageComponent = () => {
         queryParams()
       ),
     keepPreviousData: true,
+    enabled: (!!statusData?.results && !!flagData?.results) ?? false ,
   });
 
   // instantiate the table

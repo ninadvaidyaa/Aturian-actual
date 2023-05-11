@@ -23,9 +23,9 @@ export const defaultColumns: Array<ColumnDef<OrdersList>> = [
             table.toggleAllRowsSelected(false);
             row.toggleSelected(!row.getIsSelected());
           }}
-          className={`text-skin-primary inline-block w-full h-full ${
+          className={`inline-block h-full w-full text-skin-primary ${
             row.getIsSelected()
-              ? "underline underline-offset-2 decoration-2"
+              ? "underline decoration-2 underline-offset-2"
               : ""
           }`}
         >
@@ -112,7 +112,7 @@ export const defaultColumns: Array<ColumnDef<OrdersList>> = [
     },
   },
   {
-    accessorFn: (value)=> value.salesperson.name,
+    accessorFn: (value) => value.salesperson.name,
     id: "salesperson",
     header: "Sales Person",
     cell: (info) => info.getValue(),
@@ -140,60 +140,13 @@ export const defaultColumns: Array<ColumnDef<OrdersList>> = [
     accessorKey: "status",
     id: "status",
     header: "Status",
-    cell: (info) => {
-      const value = info.getValue();
-      switch (value) {
-        case "In Production":
-          return (
-            <StatusCell
-              color="#006979"
-              label="In Production"
-            />
-          );
-        case "In Process":
-          return (
-            <StatusCell
-              color="#DB9409"
-              label="In Process"
-            />
-          );
-        case "Partially Shipped":
-          return (
-            <StatusCell
-              color="#951395"
-              label="Partially Shipped"
-            />
-          );
-        case "SHIPPED":
-          return (
-            <StatusCell
-              color="#00840F"
-              label="Shipped"
-            />
-          );
-        case "Finalized":
-          return (
-            <StatusCell
-              color="#00840F"
-              label="Finalized"
-            />
-          );
-        case "On-Hold":
-          return (
-            <StatusCell
-              color="#0728A4"
-              label="On-Hold"
-            />
-          );
-        default:
-          return (
-            <StatusCell
-              color="#517806"
-              label="Open"
-            />
-          );
-      }
-    },
+    cell: (info) => (
+      <StatusCell
+        color="#006979"
+        label="In Production"
+        info={info}
+      />
+    ),
     footer: (props) => props.column.id,
     size: 100,
     enableSorting: true,
