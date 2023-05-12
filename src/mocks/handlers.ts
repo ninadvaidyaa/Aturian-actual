@@ -6,6 +6,8 @@ import * as apiConstants from "constants/api.constants";
 import { orderData } from "./orders";
 import { settings } from "config";
 import { customerData } from "./customers";
+import { opsStatusData } from "./ops.status";
+import { flagsData } from "./flags";
 
 const baseApiUrl = import.meta.env.VITE_BASE_URL;
 export const handlers = [
@@ -26,7 +28,8 @@ export const handlers = [
   }),
   rest.post(
     `${baseApiUrl}${apiConstants.REFRESH_API}`,
-    async (req, res, ctx) => await res(
+    async (req, res, ctx) =>
+      await res(
         ctx.status(200),
         ctx.json({
           access_token:
@@ -39,7 +42,6 @@ export const handlers = [
   rest.get(
     `${settings.apiBase}${apiConstants.ORDERS_GET_ALL_API}`,
     async (req, res, ctx) => {
-      
       const offset: number = req.url.searchParams.get("offset")
         ? parseInt(req.url.searchParams.get("offset"))
         : 0;
@@ -50,15 +52,34 @@ export const handlers = [
         ctx.status(200),
         ctx.json({
           data: orderData.slice(offset * limit, offset * limit + limit),
-          results: orderData.length
+          results: orderData.length,
         })
       );
     }
   ),
   rest.get(
+    `${settings.apiBase}${apiConstants.SETTINGS_GET_ALL_STATUS}`,
+    async (req, res, ctx) => await res(
+        ctx.status(200),
+        ctx.json({
+          data: opsStatusData,
+          results: opsStatusData.length,
+        })
+      )
+  ),
+  rest.get(
+    `${settings.apiBase}${apiConstants.SETTINGS_GET_ALL_FLAG}`,
+    async (req, res, ctx) => await res(
+        ctx.status(200),
+        ctx.json({
+          data: flagsData,
+          results: flagsData.length,
+        })
+      )
+  ),
+  rest.get(
     `${settings.apiBase}${apiConstants.CUSTOMER_GET_ALL_API}`,
     async (req, res, ctx) => {
-      
       const offset: number = req.url.searchParams.get("offset")
         ? parseInt(req.url.searchParams.get("offset"))
         : 0;
@@ -69,7 +90,7 @@ export const handlers = [
         ctx.status(200),
         ctx.json({
           data: customerData.slice(offset * limit, offset * limit + limit),
-          total: customerData.length
+          total: customerData.length,
         })
       );
     }

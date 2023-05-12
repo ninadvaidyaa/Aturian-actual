@@ -2,7 +2,7 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { type OrdersList } from "validators/orders.validators";
 import { type UserViews } from "types/userViews";
 
-import RowActions from "components/lib/ReactTable/RowActions";
+import RowActions from "./RowActions";
 import { getFormattedDate } from "utils/date";
 import StatusCell from "components/lib/ReactTable/StatusCell";
 import { Link } from "react-router-dom";
