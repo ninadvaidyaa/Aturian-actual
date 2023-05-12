@@ -40,10 +40,8 @@ const FlagComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
     () => getFlagElements(flags, data?.data as Flag[]),
     [data, flags]
   );
-  // const rowData = info.row.getValue(info.column.id);
-  // TODO: update color based on flag code
   return (
-    <div className="flex flex-row gap-0.5 pt-1">
+    <div className="flex flex-row pt-1">
       {flagData?.map((flag) => (
         <button
           type="button"

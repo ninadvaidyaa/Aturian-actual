@@ -3,6 +3,8 @@ import { z } from "zod";
 
 export const HORIZONTAL_MAX_ITEM = 6;
 export const DRAWER_WIDTH = 260;
+export const NAV_HEIGHT = 62;
+
 const config: DefaultConfigProps = {
   fontFamily: `'Public Sans', sans-serif`,
   i18n: "en",

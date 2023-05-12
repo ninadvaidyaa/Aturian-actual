@@ -2,25 +2,20 @@ import { useState, Fragment } from "react";
 import { Menu, Transition, Dialog } from "@headlessui/react";
 
 import { type Table } from "@tanstack/react-table";
-import {
-  MdOutlineAdd,
-  MdOutlineLockOpen,
-  MdOutlineSettings,
-} from "react-icons/md";
 
 const Search = () => (
-  <div className="flex flex-row justify-between items-center gap-1 ">
+  <div className="flex flex-row items-center justify-between gap-1 ">
     <button
       type="button"
-      className="text-gray-400 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium  text-sm p-1 text-center inline-flex items-center  bg-white rounded-md"
+      className="inline-flex items-center rounded-md bg-white p-2.5  text-center text-sm font-medium text-gray-400 focus:outline-none  focus:ring-1 focus:ring-blue-300"
     >
-      <MdOutlineLockOpen className="w-6 h-6" />
+      <span className="fal fa-lock " />
       <span className="sr-only">Icon</span>
     </button>
     <form className="w-full">
       <label
         htmlFor="default-search"
-        className="mb-2 text-sm font-medium text-gray-900 sr-only"
+        className="sr-only mb-2 text-sm font-medium text-gray-900"
       >
         Search
       </label>
@@ -28,13 +23,13 @@ const Search = () => (
         <input
           type="search"
           id="default-search"
-          className="bg-white border border-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 active:border-blue-500 block w-full pr-10 p-2"
+          className="block w-full rounded-lg border border-none bg-white p-2 pr-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 active:border-blue-500"
           placeholder="Search Mockups, Logos..."
         />
-        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
           <svg
             aria-hidden="true"
-            className="w-5 h-5 text-gray-500"
+            className="h-5 w-5 text-gray-500"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -73,31 +68,25 @@ const TablePageHeader = <TData,>({
   return (
     <>
       <div className="z-20">
-        <div className="flex flex-row justify-between items-center gap-1 ">
-          <div>
-            <h2 className="text-2xl font-semibold">{title} List</h2>
-          </div>
-          <div className="flex flex-row justify-end gap-2 items-center col-span-8">
+        <div className="flex flex-row items-center justify-between gap-1 ">
+          <h2 className="text-2xl font-semibold">{title} List</h2>
+          <div className="col-span-8 flex flex-row items-center justify-end gap-2">
             <Search />
             <button
               type="button"
-              className="text-white bg-skin-fill hover:bg-skin-fill focus:ring-4 focus:outline-none focus:ring-slate-50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2"
+              className="mr-2 inline-flex items-center justify-center rounded-lg bg-skin-fill px-3 py-2 text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-slate-50 hover:bg-skin-fill"
             >
-              <MdOutlineAdd className="w-5 h-5 mr-2 -ml-1" />
+              <i className="fal fa-plus -ml-1 mr-2 "></i>
               Add New {title}
             </button>
             <Menu
               as="div"
-              className="relative inline-block text-left"
+              className="relative inline-block text-center"
             >
-              <div>
-                <Menu.Button className="text-gray-600 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm pl-1 text-center inline-flex items-center">
-                  <MdOutlineSettings
-                    className="w-6 h-6"
-                    aria-hidden="true"
-                  />
-                </Menu.Button>
-              </div>
+              <Menu.Button className="p-0.5 rounded-full w-6 h-6 font-bold text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-300">
+                <i className="far fa-cog fa-lg"></i>
+              </Menu.Button>
+
               <Transition
                 as={Fragment}
                 enter="transition ease-out duration-100"
@@ -107,7 +96,7 @@ const TablePageHeader = <TData,>({
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-0 mt-2 w-min origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-30">
+                <Menu.Items className="absolute right-0 z-30 mt-2 w-min origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div className="px-1 py-1">
                     <Menu.Item>
                       {({ active }) => (
@@ -191,7 +180,7 @@ const TablePageHeader = <TData,>({
                               disabled
                               id={column.id}
                               type="checkbox"
-                              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                              className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-blue-500"
                             />
                             <label
                               htmlFor={column.id}
@@ -224,7 +213,7 @@ const TablePageHeader = <TData,>({
                   <div className="mt-4">
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 hover:bg-blue-200"
                       onClick={closeModal}
                     >
                       close
