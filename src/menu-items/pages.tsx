@@ -51,6 +51,25 @@ const pages: NavItemType = {
       ]
     },
    
+    {
+      id: 'suppliers',
+      title: "Suppliers",
+      type: 'collapse',
+      icon: 'supplierIcon',
+      children: [
+        {
+          id: 'supplier-list',
+          title: 'Manage Suppliers',
+          type: 'item',
+          url: '/suppliers',
+          target: true,
+          breadcrumbsArray:[
+            'Vendor List' 
+          ]
+        },
+       
+      ]
+    },
   ]
 };
 

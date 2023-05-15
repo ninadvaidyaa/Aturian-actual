@@ -8,6 +8,7 @@ import { settings } from "config";
 import { customerData } from "./customers";
 import { opsStatusData } from "./ops.status";
 import { flagsData } from "./flags";
+import { supplierListData } from "./supliers";
 
 const baseApiUrl = import.meta.env.VITE_BASE_URL;
 export const handlers = [
@@ -59,7 +60,8 @@ export const handlers = [
   ),
   rest.get(
     `${settings.apiBase}${apiConstants.SETTINGS_GET_ALL_STATUS}`,
-    async (req, res, ctx) => await res(
+    async (req, res, ctx) =>
+      await res(
         ctx.status(200),
         ctx.json({
           data: opsStatusData,
@@ -69,7 +71,8 @@ export const handlers = [
   ),
   rest.get(
     `${settings.apiBase}${apiConstants.SETTINGS_GET_ALL_FLAG}`,
-    async (req, res, ctx) => await res(
+    async (req, res, ctx) =>
+      await res(
         ctx.status(200),
         ctx.json({
           data: flagsData,
@@ -91,6 +94,25 @@ export const handlers = [
         ctx.json({
           data: customerData.slice(offset * limit, offset * limit + limit),
           total: customerData.length,
+        })
+      );
+    }
+  ),
+
+  rest.get(
+    `${settings.apiBase}${apiConstants.SUPPLIERS_GET_ALL_API}`,
+    async (req, res, ctx) => {
+      const offset: number = req.url.searchParams.get("offset")
+        ? parseInt(req.url.searchParams.get("offset"))
+        : 0;
+      const limit: number = req.url.searchParams.get("limit")
+        ? parseInt(req.url.searchParams.get("limit"))
+        : 1;
+      return await res(
+        ctx.status(200),
+        ctx.json({
+          data: supplierListData.slice(offset * limit, offset * limit + limit),
+          results: supplierListData.length,
         })
       );
     }

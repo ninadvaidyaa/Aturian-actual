@@ -6,6 +6,20 @@ import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 const LoginPage = Loadable(lazy(async () => await import("pages/auth/login")));
 const OrderPage = Loadable(lazy(async () => await import("pages/orders")));
+const SuppliersPage = Loadable(
+  lazy(
+    async () =>
+      await import("pages/suppliers").then((m) => ({ default: m.SupplierPage }))
+  )
+);
+const SupplierDetail = Loadable(
+  lazy(
+    async () =>
+      await import("pages/suppliers").then((m) => ({
+        default: m.SupplierDetail,
+      }))
+  )
+);
 const OrderDetailPage = Loadable(
   lazy(async () => await import("pages/orders/OrderDetailPage"))
 );
@@ -40,6 +54,14 @@ const router = createBrowserRouter([
                 element: <CustomerPage />,
               },
               { path: "customers/:orderId", element: <OrderDetailPage /> }, // TODO: change it
+              {
+                path: "suppliers",
+                element: <SuppliersPage />,
+              },
+              {
+                path: "suppliers/:supplierId",
+                element: <SupplierDetail />,
+              },
             ],
           },
         ],

@@ -1,16 +1,21 @@
-
-import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import {
+  MdOutlineInventory2,
+  MdOutlineListAlt,
+  MdOutlinePerson,
+} from "react-icons/md";
 
 const NavIcon = (iconName: any) => {
-    switch(iconName) {
+  switch (iconName) {
+    case "orderIcon":
+      return <MdOutlineInventory2 className="h-5 w-5 rounded-sm" />;
+    case "customerIcon":
+      return <MdOutlinePerson className="h-5 w-5 rounded-sm" />;
+    case "supplierIcon":
+      return <MdOutlineListAlt className="h-5 w-5 rounded-sm" />;
 
-      case "orderIcon":   return <Inventory2OutlinedIcon  sx={{ borderRadius: 1, width: 18, height: 18 }}/>;
-      case "customerIcon":   return <PersonOutlineOutlinedIcon sx={{ borderRadius: 1, width: 18, height: 18 }} />;
-    
-      default:      return <h1>No project match</h1>;
-    }
-  };
+    default:
+      return <h1>No project match</h1>;
+  }
+};
 
-
-  export default NavIcon;
+export default NavIcon;
