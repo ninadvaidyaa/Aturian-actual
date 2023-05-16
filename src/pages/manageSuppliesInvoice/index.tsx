@@ -1,10 +1,5 @@
-
 import {useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-
-
-
-
 import {
   useColumnFilters,
   usePagination,
@@ -24,9 +19,11 @@ import {
 import { useSetRowSelection } from "hooks/useSelectRow";
 
 import { fetchAllFlags, fetchAllStatus } from "api/settings.api";
-import { fetchAllPickPackOthers } from "api/inventory.api";
+import { fetchAllManageSupplierInvoice } from "api/manageSupplierInvoice.api";
 
-const PickPackOtherListPage = () => {
+
+
+const ManageSupplierInvoiceListPage = () => {
   const pagination = usePagination();
   const tableActions = useTableActions();
   const columnFilters = useColumnFilters();
@@ -80,13 +77,13 @@ const PickPackOtherListPage = () => {
   const { data:flagData } = useQuery(["flags"], fetchAllFlags);
   const { data, isFetching, isError, error } = useQuery({
     queryKey: [
-      "pickPackOthersList",
+      "manageSupplierInvoiceList",
       pagination?.pageIndex,
       pagination?.pageSize,
       queryParams(),
     ],
     queryFn: async () =>
-      await fetchAllPickPackOthers(
+      await fetchAllManageSupplierInvoice(
         pagination?.pageIndex,
         pagination?.pageSize,
         queryParams()
@@ -108,7 +105,7 @@ const PickPackOtherListPage = () => {
 
 <div className="">
   <TablePageHeader
-    title={"Pick Pack"}
+    title={"Manage Supplier Invoice"}
     table={table}
   />
   <ViewSelector views={views} />
@@ -148,8 +145,9 @@ const PickPackOtherListPage = () => {
     }}
   />
 </div>
+   
     </>
   );
 };
 
-export default PickPackOtherListPage;
+export default ManageSupplierInvoiceListPage;

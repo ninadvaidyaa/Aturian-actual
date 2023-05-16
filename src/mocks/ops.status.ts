@@ -141,4 +141,22 @@ export const opsStatusData = [
     seq: 100,
     color: "#d9534f",
   },
+
+  {
+    id: 72,
+    name: "Ready",
+    description: "Ready",
+    shortDescription: "Ready",
+    seq: 100,
+    color: "#eea236",
+  },
+
+  {
+    id: 73,
+    name: "Paid",
+    description: "Paid",
+    shortDescription: "Paid",
+    seq: 100,
+    color: "#5bc0de",
+  },
 ];

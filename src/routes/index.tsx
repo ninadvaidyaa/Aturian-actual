@@ -2,6 +2,8 @@ import MainLayout from "MainLayout";
 import AuthGuard from "components/AuthGuard";
 import ErrorPage from "components/ErrorPage";
 import Loadable from "components/Loadable";
+import ManageSupplierInvoiceListPage from "pages/manageSuppliesInvoice";
+import ManagerSupplierInvoiceDetailPage from "pages/manageSuppliesInvoice/ManageSuppliesInvoiceDetalisPage";
 import ManageProposalPage from "pages/proposal";
 import ProposalDetailPage from "pages/proposal/ProposalDetalisPage";
 import { lazy } from "react";
@@ -92,13 +94,29 @@ const router = createBrowserRouter([
                 element: <ProposalDetailPage />,
               },
               {
+                path: "proposals/:proposalId",
+                element: <ProposalDetailPage />,
+              },
+              {
                 path: "items",
                 element: <ItemsListPage />,
               },
               { path: "items/:itemId", element: <ItemDetailPage /> },
+
+              { path: "items/:itemId", element: <ItemDetailPage /> },
               {
                 path: "pick-packs",
                 element: <PickPackOtherListPage />,
+              },
+
+              {
+                path: "supplier-invoices",
+                element: <ManageSupplierInvoiceListPage />,
+              },
+
+              {
+                path: "supplier-invoices/:invoiceId",
+                element: <ManagerSupplierInvoiceDetailPage />,
               },
               {
                 path: "suppliers",

@@ -3,6 +3,7 @@ import {
   MdOutlineListAlt,
   MdOutlinePerson,
   MdOutlineShoppingCart,
+  MdOutlineDescription,
 } from "react-icons/md";
 
 const NavIcon = (iconName: any) => {
@@ -17,7 +18,8 @@ const NavIcon = (iconName: any) => {
       return <MdOutlineShoppingCart className="h-5 w-5 rounded-sm" />;
     case "proposalIcon":
       return <MdOutlineShoppingCart className="h-5 w-5 rounded-sm" />;
-
+    case "a/pIcon":
+      return <MdOutlineDescription className="h-5 w-5 rounded-sm" />;
     default:
       return <h1>No project match</h1>;
   }
