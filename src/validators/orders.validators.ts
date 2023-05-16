@@ -39,13 +39,3 @@ export const ordersListSchema = z.object({
   total: z.number(),
 });
 export type OrdersList = z.infer<typeof ordersListSchema>;
-
-interface UserView {
-  name: string;
-  id: number;
-  columns: Array<{
-    id: string;
-    index: number;
-  }>;
-}
-export type UserViews = Record<string, UserView>;

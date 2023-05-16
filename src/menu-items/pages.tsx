@@ -50,6 +50,60 @@ const pages: NavItemType = {
        
       ]
     },
+
+    {
+      id: 'inventory',
+      title: "Inventory",
+      type: 'collapse',
+      icon: 'inventoryIcon',
+      children: [
+        {
+          id: 'item-list',
+          
+          title: 'Item List',
+          type: 'item',
+          url: '/items',
+          target: true,
+          breadcrumbsArray:[
+            'Inventory', 'Inventory Items', 'Items List'
+          ]
+        },
+        {
+          id: 'pick-pack-list',
+          
+          title: 'Pick Pack',
+          type: 'item',
+          url: '/pick-packs',
+          target: true,
+          breadcrumbsArray:[
+            'Inventory', 'Pick Pack', 'Pick List'
+          ]
+        },
+       
+      ]
+    },
+
+    {
+      id: 'proposals',
+      title: "PROposals",
+      type: 'collapse',
+      icon: 'proposalIcon',
+      children: [
+        {
+          id: 'manager-proposal-list',
+          title: 'Proposal List',
+          type: 'item',
+          url: '/proposals',
+          target: true,
+          breadcrumbsArray:[
+            'Sales', 'Proposal List'
+          ]
+        },
+       
+      ]
+    },
+
+    
    
     {
       id: 'suppliers',

@@ -63,4 +63,82 @@ export const opsStatusData = [
     seq: 100,
     color: "#444444",
   },
+
+  {
+    id: 62,
+    name: "New",
+    description: "New",
+    shortDescription: "New",
+    seq: 100,
+    color: "#d9534f",
+  },
+  {
+    id: 65,
+    name: "Test",
+    description: "Test",
+    shortDescription: "Test",
+    seq: 100,
+    color: "#800000",
+  },
+  {
+    id: 63,
+    name: "Converted",
+    description: "Converted",
+    shortDescription: "Converted",
+    seq: 100,
+    color: "#444444",
+  },
+  {
+    id: 64,
+    name: "Won",
+    description: "Won",
+    shortDescription: "Won",
+    seq: 100,
+    color: "#5CB85C",
+  },
+  {
+    id: 65,
+    name: "Lost",
+    description: "Lost",
+    shortDescription: "Lost",
+    seq: 100,
+    color: "#d9534f",
+  },
+
+  {
+    id: 67,
+    name: "Completed",
+    description: "Completed",
+    shortDescription: "Completed",
+    seq: 100,
+    color: "#5CB85C",
+  },
+
+  {
+    id: 69,
+    name: "Incompleted",
+    description: "Incompleted",
+    shortDescription: "Incompleted",
+    seq: 100,
+    color: "#d9534f",
+  },
+
+  
+  {
+    id: 70,
+    name: "Open",
+    description: "Open",
+    shortDescription: "Open",
+    seq: 100,
+    color: "#5CB85C",
+  },
+
+  {
+    id: 71,
+    name: "Printed",
+    description: "Printed",
+    shortDescription: "Printed",
+    seq: 100,
+    color: "#d9534f",
+  },
 ];

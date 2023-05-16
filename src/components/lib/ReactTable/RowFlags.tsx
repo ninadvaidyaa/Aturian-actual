@@ -11,7 +11,7 @@ interface RowActionsProps<TData, P> {
 }
 
 const getFlagElements = (flagData: FlagData[], flags: Flag[]) =>
-  flagData.map((flag) => {
+  flagData?.map((flag) => {
     const flagInfo = flags.find((item) => item.id === flag.id);
     if (flagInfo) {
       const status = flagInfo.statuses.find(
