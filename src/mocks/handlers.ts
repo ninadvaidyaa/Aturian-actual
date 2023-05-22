@@ -13,6 +13,7 @@ import { managePraposalListData } from "./manageroposal";
 import { pickPackOtherListData } from "./pickPackOthers";
 import { manageSupplierInvoiceListData } from "./manageSupplierInvoice";
 import { supplierListData } from "./supliers";
+import { pickListInventoryData } from "./picklistinventory";
 
 const baseApiUrl = import.meta.env.VITE_BASE_URL;
 export const handlers = [
@@ -204,6 +205,27 @@ export const handlers = [
             offset * limit + limit
           ),
           total: manageSupplierInvoiceListData.length,
+        })
+      );
+    }
+  ),
+  rest.get(
+    `${settings.apiBase}${apiConstants.INVENTORY_GET_PICKPACK_LIST_API}`,
+    async (req, res, ctx) => {
+      const offset: number = req.url.searchParams.get("offset")
+        ? parseInt(req.url.searchParams.get("offset"))
+        : 0;
+      const limit: number = req.url.searchParams.get("limit")
+        ? parseInt(req.url.searchParams.get("limit"))
+        : 1;
+      return await res(
+        ctx.status(200),
+        ctx.json({
+          data: pickListInventoryData.slice(
+            offset * limit,
+            offset * limit + limit
+          ),
+          total: pickListInventoryData.length,
         })
       );
     }

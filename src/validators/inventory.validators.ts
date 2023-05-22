@@ -1,3 +1,16 @@
+export interface PickListInventory {
+    orderNote: boolean,
+    pickPackStatus: string,
+    packingSlip: string,
+    isShippingLabelExists: boolean,
+    isOrderExistInBothList: number,
+    orderNumber: string,
+    custName : string,
+    orderDate : string,
+    inHandDate : string,
+    dayOnList : number,
+    noOfItems: number,
+}
 export interface InventoryItemsList {
   itemNumber: number;
   externalItemNumber: number;

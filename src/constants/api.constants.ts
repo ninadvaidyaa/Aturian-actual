@@ -11,3 +11,4 @@ export const MANAGE_PROPOSAL_GET_ALL_API = `/${settings.apiEnv}/manage_proposal`
 export const PICK_PACK_OTHERS_GET_ALL_API = `/${settings.apiEnv}/pick_pack_others`;
 export const MANAGE_SUPPLIER_INVOICES_GET_ALL_API = `/${settings.apiEnv}/manage_supplier_invoices`;
 export const SUPPLIERS_GET_ALL_API = `/${settings.apiEnv}/suppliers`;
+export const INVENTORY_GET_PICKPACK_LIST_API = `/${settings.apiEnv}/pickpacklist`;

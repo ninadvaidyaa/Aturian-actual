@@ -2,6 +2,8 @@ import MainLayout from "MainLayout";
 import AuthGuard from "components/AuthGuard";
 import ErrorPage from "components/ErrorPage";
 import Loadable from "components/Loadable";
+import PickPackPage from "pages/inventory/picklist";
+import PickPackInventoryDetails from "pages/inventory/picklist/inventory";
 import PickListOthersDetailsPage from "pages/inventory/pickPackItems/PickListOthersDetailsPage";
 import ManageSupplierInvoiceListPage from "pages/manageSuppliesInvoice";
 import ManagerSupplierInvoiceDetailPage from "pages/manageSuppliesInvoice/ManageSuppliesInvoiceDetalisPage";
@@ -50,14 +52,14 @@ const ItemDetailPage = Loadable(
       }))
   )
 );
-const PickPackOtherListPage = Loadable(
-  lazy(
-    async () =>
-      await import("pages/inventory").then((m) => ({
-        default: m.PickPackOtherListPage,
-      }))
-  )
-);
+// const PickPackOtherListPage = Loadable(
+//   lazy(
+//     async () =>
+//       await import("pages/inventory").then((m) => ({
+//         default: m.PickPackOtherListPage,
+//       }))
+//   )
+// );
 
 const router = createBrowserRouter([
   {
@@ -108,7 +110,11 @@ const router = createBrowserRouter([
               { path: "items/:itemId", element: <ItemDetailPage /> },
               {
                 path: "pick-packs",
-                element: <PickPackOtherListPage />,
+                element: <PickPackPage />,
+              },
+               {
+                path: "pick-packs/:orderId",
+                element: <PickPackInventoryDetails />,
               },
 
               { path: "pick-packs/:pickListOtherlId", element: <PickListOthersDetailsPage />, },
