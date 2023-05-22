@@ -2,8 +2,10 @@ import MainLayout from "MainLayout";
 import AuthGuard from "components/AuthGuard";
 import ErrorPage from "components/ErrorPage";
 import Loadable from "components/Loadable";
+import PickListOthersDetailsPage from "pages/inventory/pickPackItems/PickListOthersDetailsPage";
 import ManageSupplierInvoiceListPage from "pages/manageSuppliesInvoice";
 import ManagerSupplierInvoiceDetailPage from "pages/manageSuppliesInvoice/ManageSuppliesInvoiceDetalisPage";
+
 import ManageProposalPage from "pages/proposal";
 import ProposalDetailPage from "pages/proposal/ProposalDetalisPage";
 import { lazy } from "react";
@@ -108,6 +110,8 @@ const router = createBrowserRouter([
                 path: "pick-packs",
                 element: <PickPackOtherListPage />,
               },
+
+              { path: "pick-packs/:pickListOtherlId", element: <PickListOthersDetailsPage />, },
 
               {
                 path: "supplier-invoices",

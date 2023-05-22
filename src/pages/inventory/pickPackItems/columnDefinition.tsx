@@ -5,10 +5,11 @@ import { type UserViews } from "types/userViews";
 import { getFormattedDate } from "utils/date";
 import StatusCell from "components/lib/ReactTable/StatusCell";
 
-import FlagComponent from "components/lib/ReactTable/RowFlags";
+
 
 import RowActions from "./RowActions";
 import { type PickPackOthersList } from "validators/inventory.validators";
+import { Link } from "react-router-dom";
 
 
 
@@ -18,26 +19,30 @@ export const defaultColumns: Array<ColumnDef<PickPackOthersList>> = [
 
   
   
-  {
-    accessorKey: "linksFlag",
-    id: "linksFlag",
-    header: "Linkes",
-    cell: (info) => <FlagComponent info={info} />,
-    footer: (props) => props.column.id,
-    size: 80,
-    enableHiding: true,
-    enableColumnFilter: false,
-    enableGlobalFilter: false,
-    enableSorting: false,
-    meta: {
-      dataType: "string",
-    },
-  },
+ 
   {
     accessorKey: "orderNumber",
     id: "orderNumber",
     header: "PL #",
-    cell: (info) => info.getValue(),
+    cell: (info) => {
+      const { table, row } = info;
+      return (
+        <Link
+          to={`/pick-packs/${info.getValue() as string}`}
+          onClick={() => {
+            table.toggleAllRowsSelected(false);
+            row.toggleSelected(!row.getIsSelected());
+          }}
+          className={`inline-block h-full w-full text-skin-primary ${
+            row.getIsSelected()
+              ? "underline decoration-2 underline-offset-2"
+              : ""
+          }`}
+        >
+          {info.getValue() as string}
+        </Link>
+      );
+    },
     footer: (props) => props.column.id,
     size: 180,
     
@@ -165,41 +170,38 @@ export const views: UserViews = {
     name: "view1",
     id: 1,
     columns: [
+     
       {
-        id: "linksFlag",
+        id: "orderNumber",
         index: 0,
       },
       {
-        id: "orderNumber",
+        id: "custName",
         index: 1,
       },
       {
-        id: "custName",
+        id: "orderDate",
         index: 2,
       },
       {
-        id: "orderDate",
+        id: "inHandDate",
         index: 3,
       },
       {
-        id: "inHandDate",
+        id: "daysOnList",
         index: 4,
       },
       {
-        id: "daysOnList",
+        id: "noOfItems",
         index: 5,
       },
       {
-        id: "noOfItems",
+        id: "pickPackStatus",
         index: 6,
       },
       {
-        id: "pickPackStatus",
-        index: 7,
-      },
-      {
         id: "action",
-        index: 8,
+        index: 7,
       },
     ],
   },
@@ -207,59 +209,41 @@ export const views: UserViews = {
     name: "view 2",
     id: 2,
     columns: [
+
       {
-        id: "cost",
-        index: 10,
-      },
-      {
-        id: "createdBy",
-        index: 9,
-      },
-      {
-        id: "types",
-        index: 8,
-      },
-      {
-        id: "total",
-        index: 11,
-      },
-     
-    
-      {
-        id: "status",
-        index: 7,
-      },
-      {
-        id: "csr",
-        index: 6,
-      },
-      {
-        id: "salesperson",
-        index: 5,
-      },
-      {
-        id: "shipDate",
-        index: 4,
-      },
-      {
-        id: "customer",
-        index: 3,
-      },
-      {
-        id: "jobId",
-        index: 2,
-      },
-      {
-        id: "flags",
-        index: 1,
-      },
-      {
-        id: "number",
+        id: "orderDate",
         index: 0,
       },
       {
+        id: "inHandDate",
+        index: 1,
+      },
+      {
+        id: "noOfItems",
+        index: 2,
+      },
+     
+      {
+        id: "orderNumber",
+        index: 3,
+      },
+      {
+        id: "custName",
+        index: 4,
+      },
+      
+      {
+        id: "daysOnList",
+        index: 5,
+      },
+     
+      {
+        id: "pickPackStatus",
+        index: 6,
+      },
+      {
         id: "action",
-        index: 12,
+        index: 7,
       },
     ],
   },

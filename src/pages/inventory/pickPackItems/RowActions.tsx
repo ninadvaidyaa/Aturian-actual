@@ -1,12 +1,19 @@
 import React, { useState, Fragment } from "react";
-import { Transition, Dialog } from "@headlessui/react";
+import { Transition, Popover,  Dialog } from "@headlessui/react";
 
 import type { CellContext } from "@tanstack/react-table";
 import {
-  MdOutlineFingerprint,
-  MdOutlinePrint,
-  MdOutlineLocalPrintshop,
+  MdFingerprint,
+ 
+  MdPrint,
+  MdLocalPrintshop,
+  MdOutlineMoreVert,
+  MdNotes,
+  
+  MdOutlineNewLabel,
+ 
 } from "react-icons/md";
+
 
 const genericMemo: <T>(component: T) => T = React.memo;
 interface RowActionsProps<TData, P> {
@@ -21,43 +28,93 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
 
   return (
     <>
-      <div className="flex flex-row justify-end gap-1">
+      <div className="flex flex-row gap-1 justify-end">
         <div>
           <button
             type="button"
-            className="inline-flex items-center rounded-full p-1 text-center text-sm font-medium text-skin-inverted focus:outline-none focus:ring-1 focus:ring-blue-300  "
+            className="text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  "
           >
-            <MdOutlinePrint
-              className="h-4 w-4"
+            <MdNotes
+              className="w-4 h-4"
               color="#1890FF"
             />
-            <span className="sr-only">Icon</span>
+            <span className="sr-only">Notes</span>
           </button>
         </div>
         <div>
           <button
             type="button"
-            className="inline-flex items-center rounded-full p-1 text-center text-sm font-medium text-skin-inverted focus:outline-none focus:ring-1 focus:ring-blue-300  "
+            className="text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  "
           >
-            <MdOutlineFingerprint
-              className="h-4 w-4"
+            <MdFingerprint
+              className="w-4 h-4"
               color="#BB0505"
             />
-            <span className="sr-only">Icon</span>
+            <span className="sr-only">Re-Print Pick Ticket</span>
           </button>
         </div>
         <div>
           <button
             type="button"
-            className="inline-flex items-center rounded-full p-1 text-center text-sm font-medium text-skin-inverted focus:outline-none focus:ring-1 focus:ring-blue-300  "
+            className="text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  "
           >
-            <MdOutlineLocalPrintshop
-              className="h-4 w-4 "
+            <MdOutlineNewLabel
+              className="w-4 h-4 "
               color="#8C8C8C"
             />
-            <span className="sr-only">Icon</span>
+            <span className="sr-only">No Shipping Label</span>
           </button>
         </div>
+        <Popover className="">
+          {({ open }) => (
+            <>
+              <Popover.Button className="text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  ">
+                <MdOutlineMoreVert
+                  className={`${open ? "" : "text-opacity-70"}
+                   h-4 w-4 transition duration-150 ease-in-out group-hover:text-opacity-80`}
+                  aria-hidden="true"
+                  color="#1C1B1F"
+                />
+              </Popover.Button>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-200"
+                enterFrom="opacity-0 translate-y-1"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition ease-in duration-150"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-1"
+              >
+                <Popover.Panel className="absolute flex flex-col ms-[-190px] z-10 mt-3 max-w-sm bg-white rounded-lg shadow">
+                  <button
+                    type="button"
+                    onClick={handleAdd}
+                    className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center first:mt-1"
+                  >
+                    <MdPrint className="w-4 h-4 mr-2" />
+                    Print Pick Ticket
+                  </button>
+                  <button
+                    type="button"
+                    className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center"
+                  >
+                    <MdFingerprint className="w-4 h-4 mr-2" />
+                    Fill Packing Slip 
+                  </button>
+                  <button
+                    type="button"
+                    className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center"
+                  >
+                    <MdLocalPrintshop className="w-4 h-4 mr-2" />
+                    Print Packing Slip
+                  </button>
+                 
+                </Popover.Panel>
+              </Transition>
+            </>
+          )}
+        </Popover>
+       
       </div>
       <Transition
         appear
@@ -110,7 +167,7 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
                   <div className="mt-4">
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 hover:bg-blue-200"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleAdd}
                     >
                       close
