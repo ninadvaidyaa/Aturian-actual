@@ -8,7 +8,7 @@ import {
   MdSkipNext,
 } from "react-icons/md";
 
-import { Fragment } from "react";
+import { Fragment, useRef, useEffect } from "react";
 
 interface TablePaginationProps {
   gotoPage: (value: number) => void;
@@ -40,18 +40,27 @@ const TablePagination = ({
   const countStart = pageIndex === 0 ? 1 : pageIndex * pageSize + 1;
   let countEnd = pageIndex === 0 ? pageSize : pageIndex * pageSize + pageSize;
   countEnd = rowCount > countEnd ? countEnd : rowCount;
-
+  const ref = useRef<HTMLInputElement>(null);
   const handleChangePagination = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const page = event.target.value ? Number(event.target.value) - 1 : 0;
-    gotoPage(page);
+    const value = parseInt(ref.current?.value ?? "1");
+    if(value < pageIndex) hasNextPage = true;
+    if (value) {
+      if (hasNextPage && value > 0 && value <= Math.ceil(rowCount / pageSize)) {
+        gotoPage(value - 1);
+      }
+    }
   };
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.value = (pageIndex + 1).toString();
+    }
+  }, [pageIndex]);
 
   const handleChange = (event: number) => {
     setPageSize(event);
   };
-
   return (
     <div className="flex flex-row items-center justify-end bg-white">
       <div className="rounded-md bg-white px-2">
@@ -159,8 +168,9 @@ const TablePagination = ({
                   <label>
                     <input
                       type="number"
+                      ref={ref}
                       id="page"
-                      value={pageIndex + 1}
+                      min={1}
                       onChange={handleChangePagination}
                       className="block w-full rounded-sm border border-gray-300 bg-gray-50 p-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                     />
