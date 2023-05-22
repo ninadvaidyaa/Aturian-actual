@@ -29,7 +29,7 @@ const ReactTableBody = <M,>({ table, ...props }: TableBodyProps<M>) => (
                 !cell.column.columnDef.meta?.isCurrency &&
                 cell.column.columnDef.meta?.dataType === "string"
                   ? "left"
-                  : "right",
+                  : (cell.column.columnDef.meta?.dataType === "date" ? "center" : "right"),
             }}
           >
             {flexRender(cell.column.columnDef.cell, cell.getContext())}
