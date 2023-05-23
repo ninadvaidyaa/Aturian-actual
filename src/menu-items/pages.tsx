@@ -139,6 +139,28 @@ const pages: NavItemType = {
         },
       ],
     },
+
+    {
+      id: "invoicing",
+      title: "Invoicing",
+      type: "collapse",
+      icon: "supplierIcon",
+      children: [
+        {
+          id: "manage-prebills-list",
+          title: "Manage Prebills",
+          type: "item",
+          url: "/prebills",
+          target: true,
+          breadcrumbsArray: [
+            "Accounting" , 
+            "Customer Invoicing" ,
+            "Manage Cust Invoices",
+            "Invoice List"
+          ],
+        },
+      ],
+    },
   ],
 };
 

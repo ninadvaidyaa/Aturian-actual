@@ -1,34 +1,26 @@
 import { type ColumnDef } from "@tanstack/react-table";
+
 import { type UserViews } from "types/userViews";
 
 
 import { getFormattedDate } from "utils/date";
 import StatusCell from "components/lib/ReactTable/StatusCell";
-
-
-
 import RowActions from "./RowActions";
-import { type PickPackOthersList } from "validators/inventory.validators";
+
 import { Link } from "react-router-dom";
+import { type ManagePrebillsList } from "validators/invoicing.validator";
 
+export const defaultColumns: Array<ColumnDef<ManagePrebillsList>> = [
 
-
-
-
-export const defaultColumns: Array<ColumnDef<PickPackOthersList>> = [
-
-  
-  
- 
   {
-    accessorKey: "orderNumber",
-    id: "orderNumber",
-    header: "PL #",
+    accessorKey: "invoiceNum",
+    id: "invoiceNum",
+    header: "PreBill #",
     cell: (info) => {
       const { table, row } = info;
       return (
         <Link
-          to={`/pick-packs/${info.getValue() as string}`}
+          to={`/prebills/${info.getValue() as string}`}
           onClick={() => {
             table.toggleAllRowsSelected(false);
             row.toggleSelected(!row.getIsSelected());
@@ -44,11 +36,25 @@ export const defaultColumns: Array<ColumnDef<PickPackOthersList>> = [
       );
     },
     footer: (props) => props.column.id,
-    size: 180,
+    size: 160,
     
+    enableHiding: false,
     enableSorting: true,
     meta: {
       dataType: "string",
+    },
+  },
+ 
+  {
+    accessorKey: "orderNumber",
+    id: "orderNumber",
+    header: "Order #",
+    cell: (info) => info.getValue(),
+    footer: (props) => props.column.id,
+    size: 180,
+    enableSorting: true,
+    meta: {
+      dataType: "number",
     },
   },
 
@@ -56,7 +62,6 @@ export const defaultColumns: Array<ColumnDef<PickPackOthersList>> = [
     accessorKey: "custName",
     id: "custName",
     header: "Customer Name",
-    // cell: (info) => info.getValue().name, // option to keep all data
     cell: (info) => info.getValue(),
     footer: (props) => props.column.id,
     size: 180,
@@ -65,11 +70,52 @@ export const defaultColumns: Array<ColumnDef<PickPackOthersList>> = [
       dataType: "string",
     },
   },
+  {
+    // accessorFn: (value) => value.customer, // option to keep all data
+    // accessorFn: (value) => value.customer.name,
+    accessorKey: "custNumber",
+    id: "custNumber",
+    header: "Customer #",
+    // cell: (info) => info.getValue().name, // option to keep all data
+    cell: (info) => info.getValue(),
+    footer: (props) => props.column.id,
+    size: 180,
+    enableSorting: true,
+    meta: {
+      dataType: "number",
+    },
+  },
+  {
+    accessorKey: "amount",
+    id: "amount",
+    header: "Amount",
+    cell: (info) => info.getValue(),
+    footer: (props) => props.column.id,
+    size: 180,
+    enableSorting: true,
+    meta: {
+      dataType: "number",
+    },
+  },
 
   {
-    accessorKey: "orderDate",
-    id: "orderDate",
-    header: "Order Date",
+    accessorKey: "amountPaid",
+    id: "amountPaid",
+    header: "Amt Paid",
+    cell: (info) => info.getValue(),
+    footer: (props) => props.column.id,
+    size: 180,
+    enableSorting: true,
+    meta: {
+      dataType: "number",
+    },
+  },
+  
+
+  {
+    accessorKey: "dueDate",
+    id: "dueDate",
+    header: "Due Date",
     cell: (info) =>
       `${getFormattedDate(info.getValue() as string, "M/D/YYYY h:mm:ss A")}`,
     footer: (props) => props.column.id,
@@ -82,9 +128,21 @@ export const defaultColumns: Array<ColumnDef<PickPackOthersList>> = [
   },
 
   {
-    accessorKey: "inHandDate",
-    id: "inHandDate",
-    header: "Create Date",
+    accessorKey: "emailAddress",
+    id: "emailAddress",
+    header: "Email",
+    cell: (info) => info.getValue(),
+    footer: (props) => props.column.id,
+    size: 180,
+    enableSorting: true,
+    meta: {
+      dataType: "string",
+    },
+  },
+  {
+    accessorKey: "invoiceDate",
+    id: "invoiceDate",
+    header: "Sent Date",
     cell: (info) =>
       `${getFormattedDate(info.getValue() as string, "M/D/YYYY h:mm:ss A")}`,
     footer: (props) => props.column.id,
@@ -98,38 +156,8 @@ export const defaultColumns: Array<ColumnDef<PickPackOthersList>> = [
  
 
   {
-    accessorKey: "daysOnList",
-    
-    id: "daysOnList",
-    header: "Day on List",
-    // cell: (info) => info.getValue().name, // option to keep all data
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "number",
-    },
-  },
-
-  {
-    accessorKey: "noOfItems",
-    
-    id: "noOfItems",
-    header: "# of Items",
-    // cell: (info) => info.getValue().name, // option to keep all data
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "number",
-    },
-  },
- 
-  {
-    accessorKey: "pickPackStatus",
-    id: "pickPackStatus",
+    accessorKey: "preBillStatus",
+    id: "preBillStatus",
     header: "Status",
     cell: (info) => (
       <StatusCell
@@ -147,6 +175,9 @@ export const defaultColumns: Array<ColumnDef<PickPackOthersList>> = [
       isStatus: true,
     },
   },
+
+ 
+
   
   {
     id: "action",
@@ -170,38 +201,52 @@ export const views: UserViews = {
     name: "view1",
     id: 1,
     columns: [
-     
       {
-        id: "orderNumber",
+        id: "invoiceNum",
         index: 0,
       },
       {
-        id: "custName",
+        id: "orderNumber",
         index: 1,
       },
       {
-        id: "orderDate",
+        id: "custName",
         index: 2,
       },
       {
-        id: "inHandDate",
+        id: "custNumber",
         index: 3,
       },
       {
-        id: "daysOnList",
+        id: "amount",
         index: 4,
       },
       {
-        id: "noOfItems",
+        id: "amountPaid",
         index: 5,
       },
       {
-        id: "pickPackStatus",
+        id: "dueDate",
         index: 6,
       },
       {
-        id: "action",
+        id: "emailAddress",
         index: 7,
+      },
+      {
+        id: "invoiceDate",
+        index: 8,
+      },
+     
+      
+      {
+        id: "preBillStatus",
+        index: 9,
+      },
+     
+      {
+        id: "action",
+        index: 10,
       },
     ],
   },
@@ -209,43 +254,57 @@ export const views: UserViews = {
     name: "view 2",
     id: 2,
     columns: [
-
       {
-        id: "orderDate",
+        id: "custNumber",
         index: 0,
       },
       {
-        id: "inHandDate",
+        id: "custName",
         index: 1,
       },
+
       {
-        id: "noOfItems",
+        id: "invoiceDate",
         index: 2,
       },
-     
       {
-        id: "orderNumber",
+        id: "invoiceNum",
         index: 3,
       },
+
       {
-        id: "custName",
+        id: "dueDate",
         index: 4,
+      },
+      {
+        id: "emailAddress",
+        index: 5,
+      },
+      {
+        id: "amount",
+        index: 6,
       },
       
       {
-        id: "daysOnList",
-        index: 5,
+        id: "amountPaid",
+        index: 7,
       },
      
+      
+    
       {
-        id: "pickPackStatus",
-        index: 6,
+        id: "orderNumber",
+        index: 8,
       },
       {
+        id: "preBillStatus",
+        index: 9,
+      },
+      
+      {
         id: "action",
-        index: 7,
+        index: 10,
       },
     ],
   },
 };
-

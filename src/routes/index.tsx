@@ -3,7 +3,14 @@ import AuthGuard from "components/AuthGuard";
 import ErrorPage from "components/ErrorPage";
 import Loadable from "components/Loadable";
 import PickPackPage from "pages/inventory/picklist";
-import PickPackInventoryDetails from "pages/inventory/picklist/inventory/PickPackInventoryDetails";
+
+
+
+
+import ManagePrebillsPage from "pages/invoicing/ManagePrebills";
+import ManagePrebillDetailPage from "pages/invoicing/ManagePrebills/PrebillDetailPage";
+
+
 
 
 
@@ -20,6 +27,7 @@ import QuotesDetailPage from "pages/proposal/ManageQuotes/QuotesDetailPage";
 
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
+import PickPackInventoryDetails from "pages/inventory/picklist/PickPackDetails";
 const LoginPage = Loadable(lazy(async () => await import("pages/auth/login")));
 const OrderPage = Loadable(lazy(async () => await import("pages/orders")));
 const SuppliersPage = Loadable(
@@ -142,6 +150,16 @@ const router = createBrowserRouter([
                 element: <SupplierDetail />,
               },
 
+
+              {
+                path: "prebills",
+                element: <ManagePrebillsPage />,
+              },
+
+              {
+                path: "prebills/:prebillId",
+                element: <ManagePrebillDetailPage />,
+              },
               {
                 path: "quotes",
                 element: <ManageQuotePage />,

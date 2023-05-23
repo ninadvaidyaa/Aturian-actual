@@ -13,6 +13,8 @@ import { manageProposalListData, manageQuoteListData } from "./manageProposal";
 import { pickPackOtherListData } from "./pickPackOthers";
 import { manageSupplierInvoiceListData } from "./manageSupplierInvoice";
 import { supplierListData } from "./supliers";
+import { managePrebillsListData } from "./invoicing";
+
 import { pickListInventoryData } from "./picklistinventory";
 
 const baseApiUrl = import.meta.env.VITE_BASE_URL;
@@ -231,6 +233,30 @@ export const handlers = [
       );
     }
   ),
+
+  rest.get(
+    `${settings.apiBase}${apiConstants.MANAGE_PREBILLS_GET_ALL_API}`,
+    async (req, res, ctx) => {
+      const offset: number = req.url.searchParams.get("offset")
+        ? parseInt(req.url.searchParams.get("offset"))
+        : 0;
+      const limit: number = req.url.searchParams.get("limit")
+        ? parseInt(req.url.searchParams.get("limit"))
+        : 1;
+      return await res(
+        ctx.status(200),
+        ctx.json({
+          data: managePrebillsListData.slice(
+            offset * limit,
+            offset * limit + limit
+          ),
+          total: managePrebillsListData.length,
+        })
+      );
+    }
+  ),
+
+  
   rest.get(
     `${settings.apiBase}${apiConstants.INVENTORY_GET_PICKPACK_LIST_API}`,
     async (req, res, ctx) => {
