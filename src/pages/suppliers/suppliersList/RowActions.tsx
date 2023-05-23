@@ -25,10 +25,11 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
 
   return (
     <>
-      <div className="flex flex-row justify-end gap-1">
+      <div className="flex flex-row">
         <div>
           <button
             type="button"
+            title="Vendor Overview"
             className="inline-flex items-center rounded-full p-1 text-center text-sm font-medium text-skin-inverted focus:outline-none focus:ring-1 focus:ring-blue-300  "
           >
             <MdOutlineRemoveRedEye
@@ -41,6 +42,8 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
         <div>
           <button
             type="button"
+            title="Activity Log"
+
             className="inline-flex items-center rounded-full p-1 text-center text-sm font-medium text-skin-inverted focus:outline-none focus:ring-1 focus:ring-blue-300  "
           >
            <MdOutlineAvTimer
@@ -53,6 +56,7 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
         <div>
           <button
             type="button"
+            title="Vendor Notes"
             className="inline-flex items-center rounded-full p-1 text-center text-sm font-medium text-skin-inverted focus:outline-none focus:ring-1 focus:ring-blue-300  "
           >
             <MdOutlineStickyNote2

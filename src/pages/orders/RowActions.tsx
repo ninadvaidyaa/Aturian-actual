@@ -33,11 +33,13 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
         <div>
           <button
             type="button"
+            title="Overview"
             className="inline-flex items-center justify-center rounded-full p-0.5 text-sm focus:outline-none focus:ring-1 focus:ring-blue-300"
           >
             <MdOutlineRemoveRedEye
               className="h-4 w-4"
               color="#8C8C8C"
+              
             />
             <span className="sr-only">Icon</span>
           </button>
@@ -45,6 +47,7 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
         <div>
           <button
             type="button"
+            title="Active Logs"
             className="inline-flex items-center justify-center rounded-full p-0.5 text-sm focus:outline-none focus:ring-1 focus:ring-blue-300"
           >
             <MdOutlineAvTimer
@@ -57,6 +60,7 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
         <div>
           <button
             type="button"
+            title="Delete"
             className="inline-flex items-center justify-center rounded-full p-0.5 text-sm focus:outline-none focus:ring-1 focus:ring-blue-300"
           >
             <MdOutlineDeleteOutline

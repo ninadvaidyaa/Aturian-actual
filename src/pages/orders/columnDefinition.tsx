@@ -108,7 +108,7 @@ export const defaultColumns: Array<ColumnDef<OrdersList>> = [
     enableSorting: true,
     meta: {
       dataType: "date",
-      dateFormate: "M/D/YYYY h:mm:ss A",
+      dateFormate: "D/M/YYYY h:mm:ss A",
     },
   },
   {
@@ -255,40 +255,44 @@ export const views: UserViews = {
         index: 3,
       },
       {
-        id: "shipDate",
+        id: "date",
         index: 4,
       },
       {
-        id: "salesperson",
+        id: "shipDate",
         index: 5,
       },
       {
-        id: "csr",
+        id: "salesperson",
         index: 6,
       },
       {
-        id: "status",
+        id: "csr",
         index: 7,
       },
       {
-        id: "types",
+        id: "status",
         index: 8,
       },
       {
-        id: "createdBy",
+        id: "types",
         index: 9,
       },
       {
-        id: "cost",
+        id: "createdBy",
         index: 10,
       },
       {
-        id: "total",
+        id: "cost",
         index: 11,
       },
       {
-        id: "action",
+        id: "total",
         index: 12,
+      },
+      {
+        id: "action",
+        index: 13,
       },
     ],
   },
@@ -298,34 +302,38 @@ export const views: UserViews = {
     columns: [
       {
         id: "total",
-        index: 11,
+        index: 12,
       },
       {
         id: "cost",
-        index: 10,
+        index: 11,
       },
       {
         id: "createdBy",
-        index: 9,
+        index: 10,
       },
       {
         id: "types",
-        index: 8,
+        index: 9,
       },
       {
         id: "status",
-        index: 7,
+        index: 8,
       },
       {
         id: "csr",
-        index: 6,
+        index: 7,
       },
       {
         id: "salesperson",
-        index: 5,
+        index: 6,
       },
       {
         id: "shipDate",
+        index: 5,
+      },
+      {
+        id: "date",
         index: 4,
       },
       {
@@ -346,7 +354,7 @@ export const views: UserViews = {
       },
       {
         id: "action",
-        index: 12,
+        index: 13,
       },
     ],
   },

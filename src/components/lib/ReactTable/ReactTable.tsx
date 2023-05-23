@@ -59,7 +59,7 @@ const ReactTable = <M,>({
             </Fragment>
           ))}
         </thead>
-        {isError ? (
+        {isError || (table.options.data.length === 0) ? (
           <EmptyTable
             msg="No Records Available"
             colSpan={table.getAllLeafColumns().length}
