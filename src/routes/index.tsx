@@ -3,13 +3,21 @@ import AuthGuard from "components/AuthGuard";
 import ErrorPage from "components/ErrorPage";
 import Loadable from "components/Loadable";
 import PickPackPage from "pages/inventory/picklist";
-import PickPackInventoryDetails from "pages/inventory/picklist/inventory";
-import PickListOthersDetailsPage from "pages/inventory/pickPackItems/PickListOthersDetailsPage";
+import PickPackInventoryDetails from "pages/inventory/picklist/inventory/PickPackInventoryDetails";
+
+
+
+
+
 import ManageSupplierInvoiceListPage from "pages/manageSuppliesInvoice";
 import ManagerSupplierInvoiceDetailPage from "pages/manageSuppliesInvoice/ManageSuppliesInvoiceDetalisPage";
+import ManageProposalPage from "pages/proposal/ManageProposal";
+import ProposalDetailPage from "pages/proposal/ManageProposal/ProposalDetalisPage";
 
-import ManageProposalPage from "pages/proposal";
-import ProposalDetailPage from "pages/proposal/ProposalDetalisPage";
+import ManageQuotePage from "pages/proposal/ManageQuotes/index";
+import QuotesDetailPage from "pages/proposal/ManageQuotes/QuotesDetailPage";
+
+
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 const LoginPage = Loadable(lazy(async () => await import("pages/auth/login")));
@@ -93,10 +101,7 @@ const router = createBrowserRouter([
                 path: "proposals",
                 element: <ManageProposalPage />,
               },
-              {
-                path: "proposals/:proposalId",
-                element: <ProposalDetailPage />,
-              },
+            
               {
                 path: "proposals/:proposalId",
                 element: <ProposalDetailPage />,
@@ -105,7 +110,7 @@ const router = createBrowserRouter([
                 path: "items",
                 element: <ItemsListPage />,
               },
-              { path: "items/:itemId", element: <ItemDetailPage /> },
+              
 
               { path: "items/:itemId", element: <ItemDetailPage /> },
               {
@@ -117,7 +122,7 @@ const router = createBrowserRouter([
                 element: <PickPackInventoryDetails />,
               },
 
-              { path: "pick-packs/:pickListOtherlId", element: <PickListOthersDetailsPage />, },
+              
 
               {
                 path: "supplier-invoices",
@@ -136,6 +141,18 @@ const router = createBrowserRouter([
                 path: "suppliers/:supplierId",
                 element: <SupplierDetail />,
               },
+
+              {
+                path: "quotes",
+                element: <ManageQuotePage />,
+              },
+              {
+                path: "quotes/:quoteId",
+                element: <QuotesDetailPage />,
+              },
+
+
+              
             ],
           },
         ],

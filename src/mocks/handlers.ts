@@ -9,7 +9,7 @@ import { customerData } from "./customers";
 import { opsStatusData } from "./ops.status";
 import { flagsData } from "./flags";
 import { inventoryItemsListData } from "./inventoryItems";
-import { managePraposalListData } from "./manageroposal";
+import { manageProposalListData, manageQuoteListData } from "./manageProposal";
 import { pickPackOtherListData } from "./pickPackOthers";
 import { manageSupplierInvoiceListData } from "./manageSupplierInvoice";
 import { supplierListData } from "./supliers";
@@ -157,11 +157,33 @@ export const handlers = [
       return await res(
         ctx.status(200),
         ctx.json({
-          data: managePraposalListData.slice(
+          data: manageProposalListData.slice(
             offset * limit,
             offset * limit + limit
           ),
-          total: managePraposalListData.length,
+          total: manageProposalListData.length,
+        })
+      );
+    }
+  ),
+
+  rest.get(
+    `${settings.apiBase}${apiConstants.MANAGE_QUOTES_GET_ALL_API}`,
+    async (req, res, ctx) => {
+      const offset: number = req.url.searchParams.get("offset")
+        ? parseInt(req.url.searchParams.get("offset"))
+        : 0;
+      const limit: number = req.url.searchParams.get("limit")
+        ? parseInt(req.url.searchParams.get("limit"))
+        : 1;
+      return await res(
+        ctx.status(200),
+        ctx.json({
+          data: manageQuoteListData.slice(
+            offset * limit,
+            offset * limit + limit
+          ),
+          total: manageQuoteListData.length,
         })
       );
     }

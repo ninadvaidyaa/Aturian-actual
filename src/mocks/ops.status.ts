@@ -159,4 +159,13 @@ export const opsStatusData = [
     seq: 100,
     color: "#5bc0de",
   },
+
+  {
+    id: 74,
+    name: "Approved",
+    description: "Approved",
+    shortDescription: "Approved",
+    seq: 100,
+    color: "#026e00",
+  },
 ];

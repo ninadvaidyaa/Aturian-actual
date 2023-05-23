@@ -78,11 +78,19 @@ const pages: NavItemType = {
       children: [
         {
           id: "manager-proposal-list",
-          title: "Proposal List",
+          title: "Manage Proposal",
           type: "item",
           url: "/proposals",
           target: true,
           breadcrumbsArray: ["Sales", "Proposal List"],
+        },
+        {
+          id: "manager-quote-list",
+          title: "Manage Quotes",
+          type: "item",
+          url: "/quotes",
+          target: true,
+          breadcrumbsArray: ["Sales", "Quotes List"],
         },
       ],
     },

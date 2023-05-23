@@ -26,7 +26,7 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
 
   return (
     <>
-      <div className="flex flex-row gap-1 justify-end">
+      <div className="flex flex-row ">
         <div>
           <button
             type="button"
