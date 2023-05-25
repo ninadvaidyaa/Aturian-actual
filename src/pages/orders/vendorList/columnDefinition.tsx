@@ -8,84 +8,36 @@ import StatusCell from "components/lib/ReactTable/StatusCell";
 import { Link } from "react-router-dom";
 import { getUSCurrency } from "utils/number";
 import FlagComponent from "components/lib/ReactTable/RowFlags";
-import CheckBox from "components/CheckBox";
 import { selectedRowIdActions } from "./useTable";
 import { useMemo } from "react";
 
 export const useDefaultColumns = () => {
-  const { resetAll, setAll, setRowIds } = selectedRowIdActions();
+  const { resetAll, setRowIds } = selectedRowIdActions();
   const defaultColumns: Array<ColumnDef<OrdersList>> = useMemo(
     () => [
-      {
-        id: "select",
-        header: ({ table }) => (
-          <CheckBox
-            {...{
-              checked: table.getIsAllRowsSelected(),
-              indeterminate: table.getIsSomeRowsSelected(),
-              onChange: table.getToggleAllRowsSelectedHandler(),
-              onClick: (e) => {
-                e.stopPropagation();
-                if (table.getIsAllRowsSelected()) {
-                  resetAll();
-                } else {
-                  const { rows } = table.getRowModel();
-                  if (rows) {
-                    const rowIds = rows.map((row) => row.original.number);
-                    setAll(rowIds);
-                  }
-                }
-              },
-            }}
-          />
-        ),
-        cell: ({ row }) => (
-          <div className="px-1">
-            <CheckBox
-              {...{
-                checked: row.getIsSelected(),
-                disabled: !row.getCanSelect(),
-                indeterminate: row.getIsSomeSelected(),
-                onChange: row.getToggleSelectedHandler(),
-                onClick: (e) => {
-                  setRowIds(row.original.number);
-                },
-              }}
-            />
-          </div>
-        ),
-
-        footer: (props) => props.column.id,
-        size: 50,
-        enableHiding: false,
-        enableColumnFilter: false,
-        enableGlobalFilter: false,
-        enableSorting: false,
-        enableResizing: false,
-        enablePinning: true,
-        meta: {
-          dataType: "string",
-        },
-      },
       {
         accessorKey: "number",
         id: "number",
         header: "Order #",
-        cell: (info) => {
-          const { row } = info;
-          return (
-            <Link
-              to={`/orders/${info.getValue() as string}`}
-              className={`inline-block h-full w-full text-skin-primary ${
-                row.getIsSelected()
-                  ? "underline decoration-2 underline-offset-2"
-                  : ""
-              }`}
-            >
-              {info.getValue() as string}
-            </Link>
-          );
-        },
+        cell: ({ table, row, getValue }) => (
+          <Link
+            to={`/orders/${getValue() as string}`}
+            className={`inline-block h-full w-full text-skin-primary ${
+              row.getIsSelected()
+                ? "underline decoration-2 underline-offset-2"
+                : ""
+            }`}
+            onClick={(e) => {
+              e.stopPropagation();
+              table.toggleAllRowsSelected(false);
+              row.toggleSelected(!row.getIsSelected());
+              resetAll();
+              setRowIds(row.original.number);
+            }}
+          >
+            {getValue() as string}
+          </Link>
+        ),
         footer: (props) => props.column.id,
         size: 100,
         enablePinning: true,
