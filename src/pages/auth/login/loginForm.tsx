@@ -18,7 +18,6 @@ import { loginFormSchema } from "validators/auth.validators";
 import type { LoginFormData } from "validators/auth.validators";
 import IconButton from "components/@extended/IconButton";
 
-
 interface LoginFormProps {
   onSubmit: (data: LoginFormData) => void;
 }
@@ -136,9 +135,7 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
           item
           xs={12}
         >
-          <button
-           className="w-full bg-skin-fill text-white  focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
-          >
+          <button className="mb-2 mr-2 w-full  rounded-lg bg-skin-fill px-5 py-2.5 text-sm font-medium text-white focus:ring-4 focus:ring-blue-300 ">
             Login
           </button>
         </Grid>

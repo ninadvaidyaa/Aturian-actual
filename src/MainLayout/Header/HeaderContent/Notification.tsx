@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import { useTheme } from '@mui/material/styles';
+import { useRef, useState } from "react";
+import { useTheme } from "@mui/material/styles";
 import {
   Badge,
   Box,
@@ -7,20 +7,20 @@ import {
   Paper,
   Popper,
   Tooltip,
-  useMediaQuery
-} from '@mui/material';
+  useMediaQuery,
+} from "@mui/material";
 
-import MainCard from 'components/MainCard';
-import IconButton from 'components/@extended/IconButton';
-import Transitions from 'components/@extended/Transitions';
-import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import MainCard from "components/MainCard";
+import IconButton from "components/@extended/IconButton";
+import Transitions from "components/@extended/Transitions";
+import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 
 // ==============================|| HEADER CONTENT - NOTIFICATION ||============================== //
 
 const Notification = () => {
   const theme = useTheme();
-  const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
+  const matchesXs = useMediaQuery(theme.breakpoints.down("md"));
 
   const anchorRef = useRef<any>(null);
   const [read, setRead] = useState(0);
@@ -36,27 +36,35 @@ const Notification = () => {
     setOpen(false);
   };
 
-  const iconBackColorOpen = theme.palette.mode === 'dark' ? 'grey.200' : 'grey.300';
-  const iconBackColor = theme.palette.mode === 'dark' ? 'background.default' : 'grey.100';
+  const iconBackColorOpen =
+    theme.palette.mode === "dark" ? "grey.200" : "grey.300";
+  const iconBackColor =
+    theme.palette.mode === "dark" ? "background.default" : "grey.100";
 
   return (
     <Box sx={{ flexShrink: 0, ml: 0.75 }}>
       <IconButton
         color="secondary"
         variant="light"
-        sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : iconBackColor }}
+        sx={{
+          color: "text.primary",
+          bgcolor: open ? iconBackColorOpen : iconBackColor,
+        }}
         aria-label="open profile"
         ref={anchorRef}
-        aria-controls={open ? 'profile-grow' : undefined}
+        aria-controls={open ? "profile-grow" : undefined}
         aria-haspopup="true"
         onClick={handleToggle}
       >
-        <Badge badgeContent={read} color="primary">
+        <Badge
+          badgeContent={read}
+          color="primary"
+        >
           <NotificationsOutlinedIcon />
         </Badge>
       </IconButton>
       <Popper
-        placement={matchesXs ? 'bottom' : 'bottom-end'}
+        placement={matchesXs ? "bottom" : "bottom-end"}
         open={open}
         anchorEl={anchorRef.current}
         role={undefined}
@@ -65,25 +73,31 @@ const Notification = () => {
         popperOptions={{
           modifiers: [
             {
-              name: 'offset',
+              name: "offset",
               options: {
-                offset: [matchesXs ? -5 : 0, 9]
-              }
-            }
-          ]
+                offset: [matchesXs ? -5 : 0, 9],
+              },
+            },
+          ],
         }}
       >
         {({ TransitionProps }) => (
-          <Transitions type="grow" position={matchesXs ? 'top' : 'top-right'} sx={{ overflow: 'hidden' }} in={open} {...TransitionProps}>
+          <Transitions
+            type="grow"
+            position={matchesXs ? "top" : "top-right"}
+            sx={{ overflow: "hidden" }}
+            in={open}
+            {...TransitionProps}
+          >
             <Paper
               sx={{
                 boxShadow: theme.customShadows.z1,
-                width: '100%',
+                width: "100%",
                 minWidth: 285,
                 maxWidth: 420,
-                [theme.breakpoints.down('md')]: {
-                  maxWidth: 285
-                }
+                [theme.breakpoints.down("md")]: {
+                  maxWidth: 285,
+                },
               }}
             >
               <ClickAwayListener onClickAway={handleClose}>
@@ -96,16 +110,22 @@ const Notification = () => {
                     <>
                       {read > 0 && (
                         <Tooltip title="Mark as all read">
-                          <IconButton color="success" size="small" onClick={() => { setRead(0); }}>
-                            <CheckCircleOutlineOutlinedIcon style={{ fontSize: '1.15rem' }} />
+                          <IconButton
+                            color="success"
+                            size="small"
+                            onClick={() => {
+                              setRead(0);
+                            }}
+                          >
+                            <CheckCircleOutlineOutlinedIcon
+                              style={{ fontSize: "1.15rem" }}
+                            />
                           </IconButton>
                         </Tooltip>
                       )}
                     </>
                   }
-                >
-                
-                </MainCard>
+                ></MainCard>
               </ClickAwayListener>
             </Paper>
           </Transitions>

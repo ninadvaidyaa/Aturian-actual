@@ -45,7 +45,7 @@ const TablePagination = ({
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const value = parseInt(ref.current?.value ?? "1");
-    if(value < pageIndex) hasNextPage = true;
+    if (value < pageIndex) hasNextPage = true;
     if (value) {
       if (hasNextPage && value > 0 && value <= Math.ceil(rowCount / pageSize)) {
         gotoPage(value - 1);

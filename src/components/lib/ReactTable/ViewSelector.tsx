@@ -3,12 +3,15 @@ import { useState, Fragment, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { MdOutlineCheck, MdOutlineExpandMore } from "react-icons/md";
 
-import { useTableActions } from "hooks/useTable";
 import { type UserViews } from "types/userViews";
 
-const ViewSelector = ({ views }: { views: UserViews }) => {
+interface ViewSelectorProps {
+  views: UserViews;
+  setColumnOrder: (value: string[]) => void;
+}
+
+const ViewSelector = ({ views, setColumnOrder }: ViewSelectorProps) => {
   const [view, setView] = useState("");
-  const { setColumnOrder } = useTableActions();
   const handleChange = (val: string) => {
     setView(val);
     const selectedView = views[val].columns

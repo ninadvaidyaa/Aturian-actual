@@ -1,4 +1,7 @@
-import { type SimplePaletteColorOptions, type PaletteColorOptions } from '@mui/material/styles';
+import {
+  type SimplePaletteColorOptions,
+  type PaletteColorOptions,
+} from "@mui/material/styles";
 
 export interface PaletteThemeProps {
   primary: SimplePaletteColorOptions;

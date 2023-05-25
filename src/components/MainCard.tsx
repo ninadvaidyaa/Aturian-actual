@@ -77,7 +77,7 @@ const MainCard = forwardRef(
             theme.palette.mode === "dark"
               ? theme.palette.divider
               : theme.palette.grey.A800,
-         
+
           ...(codeHighlight && {
             "& pre": {
               m: 0,
@@ -101,7 +101,6 @@ const MainCard = forwardRef(
           ...sx,
         }}
       >
-        
         {!darkTitle && title && (
           <CardHeader
             sx={headerSX}
@@ -119,10 +118,8 @@ const MainCard = forwardRef(
           />
         )}
 
-        
         {title && divider && <Divider />}
 
-        
         {content && <CardContent sx={contentSX}>{children}</CardContent>}
         {!content && children}
       </Card>

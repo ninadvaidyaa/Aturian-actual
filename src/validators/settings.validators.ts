@@ -16,13 +16,15 @@ export const flagSchema = z.object({
   name: z.string(),
   seq: z.number(),
   color: z.string(),
-  statuses: z.array(z.object({
-    id: z.number(),
-    name: z.string(),
-    tooltip: z.string(),
-    color: z.string(),
-    icon: z.string(),
-  })),
+  statuses: z.array(
+    z.object({
+      id: z.number(),
+      name: z.string(),
+      tooltip: z.string(),
+      color: z.string(),
+      icon: z.string(),
+    })
+  ),
 });
 
 export const flagDataSchema = z.object({

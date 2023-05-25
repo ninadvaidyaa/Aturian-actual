@@ -21,7 +21,7 @@ const getFlagElements = (flagData: FlagData[], flags: Flag[]) =>
         name: flagInfo.name,
         color: status?.color ?? "#F3F3F3",
         tooltip: status?.tooltip,
-        icon: status?.icon ??  "fa fa-circle",
+        icon: status?.icon ?? "fa fa-circle",
       };
     }
     return {

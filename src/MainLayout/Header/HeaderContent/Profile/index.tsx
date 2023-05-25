@@ -1,28 +1,34 @@
-import { useRef, useState } from 'react';
-import { useTheme } from '@mui/material/styles';
-import { Box, ButtonBase, ClickAwayListener,  Paper, Popper, Stack, Typography } from '@mui/material';
+import { useRef, useState } from "react";
+import { useTheme } from "@mui/material/styles";
+import {
+  Box,
+  ButtonBase,
+  ClickAwayListener,
+  Paper,
+  Popper,
+  Stack,
+  Typography,
+} from "@mui/material";
 
-import Avatar from 'components/@extended/Avatar';
-import MainCard from 'components/MainCard';
-import Transitions from 'components/@extended/Transitions';
-import avatar1 from 'assets/images/users/avatar-1.png';
-import useLogOut from 'hooks/useLogOut';
+import Avatar from "components/@extended/Avatar";
+import MainCard from "components/MainCard";
+import Transitions from "components/@extended/Transitions";
+import avatar1 from "assets/images/users/avatar-1.png";
+import useLogOut from "hooks/useLogOut";
 
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import LogoutIcon from '@mui/icons-material/Logout';
-import SettingsIcon from '@mui/icons-material/Settings';
-
-
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import LogoutIcon from "@mui/icons-material/Logout";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 // ==============================|| HEADER CONTENT - PROFILE ||============================== //
 
 const Profile = () => {
   const theme = useTheme();
-  const {onLogout} = useLogOut();
+  const { onLogout } = useLogOut();
 
   const anchorRef = useRef<any>(null);
   const [open, setOpen] = useState(false);
@@ -37,9 +43,8 @@ const Profile = () => {
     setOpen(false);
   };
 
-
-
-  const iconBackColorOpen = theme.palette.mode === 'dark' ? 'grey.200' : 'grey.300';
+  const iconBackColorOpen =
+    theme.palette.mode === "dark" ? "grey.200" : "grey.300";
 
   return (
     <Box sx={{ flexShrink: 0, ml: 0.75 }}>
@@ -123,7 +128,7 @@ const Profile = () => {
                 >
                   <List>
                     <ListItem disablePadding>
-                      <ListItemButton   onClick={onLogout}>
+                      <ListItemButton onClick={onLogout}>
                         <ListItemIcon>
                           <LogoutIcon />
                         </ListItemIcon>
@@ -139,7 +144,6 @@ const Profile = () => {
                       </ListItemButton>
                     </ListItem>
                   </List>
-                 
                 </MainCard>
               </ClickAwayListener>
             </Paper>

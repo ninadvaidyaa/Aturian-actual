@@ -8,10 +8,7 @@ export const fetchAllOrders = async (
   q: string = ""
 ) => {
   const resp = await api.get<{ data: OrdersList[]; results: number }>(
-    `${ORDERS_GET_ALL_API}?offset=${offset}&limit=${limit}${
-      q ? `&${q}` : ""
-    }`
+    `${ORDERS_GET_ALL_API}?offset=${offset}&limit=${limit}${q ? `&${q}` : ""}`
   );
   return resp.data;
 };
-

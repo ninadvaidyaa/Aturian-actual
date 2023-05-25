@@ -78,7 +78,7 @@ const pages: NavItemType = {
       children: [
         {
           id: "manager-proposal-list",
-          title: "Manage Proposal",
+          title: "Proposal List",
           type: "item",
           url: "/proposals",
           target: true,
@@ -88,7 +88,7 @@ const pages: NavItemType = {
           id: "manager-quote-list",
           title: "Manage Quotes",
           type: "item",
-          url: "/quotes",
+          url: "/proposals/quotes",
           target: true,
           breadcrumbsArray: ["Sales", "Quotes List"],
         },
@@ -122,7 +122,6 @@ const pages: NavItemType = {
         },
       ],
     },
-
     {
       id: "suppliers",
       title: "Suppliers",
@@ -139,7 +138,6 @@ const pages: NavItemType = {
         },
       ],
     },
-
     {
       id: "invoicing",
       title: "Invoicing",
@@ -150,13 +148,13 @@ const pages: NavItemType = {
           id: "manage-prebills-list",
           title: "Manage Prebills",
           type: "item",
-          url: "/prebills",
+          url: "/invoices",
           target: true,
           breadcrumbsArray: [
-            "Accounting" , 
-            "Customer Invoicing" ,
+            "Accounting",
+            "Customer Invoicing",
             "Manage Cust Invoices",
-            "Invoice List"
+            "Invoice List",
           ],
         },
       ],

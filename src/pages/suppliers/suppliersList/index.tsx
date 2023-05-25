@@ -1,14 +1,16 @@
 import { useEffect, useMemo } from "react";
 
 import { fetchAllSuppliers } from "api/supplier.api";
-import { defaultColumns, views } from "./columnDefinition";
+import { useDefaultColumns, views } from "./columnDefinition";
 import {
   useColumnFilters,
   usePagination,
   useSorting,
   useTable,
   useTableActions,
-} from "hooks/useTable";
+  useSetRowSelection,
+  useSelectedRowIds,
+} from "./useTable";
 import Loader from "components/Loader";
 import { useQuery } from "@tanstack/react-query";
 import TablePageHeader from "components/TablePageHeader";
@@ -17,21 +19,19 @@ import {
   TablePagination,
   ViewSelector,
 } from "components/lib/ReactTable";
-import { useSetRowSelection } from "hooks/useSelectRow";
 
 const SupplierPage = () => {
   const pagination = usePagination();
   const columnFilters = useColumnFilters();
   const sorting = useSorting();
-  const { reset } = useTableActions();
-  useEffect(
-    () => () => {
-      reset();
-    },
-    []
-  );
-  const setRowSelection = useSetRowSelection();
   const defaultData = useMemo(() => [], []);
+  const defaultColumns = useDefaultColumns();
+  const { setColumnOrder } = useTableActions();
+  const setRowSelection = useSetRowSelection();
+  const selectRowIds = useSelectedRowIds();
+  useEffect(() => {
+    setColumnOrder(views.view1.columns.map((c) => c.id));
+  }, []);
 
   const queryParams = () => {
     let params = "";
@@ -80,7 +80,7 @@ const SupplierPage = () => {
     }
     return params;
   };
-  const { data, isError, isFetching,error } = useQuery({
+  const { data, isError, isFetching, error } = useQuery({
     queryKey: [
       "suppliers",
       pagination?.pageIndex,
@@ -102,6 +102,21 @@ const SupplierPage = () => {
     totalRows: data?.results ?? 0,
   });
 
+  useEffect(() => {
+    const { rows } = table.getRowModel();
+    if (selectRowIds.size > 0 && table?.getState()) {
+      const selectedRows: Record<string, boolean> = {};
+      rows.forEach((r) => {
+        if (selectRowIds.has(r.original.number)) {
+          selectedRows[r.id] = true;
+        }
+      });
+      setRowSelection(selectedRows);
+    }
+    return () => {
+      setRowSelection({});
+    };
+  }, [pagination?.pageIndex, data?.data]);
   return (
     <>
       {isFetching && <Loader />}
@@ -111,10 +126,13 @@ const SupplierPage = () => {
           title={"Vendor"}
           table={table}
         />
-        <ViewSelector views={views} />
+        <ViewSelector
+          views={views}
+          setColumnOrder={setColumnOrder}
+        />
         <Table
           table={table}
-          isError={isError}
+          isError={!isFetching && isError && data?.data?.length === 0}
           error={error}
         />
         <TablePagination

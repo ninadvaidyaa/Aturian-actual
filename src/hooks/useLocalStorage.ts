@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 
-const useLocalStorage = <T>(key: string, defaultValue: T):[T, (newValue: T) => void] => {
+const useLocalStorage = <T>(
+  key: string,
+  defaultValue: T
+): [T, (newValue: T) => void] => {
   const [value, setValue] = useState(() => {
     const storedValue =
       typeof window !== "undefined" ? localStorage.getItem(key) : null;
@@ -14,7 +17,7 @@ const useLocalStorage = <T>(key: string, defaultValue: T):[T, (newValue: T) => v
         e.storageArea === localStorage &&
         e.key === key
       ) {
-        const {newValue} = e;
+        const { newValue } = e;
         setValue(newValue != null ? JSON.parse(newValue) : newValue);
       }
     };
@@ -25,7 +28,7 @@ const useLocalStorage = <T>(key: string, defaultValue: T):[T, (newValue: T) => v
     };
   }, [key, defaultValue]);
 
-  const setValueInLocalStorage= (newValue: T):void => {
+  const setValueInLocalStorage = (newValue: T): void => {
     setValue((currentValue: any) => {
       const result =
         typeof newValue === "function" ? newValue(currentValue) : newValue;

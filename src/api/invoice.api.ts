@@ -1,8 +1,6 @@
-
 import api from "./axios";
 import { MANAGE_PREBILLS_GET_ALL_API } from "constants/api.constants";
 import { type ManagePrebillsList } from "validators/invoicing.validator";
-
 
 export const fetchAllPrebillsItems = async (
   offset: number = 0,
@@ -16,7 +14,3 @@ export const fetchAllPrebillsItems = async (
   );
   return resp.data;
 };
-
-
-
-

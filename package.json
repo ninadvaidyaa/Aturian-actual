@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "cross-env CI=true eslint --ignore-pattern '*.d.ts' --ext ts,tsx --max-warnings 0 src",
+    "format": "prettier --write . --ignore-path .gitignore",
     "prepare": "husky install",
     "coverage": "vitest run --coverage",
     "test": "vitest run",

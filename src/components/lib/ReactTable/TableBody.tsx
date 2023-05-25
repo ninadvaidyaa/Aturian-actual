@@ -14,13 +14,13 @@ const ReactTableBody = <M,>({ table, ...props }: TableBodyProps<M>) => (
         //   table.toggleAllRowsSelected(false);
         //   row.toggleSelected(!row.getIsSelected());
         // }}
-        className={`odd:bg-white even:bg-gray-50 hover:bg-base-hover  border-b  `}
+        className={`border-b odd:bg-white even:bg-gray-50  hover:bg-base-hover  `}
       >
         {row.getVisibleCells().map((cell) => (
           <td
             key={cell.id}
             scope="row"
-            className={`p-1 font-medium text-gray-900 whitespace-nowrap  text-ellipsis ${
+            className={`text-ellipsis whitespace-nowrap p-1 font-medium  text-gray-900 ${
               cell.column.id !== "action" ? "truncate" : ""
             }`}
             style={{
@@ -29,7 +29,9 @@ const ReactTableBody = <M,>({ table, ...props }: TableBodyProps<M>) => (
                 !cell.column.columnDef.meta?.isCurrency &&
                 cell.column.columnDef.meta?.dataType === "string"
                   ? "left"
-                  : (cell.column.columnDef.meta?.dataType === "date" ? "center" : "right"),
+                  : cell.column.columnDef.meta?.dataType === "date"
+                  ? "center"
+                  : "right",
             }}
           >
             {flexRender(cell.column.columnDef.cell, cell.getContext())}

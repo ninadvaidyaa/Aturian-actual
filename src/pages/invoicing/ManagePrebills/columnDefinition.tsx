@@ -2,200 +2,201 @@ import { type ColumnDef } from "@tanstack/react-table";
 
 import { type UserViews } from "types/userViews";
 
-
 import { getFormattedDate } from "utils/date";
 import StatusCell from "components/lib/ReactTable/StatusCell";
 import RowActions from "./RowActions";
 
 import { Link } from "react-router-dom";
 import { type ManagePrebillsList } from "validators/invoicing.validator";
+import { selectedRowIdActions } from "./useTable";
 
-export const defaultColumns: Array<ColumnDef<ManagePrebillsList>> = [
-
-  {
-    accessorKey: "invoiceNum",
-    id: "invoiceNum",
-    header: "PreBill #",
-    cell: (info) => {
-      const { table, row } = info;
-      return (
+export const useDefaultColumns = () => {
+  const { setRowIds, resetAll } = selectedRowIdActions();
+  const defaultColumns: Array<ColumnDef<ManagePrebillsList>> = [
+    {
+      accessorKey: "invoiceNum",
+      id: "invoiceNum",
+      header: "PreBill #",
+      cell: ({ table, row, getValue }) => (
+        // TODO: change 'invoices' to 'prebills' when the route is ready
         <Link
-          to={`/prebills/${info.getValue() as string}`}
-          onClick={() => {
+          to={`/invoices/${getValue() as string}`}
+          onClick={(e) => {
+            e.stopPropagation();
             table.toggleAllRowsSelected(false);
             row.toggleSelected(!row.getIsSelected());
+            resetAll();
+            setRowIds(row.original.invoiceNum);
           }}
-          className={`inline-block h-full w-full text-skin-primary ${
+          className={`inline-block h-full w-full text-primary-500 ${
             row.getIsSelected()
               ? "underline decoration-2 underline-offset-2"
               : ""
           }`}
         >
-          {info.getValue() as string}
+          {getValue() as string}
         </Link>
-      );
-    },
-    footer: (props) => props.column.id,
-    size: 160,
-    
-    enableHiding: false,
-    enableSorting: true,
-    meta: {
-      dataType: "string",
-    },
-  },
- 
-  {
-    accessorKey: "orderNumber",
-    id: "orderNumber",
-    header: "Order #",
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "number",
-    },
-  },
+      ),
 
-  {
-    accessorKey: "custName",
-    id: "custName",
-    header: "Customer Name",
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "string",
-    },
-  },
-  {
-    // accessorFn: (value) => value.customer, // option to keep all data
-    // accessorFn: (value) => value.customer.name,
-    accessorKey: "custNumber",
-    id: "custNumber",
-    header: "Customer #",
-    // cell: (info) => info.getValue().name, // option to keep all data
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "number",
-    },
-  },
-  {
-    accessorKey: "amount",
-    id: "amount",
-    header: "Amount",
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "number",
-    },
-  },
+      footer: (props) => props.column.id,
+      size: 160,
 
-  {
-    accessorKey: "amountPaid",
-    id: "amountPaid",
-    header: "Amt Paid",
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "number",
+      enableHiding: false,
+      enableSorting: true,
+      meta: {
+        dataType: "string",
+      },
     },
-  },
-  
 
-  {
-    accessorKey: "dueDate",
-    id: "dueDate",
-    header: "Due Date",
-    cell: (info) =>
-      `${getFormattedDate(info.getValue() as string, "M/D/YYYY h:mm:ss A")}`,
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "date",
-      dateFormate: "M/D/YYYY h:mm:ss A",
+    {
+      accessorKey: "orderNumber",
+      id: "orderNumber",
+      header: "Order #",
+      cell: (info) => info.getValue(),
+      footer: (props) => props.column.id,
+      size: 180,
+      enableSorting: true,
+      meta: {
+        dataType: "number",
+      },
     },
-  },
 
-  {
-    accessorKey: "emailAddress",
-    id: "emailAddress",
-    header: "Email",
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "string",
+    {
+      accessorKey: "custName",
+      id: "custName",
+      header: "Customer Name",
+      cell: (info) => info.getValue(),
+      footer: (props) => props.column.id,
+      size: 180,
+      enableSorting: true,
+      meta: {
+        dataType: "string",
+      },
     },
-  },
-  {
-    accessorKey: "invoiceDate",
-    id: "invoiceDate",
-    header: "Sent Date",
-    cell: (info) =>
-      `${getFormattedDate(info.getValue() as string, "M/D/YYYY h:mm:ss A")}`,
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "date",
-      dateFormate: "M/D/YYYY h:mm:ss A",
+    {
+      // accessorFn: (value) => value.customer, // option to keep all data
+      // accessorFn: (value) => value.customer.name,
+      accessorKey: "custNumber",
+      id: "custNumber",
+      header: "Customer #",
+      // cell: (info) => info.getValue().name, // option to keep all data
+      cell: (info) => info.getValue(),
+      footer: (props) => props.column.id,
+      size: 180,
+      enableSorting: true,
+      meta: {
+        dataType: "number",
+      },
     },
-  },
- 
+    {
+      accessorKey: "amount",
+      id: "amount",
+      header: "Amount",
+      cell: (info) => info.getValue(),
+      footer: (props) => props.column.id,
+      size: 180,
+      enableSorting: true,
+      meta: {
+        dataType: "number",
+      },
+    },
 
-  {
-    accessorKey: "preBillStatus",
-    id: "preBillStatus",
-    header: "Status",
-    cell: (info) => (
-      <StatusCell
-        color="#006979"
-        label="In Production"
-        info={info}
-      />
-    ),
-    footer: (props) => props.column.id,
-    size: 100,
-    enableSorting: true,
-    meta: {
-      dataType: "string",
-      isSelectable: true,
-      isStatus: true,
+    {
+      accessorKey: "amountPaid",
+      id: "amountPaid",
+      header: "Amt Paid",
+      cell: (info) => info.getValue(),
+      footer: (props) => props.column.id,
+      size: 180,
+      enableSorting: true,
+      meta: {
+        dataType: "number",
+      },
     },
-  },
 
- 
-
-  
-  {
-    id: "action",
-    header: "Action",
-    cell: (info) => <RowActions info={info} />,
-    footer: (props) => props.column.id,
-    size: 150,
-    enableHiding: false,
-    enableColumnFilter: false,
-    enableGlobalFilter: false,
-    enableSorting: false,
-    enableResizing: false,
-    enablePinning: true,
-    meta: {
-      dataType: "string",
+    {
+      accessorKey: "dueDate",
+      id: "dueDate",
+      header: "Due Date",
+      cell: (info) =>
+        `${getFormattedDate(info.getValue() as string, "M/D/YYYY h:mm:ss A")}`,
+      footer: (props) => props.column.id,
+      size: 180,
+      enableSorting: true,
+      meta: {
+        dataType: "date",
+        dateFormate: "M/D/YYYY h:mm:ss A",
+      },
     },
-  },
-];
+
+    {
+      accessorKey: "emailAddress",
+      id: "emailAddress",
+      header: "Email",
+      cell: (info) => info.getValue(),
+      footer: (props) => props.column.id,
+      size: 180,
+      enableSorting: true,
+      meta: {
+        dataType: "string",
+      },
+    },
+    {
+      accessorKey: "invoiceDate",
+      id: "invoiceDate",
+      header: "Sent Date",
+      cell: (info) =>
+        `${getFormattedDate(info.getValue() as string, "M/D/YYYY h:mm:ss A")}`,
+      footer: (props) => props.column.id,
+      size: 180,
+      enableSorting: true,
+      meta: {
+        dataType: "date",
+        dateFormate: "M/D/YYYY h:mm:ss A",
+      },
+    },
+
+    {
+      accessorKey: "preBillStatus",
+      id: "preBillStatus",
+      header: "Status",
+      cell: (info) => (
+        <StatusCell
+          color="#006979"
+          label="In Production"
+          info={info}
+        />
+      ),
+      footer: (props) => props.column.id,
+      size: 100,
+      enableSorting: true,
+      meta: {
+        dataType: "string",
+        isSelectable: true,
+        isStatus: true,
+      },
+    },
+
+    {
+      id: "action",
+      header: "Action",
+      cell: (info) => <RowActions info={info} />,
+      footer: (props) => props.column.id,
+      size: 150,
+      enableHiding: false,
+      enableColumnFilter: false,
+      enableGlobalFilter: false,
+      enableSorting: false,
+      enableResizing: false,
+      enablePinning: true,
+      meta: {
+        dataType: "string",
+      },
+    },
+  ];
+
+  return defaultColumns;
+};
 export const views: UserViews = {
   view1: {
     name: "view1",
@@ -237,13 +238,12 @@ export const views: UserViews = {
         id: "invoiceDate",
         index: 8,
       },
-     
-      
+
       {
         id: "preBillStatus",
         index: 9,
       },
-     
+
       {
         id: "action",
         index: 10,
@@ -284,14 +284,12 @@ export const views: UserViews = {
         id: "amount",
         index: 6,
       },
-      
+
       {
         id: "amountPaid",
         index: 7,
       },
-     
-      
-    
+
       {
         id: "orderNumber",
         index: 8,
@@ -300,7 +298,7 @@ export const views: UserViews = {
         id: "preBillStatus",
         index: 9,
       },
-      
+
       {
         id: "action",
         index: 10,

@@ -27,15 +27,14 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
 
   return (
     <>
-      <div className="flex flex-row">
+      <div className="flex flex-row ">
         <div>
           <button
             type="button"
-            title="Edit"
-            className="text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  "
+            className="inline-flex items-center rounded-full p-1 text-center text-sm font-medium text-skin-inverted focus:outline-none focus:ring-1 focus:ring-blue-300  "
           >
             <MdOutlineEditNote
-              className="w-4 h-4"
+              className="h-4 w-4"
               color="#1890FF"
             />
             <span className="sr-only">Edit</span>
@@ -44,11 +43,10 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
         <div>
           <button
             type="button"
-            title="Delete"
-            className="text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  "
+            className="inline-flex items-center rounded-full p-1 text-center text-sm font-medium text-skin-inverted focus:outline-none focus:ring-1 focus:ring-blue-300  "
           >
             <MdOutlineDeleteOutline
-              className="w-4 h-4"
+              className="h-4 w-4"
               color="#BB0505"
             />
             <span className="sr-only">Delete</span>
@@ -57,11 +55,10 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
         <div>
           <button
             type="button"
-            title="Notes"
-            className="text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  "
+            className="inline-flex items-center rounded-full p-1 text-center text-sm font-medium text-skin-inverted focus:outline-none focus:ring-1 focus:ring-blue-300  "
           >
             <MdOutlineStickyNote2
-              className="w-4 h-4 "
+              className="h-4 w-4 "
               color="#8C8C8C"
             />
             <span className="sr-only">Notes</span>
@@ -70,7 +67,7 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
         <Popover className="">
           {({ open }) => (
             <>
-              <Popover.Button className="text-skin-inverted focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center  ">
+              <Popover.Button className="inline-flex items-center rounded-full p-1 text-center text-sm font-medium text-skin-inverted focus:outline-none focus:ring-1 focus:ring-blue-300  ">
                 <MdOutlineMoreVert
                   className={`${open ? "" : "text-opacity-70"}
                    h-4 w-4 transition duration-150 ease-in-out group-hover:text-opacity-80`}
@@ -87,41 +84,41 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1"
               >
-                <Popover.Panel className="absolute flex flex-col ms-[-190px] z-10 mt-3 max-w-sm bg-white rounded-lg shadow">
+                <Popover.Panel className="absolute z-10 ms-[-190px] mt-3 flex max-w-sm flex-col rounded-lg bg-white shadow">
                   <button
                     type="button"
                     onClick={handleAdd}
-                    className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center first:mt-1"
+                    className="mx-4 inline-flex items-center border-b border-gray-200 bg-white px-3 py-2 text-center text-sm font-medium text-gray-900 first:mt-1 focus:outline-none focus:ring-4 focus:ring-gray-100 hover:bg-gray-100"
                   >
-                    <MdOutlineRemoveRedEye className="w-4 h-4 mr-2" />
+                    <MdOutlineRemoveRedEye className="mr-2 h-4 w-4" />
                     Convet to quote
                   </button>
                   <button
                     type="button"
-                    className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center"
+                    className="mx-4 inline-flex items-center border-b border-gray-200 bg-white px-3 py-2 text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-100 hover:bg-gray-100"
                   >
-                    <MdOutlineInventory className="w-4 h-4 mr-2" />
+                    <MdOutlineInventory className="mr-2 h-4 w-4" />
                     Convert to order
                   </button>
                   <button
                     type="button"
-                    className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center"
+                    className="mx-4 inline-flex items-center border-b border-gray-200 bg-white px-3 py-2 text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-100 hover:bg-gray-100"
                   >
-                    <MdOutlineCreditCard className="w-4 h-4 mr-2" />
+                    <MdOutlineCreditCard className="mr-2 h-4 w-4" />
                     Dublicate Proposal
                   </button>
                   <button
                     type="button"
-                    className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center"
+                    className="mx-4 inline-flex items-center border-b border-gray-200 bg-white px-3 py-2 text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-100 hover:bg-gray-100"
                   >
-                    <MdOutlineAvTimer className="w-4 h-4 mr-2" />
+                    <MdOutlineAvTimer className="mr-2 h-4 w-4" />
                     Set Status
                   </button>
                   <button
                     type="button"
-                    className="text-gray-900 bg-white hover:bg-gray-100 mx-4 border-b border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium text-sm px-3 py-2 text-center inline-flex items-center last:mb-1"
+                    className="mx-4 inline-flex items-center border-b border-gray-200 bg-white px-3 py-2 text-center text-sm font-medium text-gray-900 last:mb-1 focus:outline-none focus:ring-4 focus:ring-gray-100 hover:bg-gray-100"
                   >
-                    <MdOutlineContactPage className="w-4 h-4 mr-2" />
+                    <MdOutlineContactPage className="mr-2 h-4 w-4" />
                     Preview
                   </button>
                 </Popover.Panel>
@@ -181,7 +178,7 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
                   <div className="mt-4">
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 hover:bg-blue-200"
                       onClick={handleAdd}
                     >
                       close

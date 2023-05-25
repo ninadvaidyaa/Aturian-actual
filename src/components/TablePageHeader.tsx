@@ -65,6 +65,7 @@ const TablePageHeader = <TData,>({
   function openModal() {
     setIsOpen(true);
   }
+
   return (
     <>
       <div className="z-20">
@@ -83,7 +84,7 @@ const TablePageHeader = <TData,>({
               as="div"
               className="relative inline-block text-center"
             >
-              <Menu.Button className="p-0.5 rounded-full w-6 h-6 font-bold text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-300">
+              <Menu.Button className="h-6 w-6 rounded-full p-0.5 font-bold text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-300">
                 <i className="far fa-cog fa-lg"></i>
               </Menu.Button>
 
@@ -186,7 +187,9 @@ const TablePageHeader = <TData,>({
                               htmlFor={column.id}
                               className="ml-2 text-sm font-medium text-gray-900"
                             >
-                              {column.columnDef.header?.toString()}
+                              {column.columnDef.id === "select"
+                                ? "select"
+                                : column.columnDef.header?.toString()}
                             </label>
                           </div>
                         ) : (

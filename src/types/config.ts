@@ -1,14 +1,18 @@
-export type ThemeDirection = 'ltr' | 'rtl';
-export type ThemeMode = 'light' | 'dark';
-export type MenuOrientation = 'vertical' | 'horizontal';
+export type ThemeDirection = "ltr" | "rtl";
+export type ThemeMode = "light" | "dark";
+export type MenuOrientation = "vertical" | "horizontal";
 
-export type FontFamily = `'Inter', sans-serif` | `'Poppins', sans-serif` | `'Roboto', sans-serif` | `'Public Sans', sans-serif`;
-export type PresetColor = 'default' | 'theme1';
-export type I18n = 'en' | 'fr'; // 'en' - English, 'fr' - French
+export type FontFamily =
+  | `'Inter', sans-serif`
+  | `'Poppins', sans-serif`
+  | `'Roboto', sans-serif`
+  | `'Public Sans', sans-serif`;
+export type PresetColor = "default" | "theme1";
+export type I18n = "en" | "fr"; // 'en' - English, 'fr' - French
 
 export const LAYOUT_CONST = {
-  VERTICAL_LAYOUT: 'vertical',
-  HORIZONTAL_LAYOUT: 'horizontal'
+  VERTICAL_LAYOUT: "vertical",
+  HORIZONTAL_LAYOUT: "horizontal",
 };
 
 export interface CustomizationActionProps {

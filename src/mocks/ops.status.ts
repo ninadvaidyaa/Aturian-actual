@@ -123,7 +123,6 @@ export const opsStatusData = [
     color: "#d9534f",
   },
 
-  
   {
     id: 70,
     name: "Open",

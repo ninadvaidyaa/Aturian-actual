@@ -1,9 +1,8 @@
+import { ButtonBase } from "@mui/material";
+import { type SxProps } from "@mui/system";
 
-import { ButtonBase } from '@mui/material';
-import { type SxProps } from '@mui/system';
-
-import Logo from './LogoMain';
-import LogoIcon from './LogoIcon';
+import Logo from "./LogoMain";
+import LogoIcon from "./LogoIcon";
 // ==============================|| MAIN LOGO ||============================== //
 
 interface Props {
@@ -14,7 +13,10 @@ interface Props {
 }
 
 const LogoSection = ({ reverse, isIcon, sx, to }: Props) => (
-  <ButtonBase disableRipple sx={sx}>
+  <ButtonBase
+    disableRipple
+    sx={sx}
+  >
     {isIcon ? <LogoIcon /> : <Logo reverse={reverse} />}
   </ButtonBase>
 );

@@ -1,10 +1,10 @@
-import React, { type ReactElement } from 'react';
+import React, { type ReactElement } from "react";
 
-import { useTheme } from '@mui/material/styles';
-import { AppBar, Box, Container, useScrollTrigger } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { AppBar, Box, Container, useScrollTrigger } from "@mui/material";
 
-import Navigation from './DrawerContent/Navigation';
-import useConfig from 'hooks/useConfig';
+import Navigation from "./DrawerContent/Navigation";
+import useConfig from "hooks/useConfig";
 
 // ==============================|| HORIZONTAL MENU LIST ||============================== //
 
@@ -18,13 +18,13 @@ function ElevationScroll({ children, window }: ElevationScrollProps) {
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
-    target: window ?? undefined
+    target: window ?? undefined,
   });
 
   theme.shadows[4] = theme.customShadows.z1;
 
   return React.cloneElement(children, {
-    elevation: trigger ? 4 : 0
+    elevation: trigger ? 4 : 0,
   });
 }
 
@@ -40,17 +40,17 @@ const CustomAppBar = () => {
         sx={{
           top: 60,
           bgcolor: theme.palette.background.paper,
-          width: '100%',
+          width: "100%",
           height: 62,
-          justifyContent: 'center',
+          justifyContent: "center",
           borderTop: `1px solid ${theme.palette.divider}`,
           borderBottom: `1px solid ${theme.palette.divider}`,
           zIndex: 1098,
-          color: theme.palette.grey[500]
+          color: theme.palette.grey[500],
         }}
       >
-        <Container maxWidth={container ? 'xl' : false}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Container maxWidth={container ? "xl" : false}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <Navigation />
           </Box>
         </Container>

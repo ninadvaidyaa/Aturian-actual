@@ -145,10 +145,8 @@ const NavGroup = ({
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handelItemClick = (event: any) =>{
-    
+  const handelItemClick = (event: any) => {
     setAnchorEl(null);
-    
   };
   const navCollapse = item.children?.map((menuItem, index) => {
     // console.log(menuItem)

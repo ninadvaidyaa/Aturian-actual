@@ -12,7 +12,6 @@ import type {
   IconButtonShapeProps,
 } from "types/extended";
 
-
 interface IconButtonStyleProps extends ExtendedStyleProps {
   variant?: ButtonVariantProps;
 }
@@ -23,7 +22,7 @@ function getColorStyle({ variant, theme, color }: IconButtonStyleProps) {
 
   // const buttonShadow = `${color}Button`;
   // console.log( 'buttonShadow'+buttonShadow)
-  const shadows = '';
+  const shadows = "";
 
   const commonShadow = {
     "&::after": {
@@ -98,7 +97,6 @@ function getColorStyle({ variant, theme, color }: IconButtonStyleProps) {
   }
 }
 
-
 interface StyleProps extends IconButtonStyleProps {
   shape?: IconButtonShapeProps;
 }
@@ -146,7 +144,6 @@ const IconButtonStyle = styled(MuiIconButton, {
   }),
   ...getColorStyle({ variant, theme, color }),
 }));
-
 
 export interface Props extends IconButtonProps {
   shape?: IconButtonShapeProps;

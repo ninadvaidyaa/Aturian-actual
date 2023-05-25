@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 
 import { fetchAllCustomers } from "api/customer.api";
-import { defaultColumns, views } from "./columnDefinition";
+import { useDefaultColumns, views } from "./columnDefinition";
 import {
   useColumnFilters,
   usePagination,
@@ -18,20 +18,20 @@ import {
   ViewSelector,
 } from "components/lib/ReactTable";
 import { useSetRowSelection } from "hooks/useSelectRow";
+import { useSelectedRowIds } from "./useTable";
 
 const CustomerPage = () => {
   const pagination = usePagination();
   const columnFilters = useColumnFilters();
   const sorting = useSorting();
-  const { reset } = useTableActions();
-  useEffect(
-    () => () => {
-      reset();
-    },
-    []
-  );
-  const setRowSelection = useSetRowSelection();
   const defaultData = useMemo(() => [], []);
+  const defaultColumns = useDefaultColumns();
+  const { setColumnOrder } = useTableActions();
+  const setRowSelection = useSetRowSelection();
+  const selectRowIds = useSelectedRowIds();
+  useEffect(() => {
+    setColumnOrder(views.view1.columns.map((c) => c.id));
+  }, []);
 
   const queryParams = () => {
     let params = "";
@@ -80,7 +80,7 @@ const CustomerPage = () => {
     }
     return params;
   };
-  const { data, isError, isFetching,error } = useQuery({
+  const { data, isError, isFetching, error } = useQuery({
     queryKey: [
       "customers",
       pagination?.pageIndex,
@@ -102,6 +102,22 @@ const CustomerPage = () => {
     totalRows: data?.total ?? 0,
   });
 
+  useEffect(() => {
+    const { rows } = table.getRowModel();
+    if (selectRowIds.size > 0 && table?.getState()) {
+      const selectedRows: Record<string, boolean> = {};
+      rows.forEach((r) => {
+        if (selectRowIds.has(r.original.id)) {
+          selectedRows[r.id] = true;
+        }
+      });
+      setRowSelection(selectedRows);
+    }
+    return () => {
+      setRowSelection({});
+    };
+  }, [pagination?.pageIndex, data?.data]);
+
   return (
     <>
       {isFetching && <Loader />}
@@ -111,10 +127,13 @@ const CustomerPage = () => {
           title={"Customer"}
           table={table}
         />
-        <ViewSelector views={views} />
+        <ViewSelector
+          views={views}
+          setColumnOrder={setColumnOrder}
+        />
         <Table
           table={table}
-          isError={isError}
+          isError={!isFetching && isError && data?.data?.length === 0}
           error={error}
         />
         <TablePagination

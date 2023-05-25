@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { Box, CardActions, Collapse, Divider, Tooltip } from '@mui/material';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { useState } from "react";
+import { Box, CardActions, Collapse, Divider, Tooltip } from "@mui/material";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
-import SyntaxHighlight from 'utils/syntaxHighlight';
-import IconButton from 'components/@extended/IconButton';
+import SyntaxHighlight from "utils/syntaxHighlight";
+import IconButton from "components/@extended/IconButton";
 
-import { CodeOutlined, CopyOutlined } from '@ant-design/icons';
+import { CodeOutlined, CopyOutlined } from "@ant-design/icons";
 
 // ==============================|| CLIPBOARD & HIGHLIGHTER   ||============================== //
 
@@ -19,29 +19,48 @@ const Highlighter = ({ codeString, codeHighlight }: Props) => {
 
   return (
     <>
-      <CardActions sx={{ justifyContent: 'flex-end' }}>
-        <Box sx={{ display: 'flex' }}>
+      <CardActions sx={{ justifyContent: "flex-end" }}>
+        <Box sx={{ display: "flex" }}>
           <CopyToClipboard text={codeString}>
-            <Tooltip title="Copy the source" placement="top-end">
-              <IconButton color="secondary" size="small" sx={{ fontSize: '0.875rem' }}>
+            <Tooltip
+              title="Copy the source"
+              placement="top-end"
+            >
+              <IconButton
+                color="secondary"
+                size="small"
+                sx={{ fontSize: "0.875rem" }}
+              >
                 <CopyOutlined />
               </IconButton>
             </Tooltip>
           </CopyToClipboard>
-          <Divider orientation="vertical" variant="middle" flexItem sx={{ mx: 1 }} />
-          <Tooltip title="Show the source" placement="top-end">
+          <Divider
+            orientation="vertical"
+            variant="middle"
+            flexItem
+            sx={{ mx: 1 }}
+          />
+          <Tooltip
+            title="Show the source"
+            placement="top-end"
+          >
             <IconButton
-              sx={{ fontSize: '0.875rem' }}
+              sx={{ fontSize: "0.875rem" }}
               size="small"
-              color={highlight ? 'primary' : 'secondary'}
-              onClick={() => { setHighlight(!highlight); }}
+              color={highlight ? "primary" : "secondary"}
+              onClick={() => {
+                setHighlight(!highlight);
+              }}
             >
               <CodeOutlined />
             </IconButton>
           </Tooltip>
         </Box>
       </CardActions>
-      <Collapse in={highlight}>{highlight && <SyntaxHighlight>{codeString}</SyntaxHighlight>}</Collapse>
+      <Collapse in={highlight}>
+        {highlight && <SyntaxHighlight>{codeString}</SyntaxHighlight>}
+      </Collapse>
     </>
   );
 };

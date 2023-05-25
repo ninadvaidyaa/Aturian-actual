@@ -57,7 +57,7 @@ api.interceptors.response.use(
       }
     }
     /* eslint-disable */
-    return  Promise.reject(err);
+    return Promise.reject(err);
   }
 );
 

@@ -8,7 +8,7 @@ interface TableHeaderProps<M> {
 }
 
 const TableHeader = <M,>({ table, ...props }: TableHeaderProps<M>) => (
-  <thead className="text-gray-700 capitalize bg-gray-50">
+  <thead className="bg-gray-50 capitalize text-gray-700">
     {table.getHeaderGroups().map((headerGroup) => (
       <Fragment key={headerGroup.id}>
         <tr key={`${headerGroup.id}-name`}>
@@ -22,7 +22,8 @@ const TableHeader = <M,>({ table, ...props }: TableHeaderProps<M>) => (
         </tr>
         <tr key={`${headerGroup.id}-filter`}>
           {headerGroup.headers.map((header) => (
-            <th className="overflow-hidden text-ellipsis whitespace-nowrap px-1 py-2 text-left font-normal"
+            <th
+              className="overflow-hidden text-ellipsis whitespace-nowrap px-1 py-2 text-left font-normal"
               key={header.id}
               colSpan={header.colSpan}
             >

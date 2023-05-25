@@ -1,30 +1,28 @@
 import { type ColumnDef } from "@tanstack/react-table";
 import { type UserViews } from "types/userViews";
 
-
 import StatusCell from "components/lib/ReactTable/StatusCell";
 import { type InventoryItemsList } from "validators/inventory.validators";
 import RowActions from "./RowActions";
 import { Link } from "react-router-dom";
+import { selectedRowIdActions } from "./useTable";
+export const useDefaultColumns = () => {
+  const { setRowIds, resetAll } = selectedRowIdActions();
 
-
-
-
-export const defaultColumns: Array<ColumnDef<InventoryItemsList>> = [
-
-  {
-    accessorKey: "itemNumber",
-    id: "itemNumber",
-    header: "Cust Item #",
-    // cell: (info) => info.getValue(),
-    cell: (info) => {
-      const { table, row } = info;
-      return (
+  const defaultColumns: Array<ColumnDef<InventoryItemsList>> = [
+    {
+      accessorKey: "itemNumber",
+      id: "itemNumber",
+      header: "Cust Item #",
+      cell: ({ table, row, getValue }) => (
         <Link
-          to={`/items/${info.getValue() as string}`}
-          onClick={() => {
+          to={`/items/${getValue() as string}`}
+          onClick={(e) => {
+            e.stopPropagation();
             table.toggleAllRowsSelected(false);
             row.toggleSelected(!row.getIsSelected());
+            resetAll();
+            setRowIds(row.original.itemNumber);
           }}
           className={`inline-block h-full w-full text-skin-primary ${
             row.getIsSelected()
@@ -32,173 +30,170 @@ export const defaultColumns: Array<ColumnDef<InventoryItemsList>> = [
               : ""
           }`}
         >
-          {info.getValue() as string}
+          {getValue() as string}
         </Link>
-      );
+      ),
+      footer: (props) => props.column.id,
+      size: 180,
+      enableHiding: false,
+      enableSorting: true,
+      enablePinning: true,
+      meta: {
+        dataType: "string",
+      },
     },
-    footer: (props) => props.column.id,
-    size: 180,
-    enableHiding: false,
-    enableSorting: true,
-    enablePinning: true,
-    meta: {
-      dataType: "string",
-    },
-  },
 
-  {
-    accessorKey: "externalItemNumber",
-    id: "externalItemNumber",
-    header: "Ext. Item #",
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "string",
+    {
+      accessorKey: "externalItemNumber",
+      id: "externalItemNumber",
+      header: "Ext. Item #",
+      cell: (info) => info.getValue(),
+      footer: (props) => props.column.id,
+      size: 180,
+      enableSorting: true,
+      meta: {
+        dataType: "string",
+      },
     },
-  },
-  {
-   
-    accessorKey: "alias1",
-    id: "alias1",
-    header: "Alias(es)",
-    // cell: (info) => info.getValue().name, // option to keep all data
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "string",
+    {
+      accessorKey: "alias1",
+      id: "alias1",
+      header: "Alias(es)",
+      // cell: (info) => info.getValue().name, // option to keep all data
+      cell: (info) => info.getValue(),
+      footer: (props) => props.column.id,
+      size: 180,
+      enableSorting: true,
+      meta: {
+        dataType: "string",
+      },
     },
-  },
-  {
-  
-    accessorKey: "supplierItemNumber",
-    id: "supplierItemNumber",
-    header: "Vendor Item #",
-    // cell: (info) => info.getValue().name, // option to keep all data
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "string",
+    {
+      accessorKey: "supplierItemNumber",
+      id: "supplierItemNumber",
+      header: "Vendor Item #",
+      // cell: (info) => info.getValue().name, // option to keep all data
+      cell: (info) => info.getValue(),
+      footer: (props) => props.column.id,
+      size: 180,
+      enableSorting: true,
+      meta: {
+        dataType: "string",
+      },
     },
-  },
 
-  {
-    accessorKey: "custNumber",
-    
-    id: "custNumber",
-    header: "Customer #",
-    // cell: (info) => info.getValue().name, // option to keep all data
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "number",
-    },
-  },
-  {
-    accessorKey: "custName",
-    id: "custName",
-    header: "Customer Name",
-    // cell: (info) => info.getValue().name, // option to keep all data
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "string",
-    },
-  },
-  
-  {
-    accessorKey: "primaryDesc",
-    id: "primaryDesc",
-    header: "Item Description",
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "string",
-      
-    },
-  },
-  {
-    accessorKey: "categoryDesc",
-    id: "categoryDesc",
-    header: "Item Category",
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 180,
-    enableSorting: true,
-    meta: {
-      dataType: "string",
-      isSelectable: true,
-    },
-  },
+    {
+      accessorKey: "custNumber",
 
-  {
-    accessorKey: "typeItemDesc",
-    id: "typeItemDesc",
-    header: "Item Type",
-    cell: (info) => info.getValue(),
-    footer: (props) => props.column.id,
-    size: 100,
-    enableSorting: true,
-    meta: {
-      dataType: "string",
-      isSelectable: true,
+      id: "custNumber",
+      header: "Customer #",
+      // cell: (info) => info.getValue().name, // option to keep all data
+      cell: (info) => info.getValue(),
+      footer: (props) => props.column.id,
+      size: 180,
+      enableSorting: true,
+      meta: {
+        dataType: "number",
+      },
     },
-  },
-  {
-    accessorKey: "itemStatus",
-    id: "itemStatus",
-    header: "Status",
-    cell: (info) => (
-      <StatusCell
-        color="#006979"
-        label="In Production"
-        info={info}
-      />
-    ),
-    footer: (props) => props.column.id,
-    size: 100,
-    enableSorting: true,
-    meta: {
-      dataType: "string",
-      isSelectable: true,
-      isStatus: true,
+    {
+      accessorKey: "custName",
+      id: "custName",
+      header: "Customer Name",
+      // cell: (info) => info.getValue().name, // option to keep all data
+      cell: (info) => info.getValue(),
+      footer: (props) => props.column.id,
+      size: 180,
+      enableSorting: true,
+      meta: {
+        dataType: "string",
+      },
     },
-  },
-    
-  {
-    id: "action",
-    header: "Action",
-    cell: (info) => <RowActions info={info} />,
-    footer: (props) => props.column.id,
-    size: 150,
-    enableHiding: false,
-    enableColumnFilter: false,
-    enableGlobalFilter: false,
-    enableSorting: false,
-    enableResizing: false,
-    enablePinning: true,
-    meta: {
-      dataType: "string",
+
+    {
+      accessorKey: "primaryDesc",
+      id: "primaryDesc",
+      header: "Item Description",
+      cell: (info) => info.getValue(),
+      footer: (props) => props.column.id,
+      size: 180,
+      enableSorting: true,
+      meta: {
+        dataType: "string",
+      },
     },
-  },
-];
+    {
+      accessorKey: "categoryDesc",
+      id: "categoryDesc",
+      header: "Item Category",
+      cell: (info) => info.getValue(),
+      footer: (props) => props.column.id,
+      size: 180,
+      enableSorting: true,
+      meta: {
+        dataType: "string",
+        isSelectable: true,
+      },
+    },
+
+    {
+      accessorKey: "typeItemDesc",
+      id: "typeItemDesc",
+      header: "Item Type",
+      cell: (info) => info.getValue(),
+      footer: (props) => props.column.id,
+      size: 100,
+      enableSorting: true,
+      meta: {
+        dataType: "string",
+        isSelectable: true,
+      },
+    },
+    {
+      accessorKey: "itemStatus",
+      id: "itemStatus",
+      header: "Status",
+      cell: (info) => (
+        <StatusCell
+          color="#006979"
+          label="In Production"
+          info={info}
+        />
+      ),
+      footer: (props) => props.column.id,
+      size: 100,
+      enableSorting: true,
+      meta: {
+        dataType: "string",
+        isSelectable: true,
+        isStatus: true,
+      },
+    },
+
+    {
+      id: "action",
+      header: "Action",
+      cell: (info) => <RowActions info={info} />,
+      footer: (props) => props.column.id,
+      size: 150,
+      enableHiding: false,
+      enableColumnFilter: false,
+      enableGlobalFilter: false,
+      enableSorting: false,
+      enableResizing: false,
+      enablePinning: true,
+      meta: {
+        dataType: "string",
+      },
+    },
+  ];
+  return defaultColumns;
+};
 export const views: UserViews = {
   view1: {
     name: "view1",
     id: 1,
     columns: [
-     
       {
         id: "itemNumber",
         index: 0,
@@ -272,14 +267,11 @@ export const views: UserViews = {
         index: 4,
       },
 
-
       {
         id: "externalItemNumber",
         index: 5,
       },
-     
-     
-    
+
       {
         id: "primaryDesc",
         index: 6,

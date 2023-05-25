@@ -94,7 +94,10 @@ const Transitions = forwardRef(
         )}
 
         {type === "collapse" && (
-          <Collapse {...others} sx={positionSX}>
+          <Collapse
+            {...others}
+            sx={positionSX}
+          >
             {children}
           </Collapse>
         )}
@@ -142,5 +145,11 @@ export const PopupTransition = forwardRef(function Transition(
   props: ZoomProps,
   ref: Ref<unknown>
 ) {
-  return <Zoom ref={ref} timeout={200} {...props} />;
+  return (
+    <Zoom
+      ref={ref}
+      timeout={200}
+      {...props}
+    />
+  );
 });

@@ -1,5 +1,10 @@
-
-import { Box, CircularProgress, type CircularProgressProps, Typography, circularProgressClasses } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  type CircularProgressProps,
+  Typography,
+  circularProgressClasses,
+} from "@mui/material";
 
 // ==============================|| PROGRESS - CIRCULAR PATH ||============================== //
 
@@ -8,12 +13,21 @@ interface Props extends CircularProgressProps {
   pathColor?: string;
 }
 
-export default function CircularWithPath({ value, size, variant, thickness, showLabel, pathColor, sx, ...others }: Props) {
+export default function CircularWithPath({
+  value,
+  size,
+  variant,
+  thickness,
+  showLabel,
+  pathColor,
+  sx,
+  ...others
+}: Props) {
   return (
-    <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+    <Box sx={{ position: "relative", display: "inline-flex" }}>
       <CircularProgress
         variant="determinate"
-        sx={{ color: pathColor ?? 'grey.200' }}
+        sx={{ color: pathColor ?? "grey.200" }}
         size={size}
         thickness={thickness}
         {...others}
@@ -26,14 +40,18 @@ export default function CircularWithPath({ value, size, variant, thickness, show
             left: 0,
             bottom: 0,
             right: 0,
-            position: 'absolute',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
+            position: "absolute",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <Typography variant="caption" component="div" color="text.secondary">
-            {value ? `${Math.round(value)}%` : '0%'}
+          <Typography
+            variant="caption"
+            component="div"
+            color="text.secondary"
+          >
+            {value ? `${Math.round(value)}%` : "0%"}
           </Typography>
         </Box>
       )}
@@ -41,11 +59,11 @@ export default function CircularWithPath({ value, size, variant, thickness, show
         variant={variant}
         sx={{
           ...sx,
-          position: 'absolute',
+          position: "absolute",
           left: 0,
           [`& .${circularProgressClasses.circle}`]: {
-            strokeLinecap: 'round'
-          }
+            strokeLinecap: "round",
+          },
         }}
         size={size}
         thickness={thickness}

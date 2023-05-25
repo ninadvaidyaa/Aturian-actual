@@ -1,4 +1,3 @@
-
 import { type SupplierList } from "validators/supplier.validators";
 import api from "./axios";
 import { SUPPLIERS_GET_ALL_API } from "constants/api.constants";
@@ -15,4 +14,3 @@ export const fetchAllSuppliers = async (
   );
   return resp.data;
 };
-

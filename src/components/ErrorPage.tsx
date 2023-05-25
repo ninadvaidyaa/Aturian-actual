@@ -1,12 +1,7 @@
 import { useNavigate, useRouteError } from "react-router-dom";
 
 import { useTheme } from "@mui/material/styles";
-import {
-  Grid,
-  Stack,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
+import { Grid, Stack, Typography, useMediaQuery } from "@mui/material";
 import {
   useQueryClient,
   useQueryErrorResetBoundary,
@@ -30,7 +25,7 @@ function ErrorPage() {
     action.reset(); // TODO: find better way to handle it
     navigate("/");
   };
-  
+
   useEffect(() => {
     reset();
   }, []);
@@ -59,7 +54,7 @@ function ErrorPage() {
               align="center"
               variant={matchDownSM ? "h2" : "h1"}
             >
-                {/* @ts-expect-error it can be network error */}
+              {/* @ts-expect-error it can be network error */}
               <i>{error?.statusText || error?.message}</i>
             </Typography>
             <Typography
@@ -73,7 +68,7 @@ function ErrorPage() {
             </Typography>
             <button
               type="button"
-              className="inline-flex text-skin-primary bg-primary-600 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4"
+              className="my-4 inline-flex rounded-lg bg-primary-600 px-5 py-2.5 text-center text-sm font-medium text-skin-primary focus:outline-none focus:ring-4 focus:ring-primary-300 hover:bg-primary-800"
               onClick={() => {
                 resetErrors();
               }}

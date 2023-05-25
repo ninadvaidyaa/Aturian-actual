@@ -1,6 +1,14 @@
-import { type PickPackOthersList, type InventoryItemsList, type PickListInventory} from "validators/inventory.validators";
+import {
+  type PickPackOthersList,
+  type InventoryItemsList,
+  type PickListInventory,
+} from "validators/inventory.validators";
 import api from "./axios";
-import { INVENTORY_ITEMS_GET_ALL_API, PICK_PACK_OTHERS_GET_ALL_API, INVENTORY_GET_PICKPACK_LIST_API } from "constants/api.constants";
+import {
+  INVENTORY_ITEMS_GET_ALL_API,
+  PICK_PACK_OTHERS_GET_ALL_API,
+  INVENTORY_GET_PICKPACK_LIST_API,
+} from "constants/api.constants";
 
 export const fetchAllInventoryItems = async (
   offset: number = 0,
@@ -14,7 +22,6 @@ export const fetchAllInventoryItems = async (
   );
   return resp.data;
 };
-
 
 export const fetchAllPickPackOthers = async (
   offset: number = 0,
@@ -41,4 +48,3 @@ export const fetchPickListInventory = async (
   );
   return resp.data;
 };
-

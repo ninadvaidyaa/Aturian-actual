@@ -1,5 +1,8 @@
 import api from "./axios";
-import { SETTINGS_GET_ALL_FLAG, SETTINGS_GET_ALL_STATUS } from "constants/api.constants";
+import {
+  SETTINGS_GET_ALL_FLAG,
+  SETTINGS_GET_ALL_STATUS,
+} from "constants/api.constants";
 import { type Flag, type Status } from "validators/settings.validators";
 
 export const fetchAllStatus = async () => {

@@ -1,4 +1,4 @@
-import {useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   useColumnFilters,
@@ -6,9 +6,11 @@ import {
   useSorting,
   useTable,
   useTableActions,
-} from "hooks/useTable";
+  useSetRowSelection,
+  useSelectedRowIds,
+} from "./useTable";
 import Loader from "components/Loader";
-import { defaultColumns, views } from "./columnDefinition";
+import { useDefaultColumns, views } from "./columnDefinition";
 
 import TablePageHeader from "components/TablePageHeader";
 import {
@@ -16,27 +18,22 @@ import {
   TablePagination,
   Table,
 } from "components/lib/ReactTable";
-import { useSetRowSelection } from "hooks/useSelectRow";
+
 import { fetchAllManageProposal } from "api/manageProposal.api";
 import { fetchAllFlags, fetchAllStatus } from "api/settings.api";
 
-
-
 const ManageProposalPage = () => {
   const pagination = usePagination();
-  const tableActions = useTableActions();
   const columnFilters = useColumnFilters();
   const sorting = useSorting();
-  const setRowSelection = useSetRowSelection();
-
   const defaultData = useMemo(() => [], []);
-
-  useEffect(
-    () => () => {
-      tableActions.reset();
-    },
-    []
-  );
+  const defaultColumns = useDefaultColumns();
+  const { setColumnOrder } = useTableActions();
+  const setRowSelection = useSetRowSelection();
+  const selectRowIds = useSelectedRowIds();
+  useEffect(() => {
+    setColumnOrder(views.view1.columns.map((c) => c.id));
+  }, []);
 
   const queryParams = () => {
     let params = "";
@@ -72,8 +69,8 @@ const ManageProposalPage = () => {
     return params;
   };
 
-  const { data:statusData, } = useQuery(["status"], fetchAllStatus);
-  const { data:flagData } = useQuery(["flags"], fetchAllFlags);
+  const { data: statusData } = useQuery(["status"], fetchAllStatus);
+  const { data: flagData } = useQuery(["flags"], fetchAllFlags);
   const { data, isFetching, isError, error } = useQuery({
     queryKey: [
       "manageProposalList",
@@ -88,7 +85,7 @@ const ManageProposalPage = () => {
         queryParams()
       ),
     keepPreviousData: true,
-    enabled: (!!statusData?.results && !!flagData?.results) ?? false ,
+    enabled: (!!statusData?.results && !!flagData?.results) ?? false,
   });
 
   // instantiate the table
@@ -97,54 +94,70 @@ const ManageProposalPage = () => {
     defaultColumns,
     totalRows: data?.total ?? 0,
   });
-
+  useEffect(() => {
+    const { rows } = table.getRowModel();
+    if (selectRowIds.size > 0 && table?.getState()) {
+      const selectedRows: Record<string, boolean> = {};
+      rows.forEach((r) => {
+        if (selectRowIds.has(r.original.proposalNumber)) {
+          selectedRows[r.id] = true;
+        }
+      });
+      setRowSelection(selectedRows);
+    }
+    return () => {
+      setRowSelection({});
+    };
+  }, [pagination?.pageIndex, data?.data]);
   return (
     <>
-     {isFetching && <Loader />}
+      {isFetching && <Loader />}
 
-<div className="">
-  <TablePageHeader
-    title={"Proposal"}
-    table={table}
-  />
-  <ViewSelector views={views} />
-  <Table
-    table={table}
-    isError={isError}
-    error={error}
-  />
-  <TablePagination
-    pageSize={table.getState().pagination.pageSize}
-    pageIndex={table.getState().pagination.pageIndex}
-    hasNextPage={table.getCanNextPage()}
-    hasPrevPage={table.getCanPreviousPage()}
-    setPageSize={(newSize: number) => {
-      table.setPageSize(newSize);
-    }}
-    gotoPage={(n: number) => {
-      table.setPageIndex(n);
-      setRowSelection({});
-    }}
-    rowCount={data?.total ?? 0}
-    onPreviousClick={() => {
-      table.previousPage();
-      setRowSelection({});
-    }}
-    onNextClick={() => {
-      table.nextPage();
-      setRowSelection({});
-    }}
-    onFirstPageClick={() => {
-      table.setPageIndex(0);
-      setRowSelection({});
-    }}
-    onLastPageClick={() => {
-      table.setPageIndex(table.getPageCount() - 1);
-      setRowSelection({});
-    }}
-  />
-</div>
-   
+      <div className="">
+        <TablePageHeader
+          title={"Proposal"}
+          table={table}
+        />
+        <ViewSelector
+          views={views}
+          setColumnOrder={setColumnOrder}
+        />
+        <Table
+          table={table}
+          isError={!isFetching && isError && data?.data?.length === 0}
+          error={error}
+        />
+        <TablePagination
+          pageSize={table.getState().pagination.pageSize}
+          pageIndex={table.getState().pagination.pageIndex}
+          hasNextPage={table.getCanNextPage()}
+          hasPrevPage={table.getCanPreviousPage()}
+          setPageSize={(newSize: number) => {
+            table.setPageSize(newSize);
+          }}
+          gotoPage={(n: number) => {
+            table.setPageIndex(n);
+            setRowSelection({});
+          }}
+          rowCount={data?.total ?? 0}
+          onPreviousClick={() => {
+            table.previousPage();
+            setRowSelection({});
+          }}
+          onNextClick={() => {
+            table.nextPage();
+            setRowSelection({});
+          }}
+          onFirstPageClick={() => {
+            table.setPageIndex(0);
+            setRowSelection({});
+          }}
+          onLastPageClick={() => {
+            table.setPageIndex(table.getPageCount() - 1);
+            setRowSelection({});
+          }}
+        />
+      </div>
     </>
   );
 };

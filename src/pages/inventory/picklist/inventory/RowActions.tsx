@@ -21,7 +21,7 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
 
   return (
     <>
-      <div className="flex flex-row">
+      <div className="flex flex-row ">
         <Popover className="">
           {({ open }) => (
             <>

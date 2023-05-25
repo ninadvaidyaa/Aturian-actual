@@ -51,7 +51,7 @@ interface EmptyTableProps {
 const EmptyTable = ({ msg, colSpan, isError, error }: EmptyTableProps) => {
   const sorting = useSorting();
   const filter = useColumnFilters();
-  const {reset} = useTableActions();
+  const { reset } = useTableActions();
 
   return (
     <TableBody>
@@ -63,7 +63,7 @@ const EmptyTable = ({ msg, colSpan, isError, error }: EmptyTableProps) => {
             spacing={1}
             className="h-[calc(100vh_-_400px)]"
           >
-            {!isError && (
+            {!error?.response && (
               <>
                 <svg
                   width="120"
@@ -121,7 +121,7 @@ const EmptyTable = ({ msg, colSpan, isError, error }: EmptyTableProps) => {
               align="center"
               color="secondary"
             >
-              {isError ? (
+              {error?.response ? (
                 <div className="h-full">
                   <p>{error.response?.data?.message ?? error.message}</p>
                   {filter && filter.length > 0 && (
@@ -137,9 +137,12 @@ const EmptyTable = ({ msg, colSpan, isError, error }: EmptyTableProps) => {
                     </>
                   )}
                   <button
-                   type="button"
-                   className="bg-primary-500 text-white focus:ring-1 py-1.5 px-3 m-3 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm text-center"
-                  onClick={reset}>Clear Filters</button>
+                    type="button"
+                    className="m-3 rounded-md bg-primary-500 px-3 py-1.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-1 focus:ring-blue-300"
+                    onClick={reset}
+                  >
+                    Clear Filters
+                  </button>
                 </div>
               ) : (
                 msg

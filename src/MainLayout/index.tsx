@@ -11,7 +11,6 @@ import InfoIcon from "@mui/icons-material/Info";
 import { NAV_HEIGHT } from "config";
 /* NAV_HEIGHT is used in main tag height calculation */
 
-
 function MainLayout(): JSX.Element {
   const [open, setOpen] = useState(true);
   const breadCrumbsArray = breadCrumbsArrayStore(
@@ -33,9 +32,12 @@ function MainLayout(): JSX.Element {
       />
       <MainDrawer open={open} />
 
-      <main className="h-screen w-[calc(100%_-_260px)] flex-1 overflow-hidden bg-base" style={{
-        paddingTop: `${NAV_HEIGHT}px`,
-      }}>
+      <main
+        className="h-screen w-[calc(100%_-_260px)] flex-1 overflow-hidden bg-base"
+        style={{
+          paddingTop: `${NAV_HEIGHT}px`,
+        }}
+      >
         <div className="relative flex h-full flex-1 flex-col p-2">
           <Grid
             container

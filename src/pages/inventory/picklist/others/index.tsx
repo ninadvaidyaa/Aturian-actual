@@ -1,15 +1,15 @@
-
-import {useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   useColumnFilters,
   usePagination,
   useSorting,
   useTable,
+  useSetRowSelection,
   useTableActions,
-} from "hooks/useTable";
+} from "./useTable";
 import Loader from "components/Loader";
-import { defaultColumns, views } from "./columnDefinition";
+import { useDefaultColumns, views } from "./columnDefinition";
 
 import TablePageHeader from "components/TablePageHeader";
 import {
@@ -17,26 +17,18 @@ import {
   TablePagination,
   Table,
 } from "components/lib/ReactTable";
-import { useSetRowSelection } from "hooks/useSelectRow";
 
 import { fetchAllFlags, fetchAllStatus } from "api/settings.api";
 import { fetchAllPickPackOthers } from "api/inventory.api";
 
 const PickPackOtherListPage = () => {
   const pagination = usePagination();
-  const tableActions = useTableActions();
   const columnFilters = useColumnFilters();
   const sorting = useSorting();
-  const setRowSelection = useSetRowSelection();
-
   const defaultData = useMemo(() => [], []);
-
-  useEffect(
-    () => () => {
-      tableActions.reset();
-    },
-    []
-  );
+  const defaultColumns = useDefaultColumns();
+  const setRowSelection = useSetRowSelection();
+  const { setColumnOrder } = useTableActions();
 
   const queryParams = () => {
     let params = "";
@@ -72,8 +64,8 @@ const PickPackOtherListPage = () => {
     return params;
   };
 
-  const { data:statusData, } = useQuery(["status"], fetchAllStatus);
-  const { data:flagData } = useQuery(["flags"], fetchAllFlags);
+  const { data: statusData } = useQuery(["status"], fetchAllStatus);
+  const { data: flagData } = useQuery(["flags"], fetchAllFlags);
   const { data, isFetching, isError, error } = useQuery({
     queryKey: [
       "pickPackOthersList",
@@ -88,7 +80,7 @@ const PickPackOtherListPage = () => {
         queryParams()
       ),
     keepPreviousData: true,
-    enabled: (!!statusData?.results && !!flagData?.results) ?? false ,
+    enabled: (!!statusData?.results && !!flagData?.results) ?? false,
   });
 
   // instantiate the table
@@ -100,50 +92,53 @@ const PickPackOtherListPage = () => {
 
   return (
     <>
-     {isFetching && <Loader />}
+      {isFetching && <Loader />}
 
-<div className="">
-  <TablePageHeader
-    title={"Pick Pack"}
-    table={table}
-  />
-  <ViewSelector views={views} />
-  <Table
-    table={table}
-    isError={isError}
-    error={error}
-  />
-  <TablePagination
-    pageSize={table.getState().pagination.pageSize}
-    pageIndex={table.getState().pagination.pageIndex}
-    hasNextPage={table.getCanNextPage()}
-    hasPrevPage={table.getCanPreviousPage()}
-    setPageSize={(newSize: number) => {
-      table.setPageSize(newSize);
-    }}
-    gotoPage={(n: number) => {
-      table.setPageIndex(n);
-      setRowSelection({});
-    }}
-    rowCount={data?.total ?? 0}
-    onPreviousClick={() => {
-      table.previousPage();
-      setRowSelection({});
-    }}
-    onNextClick={() => {
-      table.nextPage();
-      setRowSelection({});
-    }}
-    onFirstPageClick={() => {
-      table.setPageIndex(0);
-      setRowSelection({});
-    }}
-    onLastPageClick={() => {
-      table.setPageIndex(table.getPageCount() - 1);
-      setRowSelection({});
-    }}
-  />
-</div>
+      <div className="">
+        <TablePageHeader
+          title={"Pick Pack"}
+          table={table}
+        />
+        <ViewSelector
+          views={views}
+          setColumnOrder={setColumnOrder}
+        />
+        <Table
+          table={table}
+          isError={!isFetching && isError && data?.data?.length === 0}
+          error={error}
+        />
+        <TablePagination
+          pageSize={table.getState().pagination.pageSize}
+          pageIndex={table.getState().pagination.pageIndex}
+          hasNextPage={table.getCanNextPage()}
+          hasPrevPage={table.getCanPreviousPage()}
+          setPageSize={(newSize: number) => {
+            table.setPageSize(newSize);
+          }}
+          gotoPage={(n: number) => {
+            table.setPageIndex(n);
+            setRowSelection({});
+          }}
+          rowCount={data?.total ?? 0}
+          onPreviousClick={() => {
+            table.previousPage();
+            setRowSelection({});
+          }}
+          onNextClick={() => {
+            table.nextPage();
+            setRowSelection({});
+          }}
+          onFirstPageClick={() => {
+            table.setPageIndex(0);
+            setRowSelection({});
+          }}
+          onLastPageClick={() => {
+            table.setPageIndex(table.getPageCount() - 1);
+            setRowSelection({});
+          }}
+        />
+      </div>
     </>
   );
 };

@@ -8,7 +8,7 @@ type DebouncedInputProps = {
   debounce?: number;
   columnId: string;
   uniqueValues?: string[];
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> 
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange">;
 
 const showCheckedFirst = (data: string[], value: string[]) =>
   data.sort((a, b) => {
@@ -64,7 +64,7 @@ const DebouncedInput = ({
   }
   return (
     <input
-      className="bg-white border border-gray-200 text-gray-700 text-sm  rounded-md focus:ring-slate-300 focus:border-slate-300 block w-full py-1 px-1.5"
+      className="block w-full rounded-md border border-gray-200  bg-white px-1.5 py-1 text-sm text-gray-700 focus:border-slate-300 focus:ring-slate-300"
       value={value}
       onChange={(e) => {
         setValue(e.target.value);
@@ -108,15 +108,15 @@ const Filter = ({ column }: FilterProps) => {
   if (column.columnDef.meta?.dataType === "date") {
     return (
       <DebouncedInput
-      type="date"
-      columnId={column.id}
-      value={(columnFilterValue ?? "") as string}
-      onChange={(value) => {
-        column.setFilterValue(value);
-      }}
-      placeholder={column.columnDef?.header?.toString()}
-      uniqueValues={sortedUniqueValues}
-    />
+        type="date"
+        columnId={column.id}
+        value={(columnFilterValue ?? "") as string}
+        onChange={(value) => {
+          column.setFilterValue(value);
+        }}
+        placeholder={column.columnDef?.header?.toString()}
+        uniqueValues={sortedUniqueValues}
+      />
     );
   }
   return (

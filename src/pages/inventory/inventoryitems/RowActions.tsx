@@ -26,11 +26,10 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
 
   return (
     <>
-      <div className="flex flex-row">
+      <div className="flex flex-row ">
         <div>
           <button
             type="button"
-            title="Edit"
             className="inline-flex items-center rounded-full p-1 text-center text-sm font-medium text-skin-inverted focus:outline-none focus:ring-1 focus:ring-blue-300  "
           >
             <MdOutlineEditNote
@@ -43,7 +42,6 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
         <div>
           <button
             type="button"
-            title="Preview"
             className="inline-flex items-center rounded-full p-1 text-center text-sm font-medium text-skin-inverted focus:outline-none focus:ring-1 focus:ring-blue-300  "
           >
             <MdOutlineRemoveRedEye
@@ -56,7 +54,6 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
         <div>
           <button
             type="button"
-            title="Quick View"
             className="inline-flex items-center rounded-full p-1 text-center text-sm font-medium text-skin-inverted focus:outline-none focus:ring-1 focus:ring-blue-300  "
           >
             <MdOutlineFactCheck
@@ -69,14 +66,13 @@ const RowActionComponent = <TData, P>({ info }: RowActionsProps<TData, P>) => {
         <div>
           <button
             type="button"
-            title="Update"
             className="inline-flex items-center rounded-full p-1 text-center text-sm font-medium text-skin-inverted focus:outline-none focus:ring-1 focus:ring-blue-300  "
           >
             <MdSync
               className="h-4 w-4"
               color="#8C8C8C"
             />
-            <span className="sr-only">Update</span>
+            <span className="sr-only">Icon</span>
           </button>
         </div>
 

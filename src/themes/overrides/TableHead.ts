@@ -1,4 +1,4 @@
-import { type Theme } from '@mui/material/styles';
+import { type Theme } from "@mui/material/styles";
 
 export default function TableHead(theme: Theme) {
   return {
@@ -10,8 +10,8 @@ export default function TableHead(theme: Theme) {
           borderBottom: `2px solid ${theme.palette.divider}`,
           position: "sticky",
           top: 0,
-        }
-      }
-    }
+        },
+      },
+    },
   };
 }

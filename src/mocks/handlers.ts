@@ -256,7 +256,6 @@ export const handlers = [
     }
   ),
 
-  
   rest.get(
     `${settings.apiBase}${apiConstants.INVENTORY_GET_PICKPACK_LIST_API}`,
     async (req, res, ctx) => {

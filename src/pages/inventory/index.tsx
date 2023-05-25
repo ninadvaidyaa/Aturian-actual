@@ -1,3 +1,15 @@
-export {default as ItemsListPage} from "./inventoryitems";
-export {default as ItemDetailPage} from "./itemDetail";
-export {default as PickPackOtherListPage} from "./pickPackItems";
+import Loadable from "components/Loadable";
+import { lazy } from "react";
+
+export const ItemsListPage = Loadable(
+  lazy(async () => await import("./inventoryitems"))
+);
+export const ItemDetailPage = Loadable(
+  lazy(async () => await import("./itemDetail"))
+);
+export const PickPackOtherListPage = Loadable(
+  lazy(async () => await import("./picklist/others"))
+);
+export const PickPackInventoryDetails = Loadable(
+  lazy(async () => await import("./picklist/PickPackDetails"))
+);

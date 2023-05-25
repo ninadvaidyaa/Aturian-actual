@@ -5,9 +5,9 @@ export default function AlertTitle() {
         root: {
           marginBottom: 4,
           marginTop: 0,
-          fontWeight: 400
-        }
-      }
-    }
+          fontWeight: 400,
+        },
+      },
+    },
   };
 }

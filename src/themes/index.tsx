@@ -1,6 +1,9 @@
 import { type ReactNode, useMemo } from "react";
 import { CssBaseline, StyledEngineProvider } from "@mui/material";
-import { createTheme, ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
+import {
+  createTheme,
+  ThemeProvider as MuiThemeProvider,
+} from "@mui/material/styles";
 import type {
   ThemeOptions,
   Theme,
@@ -18,9 +21,7 @@ interface ThemeCustomizationProps {
   children: ReactNode;
 }
 
-export default function ThemeProvider({
-  children,
-}: ThemeCustomizationProps) {
+export default function ThemeProvider({ children }: ThemeCustomizationProps) {
   const { themeDirection, mode, presetColor, fontFamily } = useConfig();
 
   const theme: Theme = useMemo<Theme>(

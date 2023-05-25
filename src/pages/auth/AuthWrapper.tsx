@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import  Box from "@mui/material/Box";
-import  Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 
 import AuthCard from "./AuthCard";
 
@@ -18,7 +18,10 @@ const AuthWrapper = ({ children }: Props) => (
         minHeight: "100vh",
       }}
     >
-      <Grid item xs={12}>
+      <Grid
+        item
+        xs={12}
+      >
         <Grid
           item
           xs={12}
