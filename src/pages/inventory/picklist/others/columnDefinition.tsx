@@ -1,6 +1,6 @@
 import { type ColumnDef } from "@tanstack/react-table";
 import { type UserViews } from "types/userViews";
-
+import { useMemo } from "react";
 import { getFormattedDate } from "utils/date";
 import StatusCell from "components/lib/ReactTable/StatusCell";
 
@@ -10,148 +10,157 @@ import RowActions from "./RowActions";
 import { type PickPackOthersList } from "validators/inventory.validators";
 
 export const useDefaultColumns = () => {
-  const defaultColumns: Array<ColumnDef<PickPackOthersList>> = [
-    {
-      accessorKey: "linksFlag",
-      id: "linksFlag",
-      header: "Links",
-      cell: (info) => <FlagComponent info={info} />,
-      footer: (props) => props.column.id,
-      size: 80,
-      enableHiding: true,
-      enableColumnFilter: false,
-      enableGlobalFilter: false,
-      enableSorting: false,
-      meta: {
-        dataType: "string",
+  const defaultColumns: Array<ColumnDef<PickPackOthersList>> = useMemo(
+    () => [
+      {
+        accessorKey: "linksFlag",
+        id: "linksFlag",
+        header: "Links",
+        cell: (info) => <FlagComponent info={info} />,
+        footer: (props) => props.column.id,
+        size: 80,
+        enableHiding: true,
+        enableColumnFilter: false,
+        enableGlobalFilter: false,
+        enableSorting: false,
+        meta: {
+          dataType: "string",
+        },
       },
-    },
-    {
-      accessorKey: "orderNumber",
-      id: "orderNumber",
-      header: "PL #",
-      cell: (info) => info.getValue(),
-      footer: (props) => props.column.id,
-      size: 180,
+      {
+        accessorKey: "orderNumber",
+        id: "orderNumber",
+        header: "PL #",
+        cell: (info) => info.getValue(),
+        footer: (props) => props.column.id,
+        size: 180,
 
-      enableSorting: true,
-      meta: {
-        dataType: "string",
+        enableSorting: true,
+        meta: {
+          dataType: "string",
+        },
       },
-    },
 
-    {
-      accessorKey: "custName",
-      id: "custName",
-      header: "Customer Name",
-      // cell: (info) => info.getValue().name, // option to keep all data
-      cell: (info) => info.getValue(),
-      footer: (props) => props.column.id,
-      size: 180,
-      enableSorting: true,
-      meta: {
-        dataType: "string",
+      {
+        accessorKey: "custName",
+        id: "custName",
+        header: "Customer Name",
+        // cell: (info) => info.getValue().name, // option to keep all data
+        cell: (info) => info.getValue(),
+        footer: (props) => props.column.id,
+        size: 180,
+        enableSorting: true,
+        meta: {
+          dataType: "string",
+        },
       },
-    },
 
-    {
-      accessorKey: "orderDate",
-      id: "orderDate",
-      header: "Order Date",
-      cell: (info) =>
-        `${getFormattedDate(info.getValue() as string, "M/D/YYYY h:mm:ss A")}`,
-      footer: (props) => props.column.id,
-      size: 180,
-      enableSorting: true,
-      meta: {
-        dataType: "date",
-        dateFormate: "M/D/YYYY h:mm:ss A",
+      {
+        accessorKey: "orderDate",
+        id: "orderDate",
+        header: "Order Date",
+        cell: (info) =>
+          `${getFormattedDate(
+            info.getValue() as string,
+            "M/D/YYYY h:mm:ss A"
+          )}`,
+        footer: (props) => props.column.id,
+        size: 180,
+        enableSorting: true,
+        meta: {
+          dataType: "date",
+          dateFormate: "M/D/YYYY h:mm:ss A",
+        },
       },
-    },
 
-    {
-      accessorKey: "inHandDate",
-      id: "inHandDate",
-      header: "Create Date",
-      cell: (info) =>
-        `${getFormattedDate(info.getValue() as string, "M/D/YYYY h:mm:ss A")}`,
-      footer: (props) => props.column.id,
-      size: 180,
-      enableSorting: true,
-      meta: {
-        dataType: "date",
-        dateFormate: "M/D/YYYY h:mm:ss A",
+      {
+        accessorKey: "inHandDate",
+        id: "inHandDate",
+        header: "Create Date",
+        cell: (info) =>
+          `${getFormattedDate(
+            info.getValue() as string,
+            "M/D/YYYY h:mm:ss A"
+          )}`,
+        footer: (props) => props.column.id,
+        size: 180,
+        enableSorting: true,
+        meta: {
+          dataType: "date",
+          dateFormate: "M/D/YYYY h:mm:ss A",
+        },
       },
-    },
 
-    {
-      accessorKey: "daysOnList",
+      {
+        accessorKey: "daysOnList",
 
-      id: "daysOnList",
-      header: "Day on List",
-      // cell: (info) => info.getValue().name, // option to keep all data
-      cell: (info) => info.getValue(),
-      footer: (props) => props.column.id,
-      size: 180,
-      enableSorting: true,
-      meta: {
-        dataType: "number",
+        id: "daysOnList",
+        header: "Day on List",
+        // cell: (info) => info.getValue().name, // option to keep all data
+        cell: (info) => info.getValue(),
+        footer: (props) => props.column.id,
+        size: 180,
+        enableSorting: true,
+        meta: {
+          dataType: "number",
+        },
       },
-    },
 
-    {
-      accessorKey: "noOfItems",
+      {
+        accessorKey: "noOfItems",
 
-      id: "noOfItems",
-      header: "# of Items",
-      // cell: (info) => info.getValue().name, // option to keep all data
-      cell: (info) => info.getValue(),
-      footer: (props) => props.column.id,
-      size: 180,
-      enableSorting: true,
-      meta: {
-        dataType: "number",
+        id: "noOfItems",
+        header: "# of Items",
+        // cell: (info) => info.getValue().name, // option to keep all data
+        cell: (info) => info.getValue(),
+        footer: (props) => props.column.id,
+        size: 180,
+        enableSorting: true,
+        meta: {
+          dataType: "number",
+        },
       },
-    },
 
-    {
-      accessorKey: "pickPackStatus",
-      id: "pickPackStatus",
-      header: "Status",
-      cell: (info) => (
-        <StatusCell
-          color="#006979"
-          label="In Production"
-          info={info}
-        />
-      ),
-      footer: (props) => props.column.id,
-      size: 100,
-      enableSorting: true,
-      meta: {
-        dataType: "string",
-        isSelectable: true,
-        isStatus: true,
+      {
+        accessorKey: "pickPackStatus",
+        id: "pickPackStatus",
+        header: "Status",
+        cell: (info) => (
+          <StatusCell
+            color="#006979"
+            label="In Production"
+            info={info}
+          />
+        ),
+        footer: (props) => props.column.id,
+        size: 100,
+        enableSorting: true,
+        meta: {
+          dataType: "string",
+          isSelectable: true,
+          isStatus: true,
+        },
       },
-    },
 
-    {
-      id: "action",
-      header: "Action",
-      cell: (info) => <RowActions info={info} />,
-      footer: (props) => props.column.id,
-      size: 150,
-      enableHiding: false,
-      enableColumnFilter: false,
-      enableGlobalFilter: false,
-      enableSorting: false,
-      enableResizing: false,
-      enablePinning: true,
-      meta: {
-        dataType: "string",
+      {
+        id: "action",
+        header: "Action",
+        cell: (info) => <RowActions info={info} />,
+        footer: (props) => props.column.id,
+        size: 150,
+        enableHiding: false,
+        enableColumnFilter: false,
+        enableGlobalFilter: false,
+        enableSorting: false,
+        enableResizing: false,
+        enablePinning: true,
+        meta: {
+          dataType: "string",
+        },
       },
-    },
-  ];
+    ],
+    []
+  );
   return defaultColumns;
 };
 export const views: UserViews = {

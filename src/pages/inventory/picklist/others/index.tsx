@@ -1,25 +1,19 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   useColumnFilters,
   usePagination,
   useSorting,
   useTable,
-  useSetRowSelection,
-  useTableActions,
 } from "./useTable";
 import Loader from "components/Loader";
-import { useDefaultColumns, views } from "./columnDefinition";
+import { useDefaultColumns } from "./columnDefinition";
 
-import TablePageHeader from "components/TablePageHeader";
-import {
-  ViewSelector,
-  TablePagination,
-  Table,
-} from "components/lib/ReactTable";
+import { TablePagination, Table } from "components/lib/ReactTable";
 
 import { fetchAllFlags, fetchAllStatus } from "api/settings.api";
 import { fetchAllPickPackOthers } from "api/inventory.api";
+import CheckBox from "components/CheckBox";
 
 const PickPackOtherListPage = () => {
   const pagination = usePagination();
@@ -27,9 +21,10 @@ const PickPackOtherListPage = () => {
   const sorting = useSorting();
   const defaultData = useMemo(() => [], []);
   const defaultColumns = useDefaultColumns();
-  const setRowSelection = useSetRowSelection();
-  const { setColumnOrder } = useTableActions();
-
+  const [checked, setChecked] = useState({
+    shipped: false,
+    consolidated: false,
+  });
   const queryParams = () => {
     let params = "";
     let sortParam = "";
@@ -95,14 +90,40 @@ const PickPackOtherListPage = () => {
       {isFetching && <Loader />}
 
       <div className="">
-        <TablePageHeader
-          title={"Pick Pack"}
-          table={table}
-        />
-        <ViewSelector
-          views={views}
-          setColumnOrder={setColumnOrder}
-        />
+        <div className="flex flex-row justify-end gap-2">
+          <div className="flex w-1/3 flex-row gap-2">
+            <CheckBox
+              {...{
+                onChange: () => {
+                  setChecked((prev) => ({
+                    ...prev,
+                    consolidated: !prev.consolidated,
+                  }));
+                },
+                checked: checked.consolidated,
+                label: "Include Consolidated Pick Ticket",
+              }}
+            />
+            <CheckBox
+              {...{
+                onChange: () => {
+                  setChecked((prev) => ({ ...prev, shipped: !prev.shipped }));
+                },
+                checked: checked.shipped,
+                label: "Include Fully Shipped",
+              }}
+            />
+          </div>
+          <div>
+            <button
+              type="button"
+              className="mr-2 inline-flex items-center justify-center rounded-lg bg-skin-fill px-3 py-2 text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-slate-50 hover:bg-skin-fill"
+            >
+              <i className="fal fa-print -ml-1 mr-2 "></i>
+              Print
+            </button>
+          </div>
+        </div>
         <Table
           table={table}
           isError={!isFetching && isError && data?.data?.length === 0}
@@ -118,24 +139,19 @@ const PickPackOtherListPage = () => {
           }}
           gotoPage={(n: number) => {
             table.setPageIndex(n);
-            setRowSelection({});
           }}
           rowCount={data?.total ?? 0}
           onPreviousClick={() => {
             table.previousPage();
-            setRowSelection({});
           }}
           onNextClick={() => {
             table.nextPage();
-            setRowSelection({});
           }}
           onFirstPageClick={() => {
             table.setPageIndex(0);
-            setRowSelection({});
           }}
           onLastPageClick={() => {
             table.setPageIndex(table.getPageCount() - 1);
-            setRowSelection({});
           }}
         />
       </div>
