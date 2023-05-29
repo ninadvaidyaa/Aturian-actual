@@ -184,17 +184,17 @@ const pages: NavItemType = {
               ],
             },
 
-            // {
-            //   id: "trial-balance",
-            //   title: "Trial Balance",
-            //   type: "item",
-            //   url: "/trial-balance",
-            //   breadcrumbsArray: [
-            //     "Accounting",
-            //     "General Accounting",
-            //     "Trial Balance",
-            //   ],
-            // },
+            {
+              id: "trial-balance",
+              title: "Trial Balance",
+              type: "item",
+              url: "/trial-balance",
+              breadcrumbsArray: [
+                "Accounting",
+                "General Accounting",
+                "Trial Balance",
+              ],
+            },
           ]
         },
       ]
