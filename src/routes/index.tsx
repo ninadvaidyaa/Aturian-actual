@@ -26,10 +26,12 @@ import { CustomerPage } from "pages/customers";
 import {
   ManagePrebillsPage,
   ManagePrebillDetailsPage,
-  ManageCustInvoicePage,
-  ManageCustInvoiceDetailPage,
+  // ManageCustInvoicePage,
+  // ManageCustInvoiceDetailPage,
 } from "pages/invoicing";
 import { SingleGLLinePage, AccountingGLDetails } from "pages/accounting";
+import ManageCustInvoicePage from "pages/invoicing/ManageCustomerInvoices";
+import ManageCustInvoiceDetailPage from "pages/invoicing/ManageCustomerInvoices/CustInvoiceDetailPage";
 const LoginPage = Loadable(lazy(async () => await import("pages/auth/login")));
 
 const router = createBrowserRouter([
