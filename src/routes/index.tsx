@@ -29,6 +29,7 @@ import {
   ManageCustInvoicePage,
   ManageCustInvoiceDetailPage,
 } from "pages/invoicing";
+import { SingleGLLinePage, AccountingGLDetails } from "pages/accounting";
 const LoginPage = Loadable(lazy(async () => await import("pages/auth/login")));
 
 const router = createBrowserRouter([
@@ -172,6 +173,24 @@ const router = createBrowserRouter([
                   {
                     path: ":prebillId",
                     element: <ManagePrebillDetailsPage />,
+                  },
+                ],
+              },
+              {
+                path: "accounting",
+                children: [
+                  {
+                    path: "ga",
+                    children: [
+                      {
+                        index: true,
+                        element: <AccountingGLDetails />,
+                      },
+                      {
+                        path: "single",
+                        element: <SingleGLLinePage />,
+                      },
+                    ],
                   },
                 ],
               },

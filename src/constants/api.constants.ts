@@ -14,4 +14,6 @@ export const MANAGE_SUPPLIER_INVOICES_GET_ALL_API = `/${settings.apiEnv}/manage_
 export const SUPPLIERS_GET_ALL_API = `/${settings.apiEnv}/suppliers`;
 export const MANAGE_PREBILLS_GET_ALL_API = `/${settings.apiEnv}/manage_prebills`;
 export const INVENTORY_GET_PICKPACK_LIST_API = `/${settings.apiEnv}/pickpacklist`;
+export const ACCOUNTING_GET_GL_DETAILS_API = `/${settings.apiEnv}/getGLDetails`;
+export const SINGLE_GET_GL_LINE_API = `/${settings.apiEnv}/getSingleGLlines`;
 export const MANAGE_CUSTOMER_INVOICE_GET_ALL_API = `/${settings.apiEnv}/manage_customers`;

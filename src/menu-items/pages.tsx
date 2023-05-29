@@ -172,6 +172,43 @@ const pages: NavItemType = {
         },
       ],
     },
+    {
+      id: "accounting",
+      title: "Accounting",
+      type: "collapse",
+      icon: "a/pIcon",
+      children: [
+        {
+          id: "general-accounting",
+          title: "General Accounting",
+          type: "collapse",
+          children: [
+            {
+              id: "display-gl-details",
+              title: "Display G/L Details",
+              type: "item",
+              url: "/accounting/ga",
+              breadcrumbsArray: [
+                "Accounting",
+                "General Accounting",
+                "Display G/L Details",
+              ],
+            },
+            {
+              id: "single-gl-line-details",
+              title: "Single G/L Line Item Details",
+              type: "item",
+              url: "/accounting/ga/single",
+              breadcrumbsArray: [
+                "Accounting",
+                "General Accounting",
+                "Single G/L Line Item Details",
+              ],
+            },
+          ],
+        },
+      ],
+    },
   ],
 };
 

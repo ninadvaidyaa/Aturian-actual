@@ -14,7 +14,7 @@ import { pickPackOtherListData } from "./pickPackOthers";
 import { manageSupplierInvoiceListData } from "./manageSupplierInvoice";
 import { supplierListData } from "./supliers";
 import { managePrebillsListData, manageCustInvoiceListData } from "./invoicing";
-
+import { GLDetailsData, SingleGLLinesData } from "./accounting";
 import { pickListInventoryData } from "./picklistinventory";
 
 const baseApiUrl = import.meta.env.VITE_BASE_URL;
@@ -294,6 +294,43 @@ export const handlers = [
             offset * limit + limit
           ),
           total: manageCustInvoiceListData.length,
+        })
+      );
+    }
+  ),
+  rest.get(
+    `${settings.apiBase}${apiConstants.ACCOUNTING_GET_GL_DETAILS_API}`,
+    async (req, res, ctx) => {
+      const offset: number = req.url.searchParams.get("offset")
+        ? parseInt(req.url.searchParams.get("offset"))
+        : 0;
+      const limit: number = req.url.searchParams.get("limit")
+        ? parseInt(req.url.searchParams.get("limit"))
+        : 1;
+      return await res(
+        ctx.status(200),
+        ctx.json({
+          data: GLDetailsData.slice(offset * limit, offset * limit + limit),
+          results: GLDetailsData.length,
+        })
+      );
+    }
+  ),
+
+  rest.get(
+    `${settings.apiBase}${apiConstants.SINGLE_GET_GL_LINE_API}`,
+    async (req, res, ctx) => {
+      const offset: number = req.url.searchParams.get("offset")
+        ? parseInt(req.url.searchParams.get("offset"))
+        : 0;
+      const limit: number = req.url.searchParams.get("limit")
+        ? parseInt(req.url.searchParams.get("limit"))
+        : 1;
+      return await res(
+        ctx.status(200),
+        ctx.json({
+          data: SingleGLLinesData.slice(offset * limit, offset * limit + limit),
+          results: SingleGLLinesData.length,
         })
       );
     }

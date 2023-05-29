@@ -33,7 +33,7 @@ function MainLayout(): JSX.Element {
       <MainDrawer open={open} />
 
       <main
-        className="h-screen w-[calc(100%_-_260px)] flex-1 overflow-hidden bg-base"
+        className="w-[calc(100%_-_260px)] flex-1 overflow-hidden bg-base"
         style={{
           paddingTop: `${NAV_HEIGHT}px`,
         }}
