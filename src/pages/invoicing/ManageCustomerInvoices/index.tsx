@@ -116,7 +116,7 @@ const ManageCustInvoicePage = () => {
 
       <div className="">
         <TablePageHeader
-          title={"Invoice"}
+          title={"Customer Invoice"}
           table={table}
         />
         <ViewSelector

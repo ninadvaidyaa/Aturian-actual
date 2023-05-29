@@ -90,7 +90,7 @@ export const useDefaultColumns = () => {
       },
       {
         accessorKey: "amount",
-        id: "amount",
+        id: "amount_invoice",
         header: "Amount",
         cell: (info) => info.getValue(),
         footer: (props) => props.column.id,
@@ -259,7 +259,7 @@ export const views: UserViews = {
         index: 3,
       },
       {
-        id: "amount",
+        id: "amount_invoice",
         index: 4,
       },
       {
@@ -325,7 +325,7 @@ export const views: UserViews = {
         index: 5,
       },
       {
-        id: "amount",
+        id: "amount_invoice",
         index: 6,
       },
 

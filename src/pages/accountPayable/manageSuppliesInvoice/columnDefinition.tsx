@@ -139,8 +139,8 @@ export const useDefaultColumns = () => {
     {
       // accessorFn: (value) => value.customer, // option to keep all data
       // accessorFn: (value) => value.customer.name,
-      accessorKey: "amountPaid",
-      id: "amountPaid",
+      accessorKey: "amountPaid_invoice",
+      id: "amountPaid_invoice",
       header: "Amount Paid",
       // cell: (info) => info.getValue().name, // option to keep all data
       cell: (info) => info.getValue(),
@@ -274,7 +274,7 @@ export const views: UserViews = {
         index: 6,
       },
       {
-        id: "amountPaid",
+        id: "amountPaid_invoice",
         index: 7,
       },
       {
@@ -337,7 +337,7 @@ export const views: UserViews = {
       },
 
       {
-        id: "amountPaid",
+        id: "amountPaid_invoice",
         index: 7,
       },
 

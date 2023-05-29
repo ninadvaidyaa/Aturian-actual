@@ -139,40 +139,6 @@ const pages: NavItemType = {
       ],
     },
     {
-      id: "invoicing",
-      title: "Invoicing",
-      type: "collapse",
-      icon: "supplierIcon",
-      children: [
-        {
-          id: "manage-prebills-list",
-          title: "Manage Prebills",
-          type: "item",
-          url: "/invoices",
-          target: true,
-          breadcrumbsArray: [
-            "Accounting",
-            "Customer Invoicing",
-            "Manage Cust Invoices",
-            "Invoice List",
-          ],
-        },
-        {
-          id: "manage-cust-invoice-list",
-          title: "Manage Cust Invoice",
-          type: "item",
-          url: "invoices/cust-invoices",
-          target: true,
-          breadcrumbsArray: [
-            "Accounting",
-            "Customer Invoicing",
-            "Manage Cust Invoices",
-            "Invoice List",
-          ],
-        },
-      ],
-    },
-    {
       id: "accounting",
       title: "Accounting",
       type: "collapse",
@@ -187,7 +153,7 @@ const pages: NavItemType = {
               id: "display-gl-details",
               title: "Display G/L Details",
               type: "item",
-              url: "/accounting/ga",
+              url: "/gl-details",
               breadcrumbsArray: [
                 "Accounting",
                 "General Accounting",
@@ -198,17 +164,75 @@ const pages: NavItemType = {
               id: "single-gl-line-details",
               title: "Single G/L Line Item Details",
               type: "item",
-              url: "/accounting/ga/single",
+              url: "/single-gl-details",
               breadcrumbsArray: [
                 "Accounting",
                 "General Accounting",
                 "Single G/L Line Item Details",
               ],
             },
+
+            {
+              id: "multi-gl-line-details",
+              title: "Multi G/L Line Item Details",
+              type: "item",
+              url: "/multi-gl-details",
+              breadcrumbsArray: [
+                "Accounting",
+                "General Accounting",
+                "Multi G/L Line Item Details",
+              ],
+            },
+
+            // {
+            //   id: "trial-balance",
+            //   title: "Trial Balance",
+            //   type: "item",
+            //   url: "/trial-balance",
+            //   breadcrumbsArray: [
+            //     "Accounting",
+            //     "General Accounting",
+            //     "Trial Balance",
+            //   ],
+            // },
+          ]
+        },
+      ]
+    },
+    {
+      id: "invoicing",
+      title: "Invoicing",
+      type: "collapse",
+      icon: "supplierIcon",
+      children: [
+        {
+          id: "manage-prebills-list",
+          title: "Manage Prebills",
+          type: "item",
+          url: "/invoices",
+          target: true,
+          breadcrumbsArray: [
+            "Accounting",
+            "Manage Prebills",
+            "Prebills",
+          ],
+        },
+        {
+          id: "manage-cust-invoice-list",
+          title: "Manage Cust Invoice",
+          type: "item",
+          url: "/invoices/cust-invoices",
+          target: true,
+          breadcrumbsArray: [
+            "Accounting",
+            "Customer Invoicing",
+            "Manage Cust Invoices",
+            "Invoice List",
           ],
         },
       ],
     },
+  
   ],
 };
 

@@ -32,6 +32,8 @@ import {
 import { SingleGLLinePage, AccountingGLDetails } from "pages/accounting";
 import ManageCustInvoicePage from "pages/invoicing/ManageCustomerInvoices";
 import ManageCustInvoiceDetailPage from "pages/invoicing/ManageCustomerInvoices/CustInvoiceDetailPage";
+import QuotesDetailPage from "pages/proposal/ManageQuotes/QuotesDetailPage";
+import MultiGLLinePage from "pages/accounting/generalAccounting/multipleGLLineList";
 const LoginPage = Loadable(lazy(async () => await import("pages/auth/login")));
 
 const router = createBrowserRouter([
@@ -196,6 +198,25 @@ const router = createBrowserRouter([
                   },
                 ],
               },
+              {
+                path: "quotes/:quoteId",
+                element: <QuotesDetailPage />,
+              },
+              {
+                path: "gl-details",
+                element: <AccountingGLDetails />,
+              },
+
+              {
+                path: "single-gl-details",
+                element: <SingleGLLinePage />,
+              },
+              {
+                path: "multi-gl-details",
+                element: <MultiGLLinePage />,
+              },
+
+             
             ],
           },
         ],

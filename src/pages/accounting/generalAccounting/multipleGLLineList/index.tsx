@@ -1,10 +1,10 @@
 import { useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import {  fetchSingleGLLines } from "api/accounting.api";
+import {  fetchMultiGLLines} from "api/accounting.api";
 import Loader from "components/Loader";
 
-import { useDefaultColumns } from "./columnDefinition";
+import { defaultColumns } from "./columnDefinition";
 import {
   useColumnFilters,
   usePagination,
@@ -23,12 +23,11 @@ import { fetchAllFlags, fetchAllStatus } from "api/settings.api";
 
 // import CheckBox from "components/CheckBox";
 import SearchComboBox from "components/SearchComboBox";
-import { Grid, TextField } from "@mui/material";
+import { Grid } from "@mui/material";
 
-const SingleGLLinePage = () => {
+const MultiGLLinePage = () => {
   const pagination = usePagination();
   const tableActions = useTableActions();
-  const defaultColumns = useDefaultColumns();
   const columnFilters = useColumnFilters();
   const sorting = useSorting();
   const setRowSelection = useSetRowSelection();
@@ -80,13 +79,13 @@ const SingleGLLinePage = () => {
   
   const { data, isFetching, isError, error } = useQuery({
     queryKey: [
-      "singleGLLine",
+      "multiGLLine",
       pagination?.pageIndex,
       pagination?.pageSize,
       queryParams(),
     ],
     queryFn: async () =>
-      await fetchSingleGLLines (
+      await fetchMultiGLLines (
         pagination?.pageIndex,
         pagination?.pageSize,
         queryParams()
@@ -114,7 +113,6 @@ const SingleGLLinePage = () => {
     { label: '2205' },
     { label: '2206' },
   ];
-
   return (
     <>
       {isFetching && <Loader />}
@@ -126,14 +124,15 @@ const SingleGLLinePage = () => {
             <SearchComboBox options={glAccounts} placeholder="Search G/L Account" />
             </Grid>
             <Grid item xs={6}>
+            {/* <SearchComboBox options={top100Films} placeholder="Search Item Name/Comments" /> */}
+            </Grid>
+            <Grid item xs={6}>
             <SearchComboBox options={period} placeholder="Begin Book Period" />
             </Grid>
             <Grid item xs={6}>
             <SearchComboBox options={period} placeholder="End Book Period" />
             </Grid>
-            <Grid item xs={6}>
-            <TextField id="outlined-basic" className="w-full" label="Search Item Name/Comments" variant="outlined" />
-            </Grid>
+           
             
           </Grid>
         
@@ -164,6 +163,7 @@ const SingleGLLinePage = () => {
           table={table}
           isError={isError}
           error={error}
+          paddingTop={424}
         />
         <TablePagination
           pageSize={table.getState().pagination.pageSize}
@@ -200,4 +200,4 @@ const SingleGLLinePage = () => {
   );
 };
 
-export default SingleGLLinePage;
+export default MultiGLLinePage;

@@ -13,9 +13,10 @@ import { manageProposalListData, manageQuoteListData } from "./manageProposal";
 import { pickPackOtherListData } from "./pickPackOthers";
 import { manageSupplierInvoiceListData } from "./manageSupplierInvoice";
 import { supplierListData } from "./supliers";
-import { managePrebillsListData, manageCustInvoiceListData } from "./invoicing";
-import { GLDetailsData, SingleGLLinesData } from "./accounting";
+import { manageCustInvoiceListData, managePrebillsListData,  } from "./invoicing";
+
 import { pickListInventoryData } from "./picklistinventory";
+import { GLDetailsData, MultiGLLinesData, SingleGLLinesData, TrialBalanceData } from "./accounting";
 
 const baseApiUrl = import.meta.env.VITE_BASE_URL;
 export const handlers = [
@@ -257,6 +258,29 @@ export const handlers = [
   ),
 
   rest.get(
+    `${settings.apiBase}${apiConstants.MANAGE_CUSTOMER_INVOICE_GET_ALL_API}`,
+    async (req, res, ctx) => {
+      const offset: number = req.url.searchParams.get("offset")
+        ? parseInt(req.url.searchParams.get("offset"))
+        : 0;
+      const limit: number = req.url.searchParams.get("limit")
+        ? parseInt(req.url.searchParams.get("limit"))
+        : 1;
+      return await res(
+        ctx.status(200),
+        ctx.json({
+          data: manageCustInvoiceListData.slice(
+            offset * limit,
+            offset * limit + limit
+          ),
+          total: manageCustInvoiceListData.length,
+        })
+      );
+    }
+  ),
+
+
+  rest.get(
     `${settings.apiBase}${apiConstants.INVENTORY_GET_PICKPACK_LIST_API}`,
     async (req, res, ctx) => {
       const offset: number = req.url.searchParams.get("offset")
@@ -278,27 +302,6 @@ export const handlers = [
     }
   ),
   rest.get(
-    `${settings.apiBase}${apiConstants.MANAGE_CUSTOMER_INVOICE_GET_ALL_API}`,
-    async (req, res, ctx) => {
-      const offset: number = req.url.searchParams.get("offset")
-        ? parseInt(req.url.searchParams.get("offset"))
-        : 0;
-      const limit: number = req.url.searchParams.get("limit")
-        ? parseInt(req.url.searchParams.get("limit"))
-        : 1;
-      return await res(
-        ctx.status(200),
-        ctx.json({
-          data: manageCustInvoiceListData.slice(
-            offset * limit,
-            offset * limit + limit
-          ),
-          total: manageCustInvoiceListData.length,
-        })
-      );
-    }
-  ),
-  rest.get(
     `${settings.apiBase}${apiConstants.ACCOUNTING_GET_GL_DETAILS_API}`,
     async (req, res, ctx) => {
       const offset: number = req.url.searchParams.get("offset")
@@ -310,7 +313,10 @@ export const handlers = [
       return await res(
         ctx.status(200),
         ctx.json({
-          data: GLDetailsData.slice(offset * limit, offset * limit + limit),
+          data: GLDetailsData.slice(
+            offset * limit,
+            offset * limit + limit
+          ),
           results: GLDetailsData.length,
         })
       );
@@ -329,8 +335,55 @@ export const handlers = [
       return await res(
         ctx.status(200),
         ctx.json({
-          data: SingleGLLinesData.slice(offset * limit, offset * limit + limit),
+          data: SingleGLLinesData.slice(
+            offset * limit,
+            offset * limit + limit
+          ),
           results: SingleGLLinesData.length,
+        })
+      );
+    }
+  ),
+
+  rest.get(
+    `${settings.apiBase}${apiConstants.MULTI_GET_GL_LINE_API}`,
+    async (req, res, ctx) => {
+      const offset: number = req.url.searchParams.get("offset")
+        ? parseInt(req.url.searchParams.get("offset"))
+        : 0;
+      const limit: number = req.url.searchParams.get("limit")
+        ? parseInt(req.url.searchParams.get("limit"))
+        : 1;
+      return await res(
+        ctx.status(200),
+        ctx.json({
+          data: MultiGLLinesData.slice(
+            offset * limit,
+            offset * limit + limit
+          ),
+          results: MultiGLLinesData.length,
+        })
+      );
+    }
+  ),
+
+  rest.get(
+    `${settings.apiBase}${apiConstants.TRIAL_BALANCE_GET_ALL_API}`,
+    async (req, res, ctx) => {
+      const offset: number = req.url.searchParams.get("offset")
+        ? parseInt(req.url.searchParams.get("offset"))
+        : 0;
+      const limit: number = req.url.searchParams.get("limit")
+        ? parseInt(req.url.searchParams.get("limit"))
+        : 1;
+      return await res(
+        ctx.status(200),
+        ctx.json({
+          data: TrialBalanceData.slice(
+            offset * limit,
+            offset * limit + limit
+          ),
+          results: TrialBalanceData.length,
         })
       );
     }

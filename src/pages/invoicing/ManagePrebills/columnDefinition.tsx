@@ -8,6 +8,7 @@ import RowActions from "./RowActions";
 
 import { Link } from "react-router-dom";
 import { type ManagePrebillsList } from "validators/invoicing.validator";
+import { getUSCurrency } from "utils/number";
 import { selectedRowIdActions } from "./useTable";
 
 export const useDefaultColumns = () => {
@@ -37,7 +38,6 @@ export const useDefaultColumns = () => {
           {getValue() as string}
         </Link>
       ),
-
       footer: (props) => props.column.id,
       size: 160,
 
@@ -47,6 +47,59 @@ export const useDefaultColumns = () => {
         dataType: "string",
       },
     },
+
+  {
+    accessorKey: "custName",
+    id: "custName",
+    header: "Customer Name",
+    cell: (info) => info.getValue(),
+    footer: (props) => props.column.id,
+    size: 180,
+    enableSorting: true,
+    meta: {
+      dataType: "string",
+    },
+  },
+  {
+    // accessorFn: (value) => value.customer, // option to keep all data
+    // accessorFn: (value) => value.customer.name,
+    accessorKey: "custNumber",
+      id: "custNumber_prebills",
+    header: "Customer #",
+    // cell: (info) => info.getValue().name, // option to keep all data
+    cell: (info) => info.getValue(),
+    footer: (props) => props.column.id,
+    size: 180,
+    enableSorting: true,
+    meta: {
+      dataType: "number",
+    },
+  },
+  {
+    accessorKey: "amount",
+    id: "amount",
+    header: "Amount",
+    cell: (info) => getUSCurrency(info.getValue() as number),
+    footer: (props) => props.column.id,
+    size: 180,
+    enableSorting: true,
+    meta: {
+      dataType: "number",
+    },
+  },
+
+  {
+    accessorKey: "amountPaid",
+    id: "amountPaid",
+    header: "Amt Paid",
+    cell: (info) => getUSCurrency(info.getValue() as number),
+    footer: (props) => props.column.id,
+    size: 180,
+    enableSorting: true,
+    meta: {
+      dataType: "number",
+    },
+  },
 
     {
       accessorKey: "orderNumber",
@@ -63,7 +116,7 @@ export const useDefaultColumns = () => {
 
     {
       accessorKey: "custName",
-      id: "custName",
+      id: "custName_prebills",
       header: "Customer Name",
       cell: (info) => info.getValue(),
       footer: (props) => props.column.id,
@@ -90,7 +143,7 @@ export const useDefaultColumns = () => {
     },
     {
       accessorKey: "amount",
-      id: "amount",
+      id: "amount_prebills",
       header: "Amount",
       cell: (info) => info.getValue(),
       footer: (props) => props.column.id,
@@ -103,7 +156,7 @@ export const useDefaultColumns = () => {
 
     {
       accessorKey: "amountPaid",
-      id: "amountPaid",
+      id: "amountPaid_prebills",
       header: "Amt Paid",
       cell: (info) => info.getValue(),
       footer: (props) => props.column.id,
@@ -211,19 +264,19 @@ export const views: UserViews = {
         index: 1,
       },
       {
-        id: "custName",
+        id: "custName_prebills",
         index: 2,
       },
       {
-        id: "custNumber",
+        id: "custNumber_prebills",
         index: 3,
       },
       {
-        id: "amount",
+        id: "amount_prebills",
         index: 4,
       },
       {
-        id: "amountPaid",
+        id: "amountPaid_prebills",
         index: 5,
       },
       {
@@ -255,11 +308,11 @@ export const views: UserViews = {
     id: 2,
     columns: [
       {
-        id: "custNumber",
+        id: "custNumber_prebills",
         index: 0,
       },
       {
-        id: "custName",
+        id: "custName_prebills",
         index: 1,
       },
 
@@ -281,12 +334,12 @@ export const views: UserViews = {
         index: 5,
       },
       {
-        id: "amount",
+        id: "amount_prebills",
         index: 6,
       },
 
       {
-        id: "amountPaid",
+        id: "amountPaid_prebills",
         index: 7,
       },
 
