@@ -23,7 +23,12 @@ import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import { SuppliersDetailPage, SuppliersListPage } from "pages/suppliers";
 import { CustomerPage } from "pages/customers";
-import { ManagePrebillsPage, ManagePrebillDetailsPage } from "pages/invoicing";
+import {
+  ManagePrebillsPage,
+  ManagePrebillDetailsPage,
+  ManageCustInvoicePage,
+  ManageCustInvoiceDetailPage,
+} from "pages/invoicing";
 const LoginPage = Loadable(lazy(async () => await import("pages/auth/login")));
 
 const router = createBrowserRouter([
@@ -155,6 +160,14 @@ const router = createBrowserRouter([
                     // TODO: update when new page is created
                     index: true,
                     element: <ManagePrebillsPage />,
+                  },
+                  {
+                    path: "cust-invoices",
+                    element: <ManageCustInvoicePage />,
+                  },
+                  {
+                    path: "cust-invoices/:invoiceId",
+                    element: <ManageCustInvoiceDetailPage />,
                   },
                   {
                     path: ":prebillId",

@@ -13,3 +13,17 @@ export const managePrebillsListSchema = z.object({
   preBillStatus: z.string(),
 });
 export type ManagePrebillsList = z.infer<typeof managePrebillsListSchema>;
+
+export const manageCustInvoiceListSchema = z.object({
+  invoiceNum: z.number(),
+  orderNumber: z.number(),
+  custName: z.string(),
+  custNumber: z.string(),
+  amount: z.string(),
+  amountPaid: z.string(),
+  dueDate: z.string(),
+  emailAddress: z.string(),
+  invoiceDate: z.string(),
+  preBillStatus: z.string(),
+});
+export type ManageCustInvoiceList = z.infer<typeof manageCustInvoiceListSchema>;

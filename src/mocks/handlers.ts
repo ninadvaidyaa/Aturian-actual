@@ -13,7 +13,7 @@ import { manageProposalListData, manageQuoteListData } from "./manageProposal";
 import { pickPackOtherListData } from "./pickPackOthers";
 import { manageSupplierInvoiceListData } from "./manageSupplierInvoice";
 import { supplierListData } from "./supliers";
-import { managePrebillsListData } from "./invoicing";
+import { managePrebillsListData, manageCustInvoiceListData } from "./invoicing";
 
 import { pickListInventoryData } from "./picklistinventory";
 
@@ -273,6 +273,27 @@ export const handlers = [
             offset * limit + limit
           ),
           total: pickListInventoryData.length,
+        })
+      );
+    }
+  ),
+  rest.get(
+    `${settings.apiBase}${apiConstants.MANAGE_CUSTOMER_INVOICE_GET_ALL_API}`,
+    async (req, res, ctx) => {
+      const offset: number = req.url.searchParams.get("offset")
+        ? parseInt(req.url.searchParams.get("offset"))
+        : 0;
+      const limit: number = req.url.searchParams.get("limit")
+        ? parseInt(req.url.searchParams.get("limit"))
+        : 1;
+      return await res(
+        ctx.status(200),
+        ctx.json({
+          data: manageCustInvoiceListData.slice(
+            offset * limit,
+            offset * limit + limit
+          ),
+          total: manageCustInvoiceListData.length,
         })
       );
     }
