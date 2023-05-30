@@ -38,4 +38,23 @@ export const ordersListSchema = z.object({
   cost: z.number(),
   total: z.number(),
 });
+
+
+export const ordersPOSchema = z.object({
+  orderId: z.string(),
+  orderNumber: z.string(),
+  jobId: z.string(),
+  supplierPONum: z.string(),
+  customerPO: z.boolean().nullable(),
+  custName: z.string(),
+  custId: z.number(),
+  followupDate: z.string(),
+  orderStatus: z.string(),
+  inHandDate: z.string(),
+  shipDate: z.string(),
+  dol: z.number(),
+  PoStatus: z.string(),
+});
+
 export type OrdersList = z.infer<typeof ordersListSchema>;
+export type OrderPO = z.infer<typeof ordersPOSchema>;

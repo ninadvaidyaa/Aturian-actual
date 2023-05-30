@@ -13,10 +13,16 @@ import { manageProposalListData, manageQuoteListData } from "./manageProposal";
 import { pickPackOtherListData } from "./pickPackOthers";
 import { manageSupplierInvoiceListData } from "./manageSupplierInvoice";
 import { supplierListData } from "./supliers";
-import { manageCustInvoiceListData, managePrebillsListData,  } from "./invoicing";
+import { supplierPOList } from "./supplierPOList";
+import { manageCustInvoiceListData, managePrebillsListData } from "./invoicing";
 
 import { pickListInventoryData } from "./picklistinventory";
-import { GLDetailsData, MultiGLLinesData, SingleGLLinesData, TrialBalanceData } from "./accounting";
+import {
+  GLDetailsData,
+  MultiGLLinesData,
+  SingleGLLinesData,
+  TrialBalanceData,
+} from "./accounting";
 
 const baseApiUrl = import.meta.env.VITE_BASE_URL;
 export const handlers = [
@@ -279,7 +285,6 @@ export const handlers = [
     }
   ),
 
-
   rest.get(
     `${settings.apiBase}${apiConstants.INVENTORY_GET_PICKPACK_LIST_API}`,
     async (req, res, ctx) => {
@@ -313,10 +318,7 @@ export const handlers = [
       return await res(
         ctx.status(200),
         ctx.json({
-          data: GLDetailsData.slice(
-            offset * limit,
-            offset * limit + limit
-          ),
+          data: GLDetailsData.slice(offset * limit, offset * limit + limit),
           results: GLDetailsData.length,
         })
       );
@@ -335,10 +337,7 @@ export const handlers = [
       return await res(
         ctx.status(200),
         ctx.json({
-          data: SingleGLLinesData.slice(
-            offset * limit,
-            offset * limit + limit
-          ),
+          data: SingleGLLinesData.slice(offset * limit, offset * limit + limit),
           results: SingleGLLinesData.length,
         })
       );
@@ -357,10 +356,7 @@ export const handlers = [
       return await res(
         ctx.status(200),
         ctx.json({
-          data: MultiGLLinesData.slice(
-            offset * limit,
-            offset * limit + limit
-          ),
+          data: MultiGLLinesData.slice(offset * limit, offset * limit + limit),
           results: MultiGLLinesData.length,
         })
       );
@@ -379,11 +375,26 @@ export const handlers = [
       return await res(
         ctx.status(200),
         ctx.json({
-          data: TrialBalanceData.slice(
-            offset * limit,
-            offset * limit + limit
-          ),
+          data: TrialBalanceData.slice(offset * limit, offset * limit + limit),
           results: TrialBalanceData.length,
+        })
+      );
+    }
+  ),
+  rest.get(
+    `${settings.apiBase}${apiConstants.ORDERS_GET_PO_LIST}`,
+    async (req, res, ctx) => {
+      const offset: number = req.url.searchParams.get("offset")
+        ? parseInt(req.url.searchParams.get("offset"))
+        : 0;
+      const limit: number = req.url.searchParams.get("limit")
+        ? parseInt(req.url.searchParams.get("limit"))
+        : 1;
+      return await res(
+        ctx.status(200),
+        ctx.json({
+          data: supplierPOList.slice(offset * limit, offset * limit + limit),
+          total: supplierPOList.length,
         })
       );
     }

@@ -22,6 +22,15 @@ const pages: NavItemType = {
           target: true,
           breadcrumbsArray: ["Sales", "Order List"],
         },
+        {
+          id: "po-list",
+
+          title: "Po List",
+          type: "item",
+          url: "/orders/po-list",
+          target: true,
+          breadcrumbsArray: ["Sales", "Order Tracking", "PO List"],
+        },
       ],
     },
 

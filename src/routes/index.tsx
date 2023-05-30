@@ -12,7 +12,7 @@ import {
   ManageSupplierInvoiceListPage,
   ManagerSupplierInvoiceDetailPage,
 } from "pages/accountPayable";
-import { VendorListPage, OrderDetailPage } from "pages/orders";
+import { VendorListPage, OrderDetailPage, OrderPOListPage } from "pages/orders";
 import {
   ManageProposalPage,
   ManageQuotePage,
@@ -60,6 +60,10 @@ const router = createBrowserRouter([
                   {
                     index: true,
                     element: <VendorListPage />,
+                  },
+                  {
+                    path: "po-list",
+                    element: <OrderPOListPage />,
                   },
                   {
                     path: ":orderId",

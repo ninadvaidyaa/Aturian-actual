@@ -7,3 +7,6 @@ export const VendorListPage = Loadable(
 export const OrderDetailPage = Loadable(
   lazy(async () => await import("./OrderDetailPage"))
 );
+export const OrderPOListPage = Loadable(
+  lazy(async () => await import("./tracking"))
+);
