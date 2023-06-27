@@ -23,6 +23,7 @@ import {
   SingleGLLinesData,
   TrialBalanceData,
 } from "./accounting";
+import { receivedOrderListData } from "./inventoryReceiveOrder";
 
 const baseApiUrl = import.meta.env.VITE_BASE_URL;
 export const handlers = [
@@ -395,6 +396,26 @@ export const handlers = [
         ctx.json({
           data: supplierPOList.slice(offset * limit, offset * limit + limit),
           total: supplierPOList.length,
+        })
+      );
+    }
+  ),
+
+
+  rest.get(
+    `${settings.apiBase}${apiConstants.RECEIVED_ORDERS_GET_ALL_API}`,
+    async (req, res, ctx) => {
+      const offset: number = req.url.searchParams.get("offset")
+        ? parseInt(req.url.searchParams.get("offset"))
+        : 0;
+      const limit: number = req.url.searchParams.get("limit")
+        ? parseInt(req.url.searchParams.get("limit"))
+        : 1;
+      return await res(
+        ctx.status(200),
+        ctx.json({
+          data: receivedOrderListData.slice(offset * limit, offset * limit + limit),
+          results: receivedOrderListData.length,
         })
       );
     }

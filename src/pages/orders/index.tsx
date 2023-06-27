@@ -10,3 +10,6 @@ export const OrderDetailPage = Loadable(
 export const OrderPOListPage = Loadable(
   lazy(async () => await import("./tracking"))
 );
+export const CreateOrderPage = Loadable(
+  lazy(async () => await import("./createOrder"))
+);

@@ -12,7 +12,7 @@ import {
   ManageSupplierInvoiceListPage,
   ManagerSupplierInvoiceDetailPage,
 } from "pages/accountPayable";
-import { VendorListPage, OrderDetailPage, OrderPOListPage } from "pages/orders";
+import { VendorListPage, OrderDetailPage, OrderPOListPage, CreateOrderPage } from "pages/orders";
 import {
   ManageProposalPage,
   ManageQuotePage,
@@ -35,6 +35,7 @@ import ManageCustInvoiceDetailPage from "pages/invoicing/ManageCustomerInvoices/
 import QuotesDetailPage from "pages/proposal/ManageQuotes/QuotesDetailPage";
 import MultiGLLinePage from "pages/accounting/generalAccounting/multipleGLLineList";
 import TrailBalancePage from "pages/accounting/generalAccounting/trialBalance";
+import ReceiveOrderListPage from "pages/inventory/receiveOrderList";
 const LoginPage = Loadable(lazy(async () => await import("pages/auth/login")));
 
 const router = createBrowserRouter([
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
                     path: ":orderId",
                     element: <OrderDetailPage />,
                   },
+                  {
+                    path: "create-orders",
+                    element: <CreateOrderPage />
+                  }
                 ],
               },
               {
@@ -133,6 +138,19 @@ const router = createBrowserRouter([
                     path: "other/:pickListOtherlId",
                     element: <PickPackInventoryDetails />,
                   },
+                ],
+              },
+
+              {
+                path: "receive-orders",
+                children: [
+                  {
+                    index: true,
+
+                    element: <ReceiveOrderListPage />,
+                  },
+
+                 
                 ],
               },
 

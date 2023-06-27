@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export interface PickListInventory {
   orderNote: boolean;
   pickPackStatus: string;
@@ -35,3 +37,29 @@ export interface PickPackOthersList {
   noOfItems: number;
   pickPackStatus: string;
 }
+
+
+export const receivedOrderSchema = z.object({
+
+  number : z.string(),
+  jobID : z.string(),
+  customer : z.object({
+    number: z.number(),
+    name : z.string()
+  }),
+  salesman: z.object({
+    number: z.number(),
+    name : z.string()
+  }),
+  CSR :  z.object({
+    number: z.number(),
+    name : z.string()
+  }),
+
+  orderDate : z.string(),
+  status : z.string(),
+
+
+});
+
+export type ReceivedOrder = z.infer<typeof receivedOrderSchema>;

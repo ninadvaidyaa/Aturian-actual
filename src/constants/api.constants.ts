@@ -20,3 +20,5 @@ export const SINGLE_GET_GL_LINE_API = `/${settings.apiEnv}/getSingleGLlines`;
 export const MULTI_GET_GL_LINE_API = `/${settings.apiEnv}/get_multi_GL_lines`;
 export const TRIAL_BALANCE_GET_ALL_API = `/${settings.apiEnv}/get_trial_balance`;
 export const MANAGE_CUSTOMER_INVOICE_GET_ALL_API = `/${settings.apiEnv}/manage_customers`;
+
+export const RECEIVED_ORDERS_GET_ALL_API = `/${settings.apiEnv}/received_orders`;

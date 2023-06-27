@@ -167,4 +167,17 @@ export const opsStatusData = [
     seq: 100,
     color: "#026e00",
   },
+
+
+  {
+    id: 74,
+    name: "OPEN",
+    description: "OPEN",
+    shortDescription: "OPEN",
+    seq: 100,
+    color: "#026e00",
+  },
+
+
+  
 ];

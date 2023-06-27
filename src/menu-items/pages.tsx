@@ -14,6 +14,15 @@ const pages: NavItemType = {
       icon: "orderIcon",
       children: [
         {
+          id: "create-order",
+
+          title: "Create Order",
+          type: "item",
+          url: "/orders/create-orders",
+          target: true,
+          breadcrumbsArray: ["Sales", "Create Order"],
+        },
+        {
           id: "order-list",
 
           title: "Orders List",
@@ -58,6 +67,15 @@ const pages: NavItemType = {
       type: "collapse",
       icon: "inventoryIcon",
       children: [
+        {
+          id: "receive-order-list",
+
+          title: "Receive",
+          type: "item",
+          url: "/receive-orders",
+          target: true,
+          breadcrumbsArray: ["Inventory", "Receive", "Order List"],
+        },
         {
           id: "item-list",
 
